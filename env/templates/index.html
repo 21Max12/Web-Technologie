@@ -14,7 +14,7 @@
         bottom: 24px;
         right: 80px;
         left: 80px;
-        width: (100% - 160px);
+        width: calc(100% - 160px);
     }
 </style>
 
@@ -45,9 +45,9 @@
 
     </div>
 
-    <form class="input-group mb-3 my-form">
-        <input type="text" class="form-control" placeholder="Bitte gebe deine Nachricht an">
-        <button class="btn btn-outline-secondary" type="button" >Senden</button>
+    <form class="input-group mb-3 my-form" action="" method="POST">
+        <input type="text" name ="content"class="form-control" placeholder="Bitte gebe deine Nachricht an">
+        <button class="btn btn-outline-secondary" type="submit" >Senden</button>
     </form>
 
 </div>
