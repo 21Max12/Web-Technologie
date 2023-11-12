@@ -13,6 +13,8 @@ class Message(db.Model):
     user = db.Column(db.String(200), nullable=True)
     content = db.Column(db.String(500), nullable=True)
     created_at = db.Column(db.DateTime(), default=datetime.utcnow)
+with app.app_context():
+    db.create_all()
 
 
 
