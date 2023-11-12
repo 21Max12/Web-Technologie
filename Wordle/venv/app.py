@@ -4,7 +4,7 @@ from flask_login import UserMixin
 from datetime import datetime
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/maximilianherzog/Desktop/Entwicklung/Web-Technologie/Web-Technologie/Wordle/venv/database.db'
 app.config['SECRET_KEY'] = 'thisisasecretkey'
 
 db = SQLAlchemy(app)
@@ -14,10 +14,10 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(20), nullable = False)
     password = db.Column(db.String(80), nullable = False)
 
-if __name__ == '__main__':
-    with app.app_context():
-        db.create_all()
-    app.run(debug=True)
+#if __name__ == '__main__':
+   # with app.app_context():
+     #   db.create_all()
+ #   app.run(debug=True)
 
     
 @app.route('/')
