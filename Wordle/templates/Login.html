@@ -12,7 +12,7 @@
 <body>
     <div class="Box"> 
         <form>
-            <h1>Login</h1>
+            <h1>Wordle</h1>
             <div class="input-box">
                 <input type="text" placeholder="Benutzername" required>
             </div>
@@ -26,52 +26,17 @@
                 <a href="#">Password zurücksetzen</a>
             </div>
 
-            <button type="submit">Einloggen</button>
+            <button type="submit" class="but">Login</button>
 
-            <div>
-                <p>Du hast noch kein Konto?</p>
-                <a href="#myModal" class="modal-open">Benutzerkonto erstellen</a>
+            <div class="anmelden">
+                <p>Du hast noch kein Konto?
+                <a href="#myModal" class="modal-open">Benutzerkonto erstellen</a></p>
             </div>
 
         </form>
     </div>
 
 
-<!-- Das Modal selbst -->
-<div id="myModal" class="modal">
-  <!-- Modal-Inhalt -->
-  <div class="modal-content">
-    <span class="close">&times;</span>
-    <form>
-      <!-- Formularfelder -->
-      <input type="text" placeholder="Benutzername">
-      <input type="password" placeholder="Passwort">
-      <input type="password" placeholder="Passwort wiederholen">
-      <input type="email" placeholder="E-Mail">
-      <button type="submit">Registrieren</button>
-    </form>
-  </div>
-</div>
-
-<script>
-    // Wenn der Nutzer auf den Link klickt
-    document.querySelector('.modal-open').addEventListener('click', function(event) {
-      event.preventDefault();
-      document.getElementById('myModal').style.display = 'block';
-    });
-    
-    // Wenn der Nutzer auf (x) klickt, das Modal schließen
-    document.querySelector('.close-button').addEventListener('click', function() {
-      document.getElementById('myModal').style.display = 'none';
-    });
-    
-    // Wenn der Nutzer irgendwo außerhalb des Modals klickt, es schließen
-    window.onclick = function(event) {
-      if (event.target == document.getElementById('myModal')) {
-        document.getElementById('myModal').style.display = 'none';
-      }
-    }
-</script>
 
     
 </body>
