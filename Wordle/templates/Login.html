@@ -23,21 +23,39 @@
 
             <div class="remember">
                 <label> <input type="checkbox"> Benutzernamen merken</label>
-                <a href="#">Password zurücksetzen</a>
+                <a href="#" open-modal>Password zurücksetzen</a>
             </div>
 
             <button type="submit" class="but">Login</button>
 
             <div class="anmelden">
                 <p>Du hast noch kein Konto?
-                <a href="#myModal" class="modal-open">Benutzerkonto erstellen</a></p>
+                <a href="#myModal" open-create>Benutzerkonto erstellen</a></p>
             </div>
 
         </form>
-    </div>
+    </div> 
+
+    <dialog anmelden>
+      <a>Gebe deine Daten dan</a>
+      <div>
+        <input type="text">
+      </div>
+      <button close-create>Close</button>
+   </dialog>
 
 
+    <dialog reset>
+      <a>Bitte beantworten sie die Sicherheitsfrage</a>
+      <div>
+        <input type="text">
+      </div>
+      <button close-modal>Close</button>
+   </dialog>
 
-    
+    <script src="reset.js"></script>
+    <script src="anmelden.js"></script>
+
+
 </body>
 </html>
