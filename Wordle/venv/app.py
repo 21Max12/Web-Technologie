@@ -60,8 +60,12 @@ class LoginForm(FlaskForm):
     
     submit = SubmitField("Login")
 
+@app.route('/')
+def home():
+    return render_template('home.html')
 
-@app.route('/', methods=['GET','POST']) 
+
+@app.route('/login', methods=['GET','POST']) 
 def login():
     form = LoginForm()
     if form.validate_on_submit():
@@ -79,7 +83,7 @@ def dashboard():
     return render_template('dashboard.html')
 
 
-@app.route('/logout', methods['GET','POST'])
+@app.route('/logout', methods=['GET','POST'])
 @login_required
 def logout():
     logout_user()
