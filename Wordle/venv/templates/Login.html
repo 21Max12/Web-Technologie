@@ -23,7 +23,7 @@
 
             <div class="remember">
                 <label> <input type="checkbox"> Benutzernamen merken</label>
-                <a href="#" open-modal>Password zurücksetzen</a>
+                <a href="#">Password zurücksetzen</a>
             </div>
 
             <button type="submit" class="but">Login</button>
@@ -36,25 +36,20 @@
         </form>
     </div> 
 
-    <dialog anmelden>
-      <a>Gebe deine Daten dan</a>
+    <dialog anmelden class="register">
+      <a>Gebe deine Daten an</a>
       <div>
-        <input type="text">
+        <input type="text" placeholder="Benutername"> 
+        <input type="text" placeholder="Passwort"> 
+        <input type="text" placeholder="Passwort wiederholen"> 
+        <input type="text" placeholder="Sicherheitsfrage"> 
+        <input type="text" placeholder="Sicherheitsantwort"> 
       </div>
       <button close-create>Close</button>
+      <button close-create>Abschicken</button>
    </dialog>
 
-
-    <dialog reset>
-      <a>Bitte beantworten sie die Sicherheitsfrage</a>
-      <div>
-        <input type="text">
-      </div>
-      <button close-modal>Close</button>
-   </dialog>
-
-    <script src="reset.js"></script>
-    <script src="anmelden.js"></script>
+   <script src="anmelden.js"></script>
 
 
 </body>
