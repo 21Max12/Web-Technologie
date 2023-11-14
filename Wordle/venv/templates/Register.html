@@ -12,22 +12,24 @@
     <div anmelden class="register"> 
         <h1>Benutzerkontoerstellung</h1>
         <h4>Gebe deine Daten an.</h4>
-        <div>
-          <input type="text" placeholder="Benutername"><br> 
-          <input type="text" placeholder="Passwort"><br>  
-          <input type="text" placeholder="Passwort wiederholen"><br> 
-          <label>Sicherheitsfrage</label>
-          <select>
-              <option value="Tier">Wie hieß dein erstes Haustier?</option>
-              <option value="Auto">Was war dein erstes Auto?</option>
-              <option value="Mutter">Wie lautet der Mädchenname deiner Mutter?</option>
-        </select><br>
-          <input type="text" placeholder="Sicherheitsantwort"><br> 
-        </div>
-        <div>       
-            <button>Close</button>
-            <button>Abschicken</button>
-        </div>
+        <form action="/submit_form" method="post">
+            <div>
+                <input type="text" placeholder="Benutername"><br> 
+                <input type="text" placeholder="Passwort"><br>  
+                <input type="text" placeholder="Passwort wiederholen"><br> 
+                <label>Sicherheitsfrage</label>
+                <select>
+                    <option value="Tier">Wie hieß dein erstes Haustier?</option>
+                    <option value="Auto">Was war dein erstes Auto?</option>
+                    <option value="Mutter">Wie lautet der Mädchenname deiner Mutter?</option>
+              </select><br>
+                <input type="text" placeholder="Sicherheitsantwort"><br> 
+              </div>
+              <div>       
+                  <button>Close</button>
+                  <button>Abschicken</button>
+              </div>
+        </form>      
     </div>
 </body>
 </html>
