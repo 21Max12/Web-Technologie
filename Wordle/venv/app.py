@@ -75,7 +75,7 @@ def login():
                 login_user(user)
                 return redirect(url_for('dashboard'))
  
-    return render_template('Login.html', form=form) #Benni Prüfen
+    return render_template('Login.html', form=form) 
 
 @app.route('/dashboard', methods=['GET','POST'])
 @login_required
