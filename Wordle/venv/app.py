@@ -90,17 +90,19 @@ def logout():
     return redirect(url_for('login'))
 
 
-@app.route('/register',methods=['GET','POST'])
+@app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
-
     if form.validate_on_submit():
         hashed_password = bcrypt.generate_password_hash(form.password.data)
-        new_user = User(username=form.username.data, password=hashed_password)
+        secure_question = request.form['security_question']
+        e_mail = request.form['e_mail']  # Stellen Sie sicher, dass dieses Feld im Formular existiert
+        new_user = User(username=form.username.data, password=hashed_password, secure_question=secure_question, e_mail=e_mail)
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('login'))
-    return render_template('Register.html',form=form) #Benni Prüfen
+    return render_template('Register.html', form=form)
+
 
 
 
