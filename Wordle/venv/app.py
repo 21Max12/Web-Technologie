@@ -111,4 +111,3 @@ if __name__ == '__main__':
 
 def index():
     return render_template("index.html") #Benni Prüfen
-
