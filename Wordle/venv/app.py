@@ -89,7 +89,7 @@ def Homescreen():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('/'))
+    return redirect(url_for('login'))
 
 
 @app.route('/register', methods=['GET', 'POST'])
