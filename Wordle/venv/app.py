@@ -72,17 +72,17 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user)
-            return redirect(url_for('dashboard'))
+            return redirect(url_for('Homescreen'))
         else:
             # Hier könnten Sie eine Fehlermeldung hinzufügen
             pass
     return render_template('Login.html', form=form)
 
 
-@app.route('/dashboard', methods=['GET','POST'])
+@app.route('/homescreen', methods=['GET','POST'])
 @login_required
-def dashboard():
-    return render_template('dashboard.html')
+def Homescreen():
+    return render_template('Homescreen.html')
 
 
 @app.route('/logout', methods=['GET','POST'])
