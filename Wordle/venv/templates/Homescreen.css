@@ -1,0 +1,30 @@
+body{
+    background-color: hsl(240, 3%, 7%);
+}
+
+.test{
+    background-color: Grey;
+    display: flex;
+}
+
+.btn-primary{
+    background-color: #3a3b3b; /* Hintergrundfarbe des Buttons */
+    color: white; /* Textfarbe */
+    border: none;
+    margin-left: 20px;
+}
+
+
+.logout{
+    background-color: #b59f39;
+    color: black;
+    border: none;
+    height: 33px;
+    border-radius: 5px;
+    justify-content: right;
+}
+
+
+.logout-btn {
+    margin-left: auto;
+}
