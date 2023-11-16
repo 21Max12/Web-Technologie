@@ -16,7 +16,7 @@ db = SQLAlchemy(app)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
-login_manager.login_view = "login"
+login_manager.login_view = 'login'
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -89,7 +89,7 @@ def Homescreen():
 @login_required
 def logout():
     logout_user()
-    return redirect(url_for('login'))
+    return redirect(url_for('/'))
 
 
 @app.route('/register', methods=['GET', 'POST'])
@@ -113,3 +113,4 @@ if __name__ == '__main__':
 
 def index():
     return render_template("index.html") #Benni Prüfen
+
