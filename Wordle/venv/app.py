@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
 from wtforms import Form, StringField, PasswordField, SubmitField, validators
-from wtforms.validators import InputRequired, Length, ValidationError, EqualTo
+from wtforms.validators import InputRequired, Length, ValidationError
 from datetime import datetime
 from flask_bcrypt import Bcrypt
 import os
@@ -45,7 +45,6 @@ class RegisterForm(FlaskForm):
     
     password = PasswordField(validators = [InputRequired(), Length(
         min = 4, max = 20)], render_kw = {"placeholder": "Password"})
-        
     
     submit = SubmitField("Register")
 
@@ -64,10 +63,6 @@ class LoginForm(FlaskForm):
     
     password = PasswordField(validators = [InputRequired(), Length(
         min = 4, max = 20)], render_kw = {"placeholder": "Password"})
-    
-    confirm_password = PasswordField('Passwort wiederholen', validators=[
-        InputRequired(),
-        EqualTo('password', message='Die Passwörter müssen übereinstimmen.')])
     
     submit = SubmitField("Login")
 
@@ -117,14 +112,8 @@ def register():
     return render_template('Register.html', form=form)
 
 
-@app.route('/pwreset', methods=['GET', 'POST'])
-def PWreset():
-    return render_template('PWreset.html')
-
-
 if __name__ == '__main__':
     app.run(debug = True)
 
 def index():
     return render_template("index.html") #Benni Prüfen
-
