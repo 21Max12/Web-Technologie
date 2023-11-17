@@ -18,6 +18,16 @@ body {
     background-size: cover;
 }
 
+.error{
+    display: flex;
+    font-weight: 900;
+    font-size: 18px;
+    justify-content: center;
+    color: #c75839;
+    margin: 10px;
+    visibility: hidden;
+}
+
 .Box{
     width: 500px;
     background-color: transparent;
