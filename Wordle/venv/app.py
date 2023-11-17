@@ -92,6 +92,7 @@ def logout():
     return redirect(url_for('login'))
 
 
+
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
@@ -106,11 +107,8 @@ def register():
     return render_template('Register.html', form=form)
 
 
-
-
 if __name__ == '__main__':
     app.run(debug = True)
 
 def index():
     return render_template("index.html") #Benni Prüfen
-
