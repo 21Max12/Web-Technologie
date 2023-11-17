@@ -6,9 +6,14 @@ from wtforms import Form, StringField, PasswordField, SubmitField, validators
 from wtforms.validators import InputRequired, Length, ValidationError
 from datetime import datetime
 from flask_bcrypt import Bcrypt
+import os
+
+
+basedir = os.path.abspath(os.path.dirname(__file__))
+
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/maximilianherzog/Desktop/Entwicklung/Web-Technologie/Web-Technologie/Wordle/venv/database.db'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'database.db')
 app.config['SECRET_KEY'] = 'thisisasecretkey'
 bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
