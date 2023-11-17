@@ -60,11 +60,8 @@ class LoginForm(FlaskForm):
         min = 4, max = 20)], render_kw = {"placeholder": "Password"})
     
     submit = SubmitField("Login")
-"""
-@app.route('/')
-def home():
-    return render_template('home.html')
-"""
+
+
 
 @app.route('/', methods=['GET', 'POST'])
 def login():
