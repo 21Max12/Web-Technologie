@@ -2,3 +2,22 @@ body{
     background-color: hsl(240, 12%, 24%);
     color: white;
 }
+.btn-primary{
+    background-color: #3a3b3b; /* Hintergrundfarbe des Buttons */
+    color: white; /* Textfarbe */
+    border: none;
+    margin-left: 20px;
+  }
+
+ .ms-auto{
+  display: flex;
+ }
+
+.leave{
+  background-color: #b59f39;
+  color: white;
+  border: none;
+  height: 33px;
+  border-radius: 5px;
+
+}
