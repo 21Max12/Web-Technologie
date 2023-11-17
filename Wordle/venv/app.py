@@ -30,6 +30,7 @@ class User(db.Model, UserMixin):
     password = db.Column(db.String(80), nullable = False)
     secure_question = db.Column(db.String(80), nullable = False)
     e_mail = db.Column(db.String(80), nullable = False)
+    
 
 
 
