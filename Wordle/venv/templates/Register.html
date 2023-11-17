@@ -11,19 +11,18 @@
 
 <body>
     <div anmelden class="register">
-        <label for="B">B</label>
-        <h1>enutzerkontoerstellung</h1>
-        <h4>Gebe deine Daten an.</h4>
+       <h1><span class="C">C</span>reate user account</h1><br>
+        <h4>Enter your data</h4>
 <form action="/register" method="post">
     <div>
         {{ form.hidden_tag() }} 
-        {{ form.username.label }} {{ form.username(size=20, class="form-control", placeholder="Benutzername") }}<br>
-        {{ form.password.label }} {{ form.password(size=20, class="form-control", placeholder="Passwort") }}<br>
-
+        {{ form.username(size=20, class="form-control", placeholder="Username") }}<br>
+        {{ form.password(size=20, class="form-control", placeholder="Password") }}<br>
+        <!--Einheitlich anpassen-->
         <input type="password" name="confirm_password" class="form-control" placeholder="Passwort wiederholen" required><br>
-        <input type="email" name="e_mail" placeholder="E-Mail" required><br>
+        <input type="email" name="e_mail" class="form-control" placeholder="E-Mail" required><br>
 
-        <label>Sicherheitsfrage</label>
+        <h4>Security question</h4>
         <select name="security_question" class="form-control">
             <option value="Tier">Wie hieß dein erstes Haustier?</option>
             <option value="Auto">Was war dein erstes Auto?</option>
@@ -31,11 +30,11 @@
         </select><br>
 
 
-        <input type="text" name="security_answer" class="form-control" placeholder="Sicherheitsantwort" required><br>
+        <input type="text" name="security_answer" class="form-control" placeholder="Security answer" required><br>
     </div>
-    <div>       
-        <a href="/" class="button-style">Close</a>
-        <button type="submit" class="btn btn-primary">Abschicken</button>
+    <div class="end">       
+        <a href="/" class="close">Close</a>
+        <button type="submit" class="btn btn-primary">Submit</button>
     </div>
 </form>
 

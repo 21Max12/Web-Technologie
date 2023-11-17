@@ -1,23 +1,51 @@
 body{
-    background-color: hsl(240, 12%, 24%);
+    background-color: hsl(0, 2%, 10%);
     color: white;
+    padding: 50px;
 }
-.btn-primary{
-    background-color: #3a3b3b; /* Hintergrundfarbe des Buttons */
-    color: white; /* Textfarbe */
+
+
+.C{
+    font-size: 2em;
+    background-color: hsl(115, 29%, 43%);
+    color: white;
+    border: .10em solid white;
+    padding: 0px 20px;
+    text-transform: uppercase;
+    font-weight: bold;
+    align-items: center;
+    user-select: none;
+    transition: transform 250ms linear;
+    margin-right: 5px;
+}
+
+.end{
+    display: flex;
+}
+
+.close {
+    width: 70px;
+    height: 100%; 
+    background-color: #6c757d; 
+    color: white;
     border: none;
-    margin-left: 20px;
-  }
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 16px; 
+    font-weight: bold; 
+    text-align: center;
+    line-height: 40px; 
+    cursor: pointer; 
+    transition: background-color .3s; 
+    user-select: none; 
+    margin-right: 10px;
+}
 
- .ms-auto{
-  display: flex;
- }
+.close:hover {
+    background-color: #0056b3; 
+}
 
-.leave{
-  background-color: #b59f39;
-  color: white;
-  border: none;
-  height: 33px;
-  border-radius: 5px;
-
+.btn-primary{
+    background-color: hsl(115, 29%, 43%);
+    border: none;
 }
