@@ -72,7 +72,9 @@ def login():
             login_user(user)
             return redirect(url_for('Homescreen'))
         else:
-            # Hier könnten Sie eine Fehlermeldung hinzufügen
+            raise ValidationError(
+                "Falscher Benutzername oder Kennwort"
+            )
             pass
     return render_template('Login.html', form=form)
 

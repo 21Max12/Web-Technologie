@@ -17,16 +17,20 @@
             
             <div class="input-box">
                 {{ form.username(placeholder="Benutzername", class_="input-class") }}
-                {% for message in form.username.errors %}
-                    <div>{{ message }}</div>
-                {% endfor %}
+                {% if form.username.errors %}
+                    {% for message in form.username.errors %}
+                        <div class="error-message">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
             </div>
-
+            
             <div class="input-box">
                 {{ form.password(placeholder="Passwort", class_="input-class") }}
-                {% for message in form.password.errors %}
-                    <div>{{ message }}</div>
-                {% endfor %}
+                {% if form.password.errors %}
+                    {% for message in form.password.errors %}
+                        <div class="error-message">{{ message }}</div>
+                    {% endfor %}
+                {% endif %}
             </div>
 
             <div class="remember">
