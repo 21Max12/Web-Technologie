@@ -9,10 +9,53 @@
     flex-direction: column;
     min-height: 100vh;
     margin: 0;
-    padding: 1em;
     font-size: clamp(.5rem, 2.5vmin, 1.5rem);
   }
   
+  .lower{
+    padding: 50px;
+  }
+  .top{
+    background-color: #818283;
+    display: flex;
+    margin-bottom: 100px;
+  }
+
+  .btn-primary{
+    background-color: #3a3b3b; /* Hintergrundfarbe des Buttons */
+    color: white; /* Textfarbe */
+    border: none;
+    margin-left: 20px;
+  }
+
+ .ms-auto{
+  display: flex;
+ }
+
+.leave{
+  background-color: #b59f39;
+  color: white;
+  border: none;
+  height: 33px;
+  border-radius: 5px;
+
+}
+
+  .logout{
+    background-color: #c75839;
+    color: white;
+    border: none;
+    height: 33px;
+    border-radius: 5px;
+    margin-left: 7px;
+  } 
+
+
+.logout-btn {
+    margin-left: auto;
+}
+
+
   .headers{
     display: flex;
     align-content: center;
@@ -24,6 +67,7 @@
     color: white;
     flex-grow: 1;
     justify-content: center;
+    margin-bottom: 50px;
   }
 
 

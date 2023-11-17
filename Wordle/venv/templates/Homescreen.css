@@ -2,8 +2,8 @@ body{
     background-color: hsl(240, 3%, 7%);
 }
 
-.test{
-    background-color: Grey;
+.top{
+    background-color: #818283;
     display: flex;
 }
 

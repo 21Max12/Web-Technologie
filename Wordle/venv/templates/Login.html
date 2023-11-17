@@ -11,54 +11,28 @@
 
 <body>
     <div class="Box"> 
-        <form action="{{ url_for('login') }}" method="post">
-            {{ form.hidden_tag() }}
             <h1>Wordle</h1>
             
-            <div class="input-box">
-                {{ form.username(placeholder="Benutzername", class_="input-class") }}
-                {% for message in form.username.errors %}
-                    <div>{{ message }}</div>
-                {% endfor %}
-            </div>
+        <form action="/" method="post">
 
             <div class="input-box">
-                {{ form.password(placeholder="Passwort", class_="input-class") }}
-                {% for message in form.password.errors %}
-                    <div>{{ message }}</div>
-                {% endfor %}
+                <input type="text" name="username" placeholder="Username" class="input-class">
             </div>
-
+            <div class="input-box">
+                <input type="password" name="password" placeholder="Password" class="input-class">
+            </div>
             <div class="remember">
-                <label> <input type="checkbox"> Benutzernamen merken</label>
-                <a href="PWreset.html">Password zurücksetzen</a>
+                <label> <input type="checkbox">Remember username</label>
+                <a href="PWreset.html">Password reset</a>
             </div>
 
-            <button type="submit" class="but">Login</button>
+            <button type="submit" value="login" class="but">Login</button>
 
             <div class="anmelden">
                 <p>Du hast noch kein Konto?
-                <a href="register" open-create>Benutzerkonto erstellen</a></p>
+                <a href="register" open-create>Create user account</a></p>
             </div>
-
         </form>
     </div> 
-
-    <dialog anmelden class="register">
-      <a>Gebe deine Daten an</a>
-      <div>
-        <input type="text" placeholder="Benutername"> 
-        <input type="text" placeholder="Passwort"> 
-        <input type="text" placeholder="Passwort wiederholen"> 
-        <input type="text" placeholder="Sicherheitsfrage"> 
-        <input type="text" placeholder="Sicherheitsantwort"> 
-      </div>
-      <button close-create>Close</button>
-      <button close-create>Abschicken</button>
-   </dialog>
-
-   <script src="anmelden.js"></script>
-
-
 </body>
 </html>
