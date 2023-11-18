@@ -2,6 +2,7 @@ body{
   background-color: hsl(0, 2%, 10%);
   color: white;
   padding: 50px;
+  
 }
 
 
@@ -19,6 +20,19 @@ body{
   margin-right: 5px;
 }
 
+.form-control {
+  box-sizing: border-box; /* Stellt sicher, dass Padding und Border innerhalb der Elementbreite sind */
+  border: 5px solid transparent; /* Setzt einen transparenten Border, um die Größe konstant zu halten */
+  transition: border-color 0.3s; /* Optional: Fügt einen sanften Übergangseffekt für den Border hinzu */
+  border-radius: 15px;
+}
+
+.form-control:focus {
+  outline: none;
+  border-color: hsl(115, 29%, 43%); /* Ändert nur die Farbe des Borders, nicht die Größe */
+  box-shadow: none;
+}
+
 .end{
   display: flex;
 }
@@ -32,7 +46,6 @@ body{
   border-radius: 5px;
   text-decoration: none;
   font-size: 16px; 
-  font-weight: bold; 
   text-align: center;
   line-height: 40px; 
   cursor: pointer; 
@@ -42,10 +55,16 @@ body{
 }
 
 .close:hover {
-  background-color: #0056b3; 
+  background-color: hsl(115, 29%, 43%); 
 }
 
 .btn-primary{
+  width: 10%;
+  background-color: #b59f39;
+  border: solid white;
+}
+
+.btn-primary:hover{
   background-color: hsl(115, 29%, 43%);
-  border: none;
+  border: solid white;
 }
