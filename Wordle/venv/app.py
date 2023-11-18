@@ -37,6 +37,8 @@ class User(db.Model, UserMixin):
     e_mail = db.Column(db.String(80), nullable = False)
     
 
+    
+
 
 
 class RegisterForm(FlaskForm):
@@ -45,7 +47,10 @@ class RegisterForm(FlaskForm):
     
     password = PasswordField(validators = [InputRequired(), Length(
         min = 4, max = 20)], render_kw = {"placeholder": "Password"})
-        
+   
+    confirm_password = PasswordField('Passwort wiederholen', validators=[
+        InputRequired(),
+        EqualTo('password', message='Die Passwörter müssen übereinstimmen.')])    
     
     submit = SubmitField("Register")
 
@@ -65,10 +70,7 @@ class LoginForm(FlaskForm):
     password = PasswordField(validators = [InputRequired(), Length(
         min = 4, max = 20)], render_kw = {"placeholder": "Password"})
     
-    confirm_password = PasswordField('Passwort wiederholen', validators=[
-        InputRequired(),
-        EqualTo('password', message='Die Passwörter müssen übereinstimmen.')])
-    
+        
     submit = SubmitField("Login")
 
 
