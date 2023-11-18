@@ -2,29 +2,89 @@ body{
     background-color: hsl(0, 2%, 10%);
 }
 
-.top{
-    background-color: #818283;
+.raster-background {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 60px 60px; 
+    z-index: -1; /* Stellt sicher, dass es hinter anderen Inhalten liegt */
+  }
+  
+.head{
+    display: flex;
+    justify-content: center;
+}
+
+.tiles{
     display: flex;
 }
 
-.btn-primary{
-    background-color: #3a3b3b; /* Hintergrundfarbe des Buttons */
-    color: white; /* Textfarbe */
-    border: none;
-    margin-left: 20px;
+.letter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 130px;
+    height: 130px;
+    background-color: #538d4e;
+    border: 5px solid white;
+    margin: 2px;
+    font-size: 60px;
+    font-weight: bold;
+    color: white;
+    margin-bottom: 20px;
+    animation: float 3s ease-in-out infinite;
+    margin-bottom: 170px;
 }
 
+.letter-grey{
+    background-color: #6c757d;
+}
 
-.logout{
+.letter-yellow{
     background-color: #b59f39;
-    color: black;
-    border: none;
-    height: 33px;
-    border-radius: 5px;
-    justify-content: right;
 }
 
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-30px);
+    }
+}
 
-.logout-btn {
-    margin-left: auto;
+.letter:nth-child(1) { animation-delay: 0s; }
+.letter:nth-child(2) { animation-delay: 0.5s; }
+.letter:nth-child(3) { animation-delay: 0.3s; }
+.letter:nth-child(4) { animation-delay: 0.7s; }
+.letter:nth-child(5) { animation-delay: 0.2s; }
+.letter:nth-child(6) { animation-delay: 1s; }
+
+.menu{
+    display: flex;
+    justify-content: center;
+}
+
+.menu-button{
+    width: 30%;
+    height: 100%;
+    border: none;
+    outline: none;
+    border: 2px rgb(199, 20, 20);
+    border-radius: 30px;
+    font-size: 23px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+.menu-button:hover{
+    background-color: #538d4e;
+}
+
+#setting{
+    margin-top: 40px;
 }

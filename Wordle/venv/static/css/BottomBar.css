@@ -1,0 +1,26 @@
+.bottom-bar{
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    display: flex;
+    background-color: rgba(58, 59, 59, 0.4);
+    height: 60px;
+    border-top: 1px solid rgba(255, 255, 255, 0.3);
+    align-items: center;
+}
+
+.bottom-link{
+    display: flex;
+    height: 60%;
+    align-items: center;
+    justify-content: center;
+    margin-left: 30px;
+    color: white;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.bottom-link:hover{
+    text-decoration: underline;
+}
