@@ -69,21 +69,38 @@ body{
     justify-content: center;
 }
 
-.menu-button{
-    width: 30%;
-    height: 100%;
+.menu-button {
+    display: flex; /* Flex-Container festlegen */
+    align-items: center; /* Kinder vertikal zentrieren */
+    justify-content: space-between; /* Inhalte im Container verteilen */
+    width: 30%; /* Anpassen nach Bedarf */
+    padding: 20px; /* Anpassen nach Bedarf */
+    margin-bottom: 20px; /* Anpassen nach Bedarf */
     border: none;
     outline: none;
-    border: 2px rgb(199, 20, 20);
     border-radius: 30px;
     font-size: 23px;
-    padding: 20px;
-    margin-bottom: 20px;
+    position: relative; /* Für absolute Positionierung des Icons */
+}
+
+.menu-button .icon {
+    position: absolute; /* Absolute Positionierung des Icons */
+    left: 40px; /* Abstand vom linken Rand */
+}
+
+.menu-button .txt {
+    flex-grow: 1; /* Lässt den Text den verbleibenden Platz einnehmen */
+    text-align: center; /* Zentriert den Text im verbleibenden Platz */
+}
+
+.menu-button .icon{
+    justify-content: left;
 }
 
 .menu-button:hover{
     background-color: #538d4e;
 }
+
 
 #setting{
     margin-top: 40px;
