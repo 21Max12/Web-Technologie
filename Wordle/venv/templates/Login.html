@@ -14,10 +14,10 @@
     <div class="Box"> 
         <form action="{{ url_for('login') }}" method="post">
             {{ form.hidden_tag() }}
-            <h1>Wordle</h1>
+            <h1><span class="W">W</span>ordle</h1>
             
             <div class="input-box">
-                {{ form.username(placeholder="Benutzername", class_="input-class") }}
+                {{ form.username(placeholder="Username", class_="input-class") }}
                 {% if form.username.errors %}
                     {% for message in form.username.errors %}
                         <div class="error-message">{{ message }}</div>
@@ -26,28 +26,30 @@
             </div>
             
             <div class="input-box">
-                {{ form.password(placeholder="Passwort", class_="input-class") }}
+                {{ form.password(placeholder="Password", class_="input-class") }}
                 {% if form.password.errors %}
                     {% for message in form.password.errors %}
                         <div class="error-message">{{ message }}</div>
                     {% endfor %}
                 {% endif %}
-
             </div>
+
             <div>
-            <div class="error">Username or Password is wrong</div>
-            </div>
+                <div class="remember">
+                    <label> <input type="checkbox">Remember user name</label>
+                    <a href="pwreset">Password reset</a>
+                </div>
 
-            <div class="remember">
-                <label> <input type="checkbox"> Benutzernamen merken</label>
-                <a href="pwreset">Password zurücksetzen</a>
+                 <div class="error-box">
+                    <div class="error">Username or Password is wrong</div>
+                </div>
             </div>
 
             <button type="submit" class="but">Login</button>
 
             <div class="anmelden">
-                <p>Du hast noch kein Konto?
-                <a href="register" open-create>Benutzerkonto erstellen</a></p>
+                <p>You dont have an Useraccount?
+                <a href="register" open-create>Create user account</a></p>
             </div>
 
         </form>
@@ -69,6 +71,7 @@
    <div class="bottom-bar">
     <a href="#" open-create class="bottom-link">DSGVO</a></p>
     <a href="#" open-create class="bottom-link">Co-determination law</a></p>
+    <a href="#" open-create class="bottom-link">Impressum</a></p>
   </div>
 
    <script src="anmelden.js"></script>

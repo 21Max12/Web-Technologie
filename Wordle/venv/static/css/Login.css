@@ -18,30 +18,55 @@ body {
     background-size: cover;
 }
 
+.error-box{
+    display: flex;
+    justify-content: center;
+}
+
 .error{
     display: flex;
+    background-color: rgb(255, 0, 0, 0.3);
     font-weight: 900;
     font-size: 18px;
+    border: none;
+    border-radius: 20px;
     justify-content: center;
-    color: #c75839;
+    color: white;
     margin: 10px;
+    padding: 5px 20px;
     visibility: hidden;
 }
 
 .Box{
-    width: 500px;
+    width: 600px;
     background-color: transparent;
     backdrop-filter: blur(60px);
     border: 1px solid white;
     border-radius: 20px;
     color: white;
-    padding: 40px;
+    padding: 50px;
 }
 
 .Box h1{
     text-align: center;
-    font-size: 60px;
+    font-size: 75px;
     font-weight: bolder;
+    margin: 20px 0px 60px 0px;
+} 
+
+.W{
+    font-size: 1em;
+    font-weight: bold;
+    background-color: hsl(115, 29%, 43%);
+    color: white;
+    border: .10em solid white;
+    padding: 0px 15px;
+    text-transform: uppercase;
+    font-weight: bold;
+    align-items: center;
+    user-select: none;
+    transition: transform 250ms linear;
+    margin-right: 5px;
 }
 
 .Box .input-box{

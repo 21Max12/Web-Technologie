@@ -81,7 +81,9 @@ body{
     border-radius: 30px;
     font-size: 23px;
     position: relative; 
+    transition: width 0.3s ease, background-color 0.3s ease, font-size 0.3s ease; /* Sanfte Transition für spezifische Eigenschaften */
 }
+
 
 .menu-button .icon {
     position: absolute;
@@ -99,6 +101,8 @@ body{
 
 .menu-button:hover{
     background-color: #538d4e;
+    width: 33%;
+    font-size: 30px;
 }
 
 .icon svg{
