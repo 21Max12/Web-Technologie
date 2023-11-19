@@ -41,9 +41,17 @@
                 </div>
 
                 <div class="error-box">
-                    <div class="error">Username or Password is wrong</div>
+                    <div id="error-message" class="alert alert-danger" role="alert" style="display: none;">
+                        Username or Password is wrong
+                      </div>                      
                 </div>
             </div>
+
+            {% if error %}
+            <script>
+            document.getElementById('error-message').style.display = 'block';
+             </script>
+            {% endif %}
 
             <button type="submit" class="but">Login</button>
 

@@ -44,11 +44,11 @@ body{
 }
 
 .letter-grey{
-    background-color: #6c757d;
+    background-color: hsl(240, 2%, 23%);
 }
 
 .letter-yellow{
-    background-color: #b59f39;
+    background-color: hsl(49, 51%, 47%);
 }
 
 @keyframes float {

@@ -1,7 +1,18 @@
 
 .modal-dialog{
-    background-color: #538d4e;
-    width: 2000px;
+    display: flex;
+    max-width: 40%;
+}
+
+.png-body{
+    display: flex;
+    justify-content: center;
+}
+
+.rules-png{
+    width: 60%;
+    height: auto;
+    margin-bottom: 40px;
 }
 
 .top{
@@ -12,10 +23,12 @@
 
 .navbar-brand{
     color: white;
+    font-size: 25px;
+    font-weight: 300;
 }
 
 .navbar-brand:hover{
-    color: #538d4e;
+    color: hsl(115, 29%, 43%);
 }
 
 .btn-primary{
@@ -23,24 +36,29 @@
     color: white; 
     border: none;
     margin-left: 20px;
-    font-weight: bold;
+    font-weight: 400;
+    font-size: 18px;
 }
 .btn-primary:hover{
-    background-color: #538d4e; 
+    background-color: hsl(115, 29%, 43%); 
 }
 
 .logout{
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #818283;
     color: white;
-    font-weight: bold;
+    font-weight: 400;
+    font-size: 18px;
     border: none;
-    height: 33px;
+    height: 40px;
     border-radius: 5px;
     justify-content: right;
 }
 
 .logout:hover{
-    background-color: #538d4e;
+    background-color: hsl(115, 29%, 43%);
     color: white;
 }
 
@@ -49,7 +67,7 @@
 }
 
 .modal-letter-green{
-    color: #538d4e;
+    color: hsl(115, 29%, 43%);
     font-size: 25px;
 }
 

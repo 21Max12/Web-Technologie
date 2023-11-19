@@ -22,18 +22,16 @@ body {
     justify-content: center;
 }
 
-.error{
+#error-message{
     display: flex;
-    background-color: rgb(255, 0, 0, 0.3);
-    font-weight: 900;
-    font-size: 18px;
+    background-color: rgb(0, 0, 0, 0.4);
+    font-weight: 600;
+    font-size: 22px;
     border: none;
     border-radius: 20px;
     justify-content: center;
-    color: white;
-    margin: 10px;
-    padding: 5px 20px;
-    visibility: hidden;
+    color: rgb(255, 94, 0);
+    padding: 3px 15px;
 }
 
 .Box{
@@ -79,7 +77,6 @@ body {
     height: 100%;
     border: none;
     outline: none;
-    border: 2px rgb(199, 20, 20);
     border-radius: 30px;
     font-size: 20px;
     padding: 20px;
@@ -88,9 +85,13 @@ body {
 .Box .remember{
     display: flex;
     justify-content: space-between;
-    font-size: 14px;
-    margin: 5px 0 20px 0;
+    font-size: 20px;
+    margin: 15px 0 15px 0;
 }
+
+input[type="checkbox"] {
+    margin-right: 8px; 
+  }
 
 .remember label input{
     accent-color: white;
@@ -111,15 +112,23 @@ body {
     border: none;
     outline: none;
     border-radius: 30px;
+    margin-top: 10px;
+    font-weight: 700;
     font-size: 25px;
-    font-weight: 900;
-    color: rgb(71, 71, 71);
+    color: hsl(240, 2%, 23%);
+    transition: width 0.3s ease, background-color 0.3s ease, font-size 0.3s ease; /* Sanfte Transition für spezifische Eigenschaften */
+}
+
+.Box .but:hover{
+    background-color: hsl(115, 29%, 43%);
+    color: white;
+    font-size: 30px;
 }
 
 .Box .anmelden{
     text-align: center;
-    margin-top: 5px;
-    font-size: 14px;
+    margin-top: 15px;
+    font-size: 18px;
 }
 
 .anmelden a{
