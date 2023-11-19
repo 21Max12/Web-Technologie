@@ -111,6 +111,17 @@ def register():
 def pwreset():
     return render_template('PWreset.html')
 
+@app.route('/co_determination_law')
+def co_determination_law():
+    return render_template('Law.html')
+
+@app.route('/dsgvo')
+def dsgvo():
+    return render_template('DSGVO.html')
+
+@app.route('/impressum')
+def impressum():
+    return render_template('Impressum.html')
 
 
 if __name__ == '__main__':
