@@ -1,9 +1,11 @@
 from flask import Flask, render_template, request, url_for, redirect
 from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import text
+from flask_migrate import Migrate
 from flask_login import UserMixin, login_user, LoginManager, login_required, logout_user, current_user
 from flask_wtf import FlaskForm
-from wtforms import Form, StringField, PasswordField, SubmitField, validators
-from wtforms.validators import InputRequired, Length, ValidationError
+from wtforms import Form, StringField, PasswordField, SubmitField, validators, SelectField
+from wtforms.validators import InputRequired, Length, ValidationError, Optional, Email
 from datetime import datetime
 from flask_bcrypt import Bcrypt
 import os
@@ -15,6 +17,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'da
 app.config['SECRET_KEY'] = 'thisisasecretkey'
 bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
+migrate = Migrate(app, db)
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -29,18 +32,18 @@ class User(db.Model, UserMixin):
     username = db.Column(db.String(20), nullable = False)
     password = db.Column(db.String(80), nullable = False)
     secure_question = db.Column(db.String(80), nullable = True)
-   # secure_answer = db.Column(db.String(80), nullable = False)
-    e_mail = db.Column(db.String(80), nullable = False)
- #   is_user = db.Column(db.bool(default=False), nullable = False)
+    secure_answer = db.Column(db.String(80), nullable = False)
+    e_mail = db.Column(db.String(80), nullable = True)
+    is_user_admin = db.Column(db.Boolean, default=False, nullable = False)
     
 
 class RegisterForm(FlaskForm):
-    username = StringField(validators = [InputRequired(), Length(
-         min = 4, max =20)], render_kw = {"placeholder":"Username"})
-    
-    password = PasswordField(validators = [InputRequired(), Length(
-        min = 4, max = 20)], render_kw = {"placeholder": "Password"})
-    
+    username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
+    password = PasswordField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Password"})
+    confirm_password = PasswordField(validators=[InputRequired(), Length(min=4, max=20)])
+    e_mail = StringField(validators=[Optional(), Email()], render_kw={"placeholder": "E-Mail"})
+    security_question = SelectField('Security Question', choices=[('Pet', "What's the name of your first pet?"), ('Car', "What was your first car?"), ('Mother', "What is the mother's surname?")], validators=[InputRequired()])
+    security_answer = StringField('Security Answer', validators=[InputRequired()])
     submit = SubmitField("Register")
 
     def validate_username(self, username):
@@ -91,16 +94,16 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-
-
 @app.route('/register', methods=['GET', 'POST'])
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
+        security_answer = form.security_answer.data
         hashed_password = bcrypt.generate_password_hash(form.password.data)
         secure_question = request.form['security_question']
-        e_mail = request.form['e_mail']  # Stellen Sie sicher, dass dieses Feld im Formular existiert
-        new_user = User(username=form.username.data, password=hashed_password, secure_question=secure_question, e_mail=e_mail)
+        hashed_answer = bcrypt.generate_password_hash(security_answer).decode('utf-8')
+        e_mail = request.form['e_mail']
+        new_user = User(username=form.username.data, password=hashed_password, secure_question=secure_question, secure_answer=hashed_answer, e_mail=e_mail)
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('login'))
@@ -133,8 +136,11 @@ def singleplayer():
 def multiplayer():
     return render_template('Multi.html')
 
+
+
 if __name__ == '__main__':
-    app.run(debug = True)
+    app.run(debug=True)
+   
 
 def index():
     return render_template("index.html") #Benni Prüfen
