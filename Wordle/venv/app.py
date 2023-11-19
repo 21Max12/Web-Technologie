@@ -28,7 +28,7 @@ class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable = False)
     password = db.Column(db.String(80), nullable = False)
-    secure_question = db.Column(db.String(80), nullable = False)
+    secure_question = db.Column(db.String(80), nullable = True)
    # secure_answer = db.Column(db.String(80), nullable = False)
     e_mail = db.Column(db.String(80), nullable = False)
  #   is_user = db.Column(db.bool(default=False), nullable = False)
@@ -107,8 +107,15 @@ def register():
     return render_template('Register.html', form=form)
 
 
+@app.route('/pwreset', methods=['GET', 'POST'])
+def pwreset():
+    return render_template('PWreset.html')
+
+
+
 if __name__ == '__main__':
     app.run(debug = True)
 
 def index():
     return render_template("index.html") #Benni Prüfen
+
