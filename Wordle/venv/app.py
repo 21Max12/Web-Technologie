@@ -62,8 +62,7 @@ def delete_users(ids):
             db.session.delete(user_to_delete)
     db.session.commit()
 
-
-    
+   
 
 class RegisterForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
@@ -163,6 +162,9 @@ def singleplayer():
 @login_required
 def multiplayer():
     return render_template('Multi.html')
+def meine_view_funktion():
+    if current_user.is_authenticated:
+        username = current_user.username
 
 
 
