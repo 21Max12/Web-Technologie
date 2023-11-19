@@ -35,6 +35,34 @@ class User(db.Model, UserMixin):
     secure_answer = db.Column(db.String(80), nullable = False)
     e_mail = db.Column(db.String(80), nullable = True)
     is_user_admin = db.Column(db.Boolean, default=False, nullable = False)
+
+
+def add_admin():
+    raw_password = "Adminspasswort?!_"
+    hashed_password = bcrypt.generate_password_hash(raw_password).decode('utf-8')
+
+    raw_secure_answer = "Peter"
+    hashed_secure_answer = bcrypt.generate_password_hash(raw_secure_answer).decode('utf-8')
+
+    new_admin = User(
+        username="Admin",
+        password=hashed_password,
+        secure_question="What's the name of your first pet?",
+        secure_answer=hashed_secure_answer,
+        e_mail="Admin@Admin.de",
+        is_user_admin = True
+    )
+    db.session.add(new_admin)
+    db.session.commit()
+
+def delete_users(ids):
+    for id in ids:
+        user_to_delete = User.query.get(id)
+        if user_to_delete:
+            db.session.delete(user_to_delete)
+    db.session.commit()
+
+
     
 
 class RegisterForm(FlaskForm):
@@ -139,6 +167,7 @@ def multiplayer():
 
 
 if __name__ == '__main__':
+
     app.run(debug=True)
    
 
