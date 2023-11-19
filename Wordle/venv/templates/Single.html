@@ -13,47 +13,9 @@
 </head>
 <body>
 
-  <nav class="navbar navbar-expand-lg top">
-    <div class="container-fluid">
-      <a class="navbar-brand" href="/homescreen">Wordle</a>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-          How to play Wordle
-        </button>
-        <div class="ms-auto">
-          <form action="/logout" method="post">            
-            <button class="btn logout" type="submit">Logout</button> 
-          </form>
-        </div>
-      </div>
-    </div>
-  </nav>
-  
-  <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="exampleModalLabel">The Rules of the Game</h1>
-          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-        </div>
-        <div class="modal-body">
-          The goal of Wordle is to guess a secret word within six tries. Each guess must be a valid five-letter word. After each guess, the color of the letters changes to show how close your guess was to the word.<br><br>
-          <ul>
-            Green: The letter is in the word and in the correct spot.
-            Yellow: The letter is in the word but in the wrong spot.
-            Gray: The letter is not in the word in any spot.
-          </ul>
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
+{% include "navbar.html" %}
 
+<div class="almost-all">
   <div class="alert-container" data-alert-container></div>
 
   <div class="game-container">
@@ -162,6 +124,7 @@
     </div>
   </div>
 </div>
+
 
 </body>
 </html>
