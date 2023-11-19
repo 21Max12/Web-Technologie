@@ -123,6 +123,15 @@ def dsgvo():
 def impressum():
     return render_template('Impressum.html')
 
+@app.route('/singleplayer', methods=['POST'])
+@login_required
+def singleplayer():
+    return render_template('Single.html')
+
+@app.route('/multiplayer',methods=['POST'])
+@login_required
+def multiplayer():
+    return render_template('Multi.html')
 
 if __name__ == '__main__':
     app.run(debug = True)
