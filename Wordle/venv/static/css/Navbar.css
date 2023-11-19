@@ -1,7 +1,12 @@
+
+.modal-dialog{
+    background-color: #538d4e;
+    width: 2000px;
+}
+
 .top{
     background-color: rgba(58, 59, 59, 0.6);
     display: flex;
-    margin-bottom: 200px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
 }
 
@@ -41,4 +46,23 @@
 
 .logout-btn {
     margin-left: auto;
+}
+
+.modal-letter-green{
+    color: #538d4e;
+    font-size: 25px;
+}
+
+.modal-letter-grey{
+    color: hsl(240, 2%, 23%);
+    font-size: 25px;
+}
+
+.modal-letter-yellow{
+    color: hsl(49, 51%, 47%);
+    font-size: 25px;
+}
+
+.modal-body{
+    font-size: 20px;
 }

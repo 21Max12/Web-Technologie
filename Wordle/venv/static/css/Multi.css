@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800;900;1000&display=swap');
+
 *, *::after, *::before {
     box-sizing: border-box;
     font-family: Arial;
@@ -10,23 +12,32 @@
     flex-direction: column;
     min-height: 100vh;
     margin: 0;
-    font-size: clamp(.5rem, 2.5vmin, 1.5rem);
+    font-family: 'Nunito', sans-serif;
   }
   
+  .almost-all{
+    font-size: clamp(.5rem, 2.5vmin, 1.5rem);
+  }
+
   .lower{
     padding: 50px;
   }
-  .top{
-    background-color: #818283;
-    display: flex;
-    margin-bottom: 100px;
-  }
 
   .btn-primary{
-    background-color: #3a3b3b; /* Hintergrundfarbe des Buttons */
-    color: white; /* Textfarbe */
-    border: none;
-    margin-left: 20px;
+    animation: highlightButton 1s ease 3;
+  }
+
+  @keyframes highlightButton {
+    0%, 100% {
+      background-color: #818283; 
+      transform: scale(1);
+      opacity: 1;
+    }
+    50% {
+      background-color: #538d4e;
+      transform: scale(1.2);
+      opacity: 1;
+    }
   }
 
  .ms-auto{
@@ -69,6 +80,7 @@
     flex-grow: 1;
     justify-content: center;
     margin-bottom: 50px;
+    margin-top: 20px;
   }
 
 
@@ -92,7 +104,6 @@
     grid-auto-rows: 3em;
     gap: .25em;
     justify-content: center;
-    background-color: aqua;
   }
   
   .key {
@@ -190,7 +201,7 @@
   
   .tile[data-state="correct"] {
     border: none;
-    background-color: hsl(115, 29%, 43%);
+    background-color: #538d4e;
   }
   
   .tile.shake {
