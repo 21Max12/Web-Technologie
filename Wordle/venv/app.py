@@ -55,6 +55,7 @@ def add_admin():
     db.session.add(new_admin)
     db.session.commit()
 
+
 def delete_users(ids):
     for id in ids:
         user_to_delete = User.query.get(id)
@@ -62,7 +63,7 @@ def delete_users(ids):
             db.session.delete(user_to_delete)
     db.session.commit()
 
-   
+
 
 class RegisterForm(FlaskForm):
     username = StringField(validators=[InputRequired(), Length(min=4, max=20)], render_kw={"placeholder": "Username"})
