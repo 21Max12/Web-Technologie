@@ -24,17 +24,15 @@ login_manager.login_view = 'login'
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-
-
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(20), nullable = False)
     password = db.Column(db.String(80), nullable = False)
     secure_question = db.Column(db.String(80), nullable = False)
+   # secure_answer = db.Column(db.String(80), nullable = False)
     e_mail = db.Column(db.String(80), nullable = False)
+ #   is_user = db.Column(db.bool(default=False), nullable = False)
     
-
-
 
 class RegisterForm(FlaskForm):
     username = StringField(validators = [InputRequired(), Length(
