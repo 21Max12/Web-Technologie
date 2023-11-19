@@ -5,6 +5,19 @@ body{
   
 }
 
+.raster-background {
+  position: fixed; 
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+  background-size: 60px 60px; 
+  z-index: -1; /* Stellt sicher, dass es hinter anderen Inhalten liegt */
+}
+
+
 .C{
   font-size: 2em;
   background-color: hsl(115, 29%, 43%);

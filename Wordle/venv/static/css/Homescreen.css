@@ -70,27 +70,27 @@ body{
 }
 
 .menu-button {
-    display: flex; /* Flex-Container festlegen */
-    align-items: center; /* Kinder vertikal zentrieren */
-    justify-content: space-between; /* Inhalte im Container verteilen */
-    width: 30%; /* Anpassen nach Bedarf */
-    padding: 20px; /* Anpassen nach Bedarf */
-    margin-bottom: 20px; /* Anpassen nach Bedarf */
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    width: 30%; 
+    padding: 20px; 
+    margin-bottom: 20px; 
     border: none;
     outline: none;
     border-radius: 30px;
     font-size: 23px;
-    position: relative; /* Für absolute Positionierung des Icons */
+    position: relative; 
 }
 
 .menu-button .icon {
-    position: absolute; /* Absolute Positionierung des Icons */
-    left: 40px; /* Abstand vom linken Rand */
+    position: absolute;
+    left: 40px; 
 }
 
 .menu-button .txt {
-    flex-grow: 1; /* Lässt den Text den verbleibenden Platz einnehmen */
-    text-align: center; /* Zentriert den Text im verbleibenden Platz */
+    flex-grow: 1; 
+    text-align: center; 
 }
 
 .menu-button .icon{
@@ -101,7 +101,12 @@ body{
     background-color: #538d4e;
 }
 
+.icon svg{
+    width: 24px; 
+    height: 24px;
+}
 
 #setting{
     margin-top: 40px;
 }
+
