@@ -8,37 +8,36 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="{{ url_for('static', filename='css/Register.css') }}">
 </head>
-
 <body>
+    <div class="raster-background"></div>
+
     <div anmelden class="register">
-        <label for="B">B</label>
-        <h1>enutzerkontoerstellung</h1>
-        <h4>Gebe deine Daten an.</h4>
+       <h1><span class="C">C</span>reate user account</h1><br>
+        <h4>Enter your data</h4>
 <form action="/register" method="post">
-    <div>
+    <div class="blub">
         {{ form.hidden_tag() }} 
-        {{ form.username.label }} {{ form.username(size=20, class="form-control", placeholder="Benutzername") }}<br>
-        {{ form.password.label }} {{ form.password(size=20, class="form-control", placeholder="Passwort") }}<br>
+        {{ form.username(size=20, class="form-control", placeholder="Username*") }}<br>
+        {{ form.password(size=20, class="form-control", placeholder="Password*") }}<br>
+        <!--Einheitlich anpassen-->
+        <input type="password" name="confirm_password" class="form-control" placeholder="Passwort repeat*" required title="Please fill out this field."><br>
+        <input type="email" name="e_mail" class="form-control" placeholder="E-Mail"><br>
 
-        <input type="password" name="confirm_password" class="form-control" placeholder="Passwort wiederholen" required><br>
-        <input type="email" name="e_mail" placeholder="E-Mail" required><br>
-
-        <label>Sicherheitsfrage</label>
-        <select name="security_question" class="form-control">
-            <option value="Tier">Wie hieß dein erstes Haustier?</option>
-            <option value="Auto">Was war dein erstes Auto?</option>
-            <option value="Mutter">Wie lautet der Mädchenname deiner Mutter?</option>
+        <h4>Security question</h4>
+        <select name="security_question" class="form-control" required title="Please fill out this field.">
+          <option value="" selected disabled>Choose a security question*</option>
+          <option value="Pet">What's the name of your first pet?</option>
+          <option value="Car">What was your first car?</option>
+          <option value="Mother">What is the mother's surname?</option>
         </select><br>
+        
 
+        <input type="text" name="security_answer" class="form-control" placeholder="Security answer*" required title="Please fill out this field."><br>
+    </div>
+    <div class="end">       
+        <a href="/" class="close">Close</a>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </div><Br>
 
-        <input type="text" name="security_answer" class="form-control" placeholder="Sicherheitsantwort" required><br>
-    </div>
-    <div>       
-        <a href="/" class="button-style">Close</a>
-        <button type="submit" class="btn btn-primary">Abschicken</button>
-    </div>
+    <p>*required</p>
 </form>
-
-    </div>
-</body>
-</html>
