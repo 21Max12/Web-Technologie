@@ -161,14 +161,16 @@ def impressum():
 def singleplayer():
     return render_template('Single.html')
 
-@app.route('/multiplayer',methods=['POST'])
+@app.route('/multiplayer',methods=['POST','GET'])
 @login_required
 def multiplayer():
-    return render_template('Multi.html')
-def meine_view_funktion():
-    if current_user.is_authenticated:
+     if current_user.is_authenticated:
         username = current_user.username
+     return render_template('Multi.html', username=username)
 
+
+
+   
 
 
 if __name__ == '__main__':
