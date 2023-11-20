@@ -9,6 +9,7 @@ from wtforms.validators import InputRequired, Length, ValidationError, Optional,
 from datetime import datetime
 from flask_bcrypt import Bcrypt
 import os
+from flask_socketio import SocketIO, emit
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -18,6 +19,8 @@ app.config['SECRET_KEY'] = 'thisisasecretkey'
 bcrypt = Bcrypt(app)
 db = SQLAlchemy(app)
 migrate = Migrate(app, db)
+socketio = SocketIO(app)
+
 
 login_manager = LoginManager()
 login_manager.init_app(app)
@@ -35,6 +38,8 @@ class User(db.Model, UserMixin):
     secure_answer = db.Column(db.String(80), nullable = False)
     e_mail = db.Column(db.String(80), nullable = True)
     is_user_admin = db.Column(db.Boolean, default=False, nullable = False)
+
+
 
 
 def add_admin():
@@ -169,6 +174,20 @@ def multiplayer():
      return render_template('Multi.html', username=username)
 
 
+@socketio.on('connect')
+def handle_connect():
+    print('Client connected')
+
+@socketio.on('disconnect')
+def handle_disconnect():
+    print('Client disconnected')
+
+@socketio.on('spieleraktion')
+def handle_spieleraktion(data):
+    # Verarbeitung der Spieleraktion
+    # Aktualisierung des Spielstands
+    # Senden des aktualisierten Spielstands an alle Spieler
+    emit('spielupdate', updated_game_state, broadcast=True)
 
    
 
@@ -176,7 +195,7 @@ def multiplayer():
 if __name__ == '__main__':
 
     app.run(debug=True)
-   
+    socketio.run(app)
 
 def index():
     return render_template("index.html") #Benni Prüfen
