@@ -197,6 +197,4 @@ if __name__ == '__main__':
     app.run(debug=True)
     socketio.run(app)
 
-def index():
-    return render_template("index.html") #Benni Prüfen
 
