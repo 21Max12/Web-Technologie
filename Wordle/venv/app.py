@@ -147,6 +147,8 @@ def register():
 
 @app.route('/pwreset', methods=['GET', 'POST'])
 def pwreset():
+    if request.method == 'POST':
+        return redirect(url_for('newpw'))
     return render_template('PWreset.html')
 
 @app.route('/co_determination_law')
@@ -173,6 +175,12 @@ def multiplayer():
         username = current_user.username
      return render_template('Multi.html', username=username)
 
+@app.route('/newpw')
+def newpw():
+
+    return render_template('NewPassword.html')
+
+
 
 @socketio.on('connect')
 def handle_connect():
@@ -189,7 +197,6 @@ def handle_spieleraktion(data):
     # Senden des aktualisierten Spielstands an alle Spieler
     emit('spielupdate', updated_game_state, broadcast=True)
 
-   
 
 
 if __name__ == '__main__':
