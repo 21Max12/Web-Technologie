@@ -15295,11 +15295,8 @@ const targetWords = [
   const keyboard = document.querySelector("[data-keyboard]")
   const alertContainer = document.querySelector("[data-alert-container]")
   const guessGrid = document.querySelector("[data-guess-grid]")
-  const offsetFromDate = new Date(2022, 0, 1)
-  const msOffset = Date.now() - offsetFromDate
-  const dayOffset = msOffset / 1000 / 60 / 60 / 24
-  const targetWord = targetWords[Math.floor(dayOffset)]
-  
+  const targetWord = targetWords[Math.floor(Math.random() * targetWords.length)];  
+
   startInteraction()
   
   function startInteraction() {
@@ -15457,16 +15454,25 @@ const targetWords = [
   
   function checkWinLose(guess, tiles) {
     if (guess === targetWord) {
-      showAlert("You Win", 5000)
-      danceTiles(tiles)
-      stopInteraction()
-      return
+      showAlert("You Win", 5000);
+      danceTiles(tiles);
+      stopInteraction();
+      triggerEndGameAnimation(); // Puls-Animation starten
+      return;
     }
   
-    const remainingTiles = guessGrid.querySelectorAll(":not([data-letter])")
+    const remainingTiles = guessGrid.querySelectorAll(":not([data-letter])");
     if (remainingTiles.length === 0) {
-      showAlert(targetWord.toUpperCase(), null)
-      stopInteraction()
+      showAlert(targetWord.toUpperCase(), null);
+      stopInteraction();
+      triggerEndGameAnimation(); // Puls-Animation starten
+    }
+  }
+
+  function triggerEndGameAnimation() {
+    const wordleTitle = document.querySelector('.navbar-brand');
+    if (wordleTitle) {
+      wordleTitle.classList.add('pulse');
     }
   }
   
