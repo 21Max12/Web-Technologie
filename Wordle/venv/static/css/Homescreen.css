@@ -2,8 +2,10 @@
 
 body{
     background-color: hsl(0, 2%, 10%);
-    font-family: 'Nunito', sans-serif;;
+    font-family: 'Nunito', sans-serif;
+    min-width: 1100px;
 }
+
 
 .raster-background {
     position: fixed; 

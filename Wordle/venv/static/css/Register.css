@@ -34,6 +34,10 @@ body{
   margin-right: 5px;
 }
 
+.sub-head{
+  margin-top: 30px;
+}
+
 .form-control {
   box-sizing: border-box; /* Stellt sicher, dass Padding und Border innerhalb der Elementbreite sind */
   border: 5px solid transparent; /* Setzt einen transparenten Border, um die Größe konstant zu halten */

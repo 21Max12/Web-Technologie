@@ -12,6 +12,7 @@
     min-height: 100vh;
     margin: 0;
     font-family: 'Nunito', sans-serif;
+    min-width: 1200px;
   }
   
   .almost-all{

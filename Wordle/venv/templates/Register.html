@@ -9,35 +9,36 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/Register.css') }}">
 </head>
 <body>
-    <div class="raster-background"></div>
+        <div class="raster-background"></div>
 
-    <div anmelden class="register">
-       <h1><span class="C">C</span>reate user account</h1><br>
-        <h4>Enter your data</h4>
-<form action="/register" method="post">
-    <div class="blub">
-        {{ form.hidden_tag() }} 
-        {{ form.username(size=20, class="form-control", placeholder="Username*") }}<br>
-        {{ form.password(size=20, class="form-control", placeholder="Password*") }}<br>
-        <!--Einheitlich anpassen-->
-        <input type="password" name="confirm_password" class="form-control" placeholder="Passwort repeat*" required title="Please fill out this field."><br>
-        <input type="email" name="e_mail" class="form-control" placeholder="E-Mail"><br>
+        <div anmelden class="register">
+        <h1><span class="C">C</span>reate user account</h1><br>
+            <h4 class="sub-head">Enter your data</h4>
+    <form action="/register" method="post">
+        <div class="blub">
+            {{ form.hidden_tag() }} 
+            {{ form.username(size=20, class="form-control", placeholder="Username*") }}<br>
+            {{ form.password(size=20, class="form-control", placeholder="Password*") }}<br>
+            <!--Einheitlich anpassen-->
+            <input type="password" name="confirm_password" class="form-control" placeholder="Passwort repeat*" required title="Please fill out this field."><br>
+            <input type="email" name="e_mail" class="form-control" placeholder="E-Mail"><br>
 
-        <h4>Security question</h4>
-        <select name="security_question" class="form-control" required title="Please fill out this field.">
-          <option value="" selected disabled>Choose a security question*</option>
-          <option value="Pet">What's the name of your first pet?</option>
-          <option value="Car">What was your first car?</option>
-          <option value="Mother">What is the mother's surname?</option>
-        </select><br>
-        
+            <h4>Security question</h4>
+            <select name="security_question" class="form-control" required title="Please fill out this field.">
+            <option value="" selected disabled>Choose a security question*</option>
+            <option value="Pet">What's the name of your first pet?</option>
+            <option value="Car">What was your first car?</option>
+            <option value="Mother">What is the mother's surname?</option>
+            </select><br>
+            
 
-        <input type="text" name="security_answer" class="form-control" placeholder="Security answer*" required title="Please fill out this field."><br>
-    </div>
-    <div class="end">       
-        <a href="/" class="close">Back</a>
-        <button type="submit" class="btn btn-primary">Submit</button>
-    </div><Br>
+            <input type="text" name="security_answer" class="form-control" placeholder="Security answer*" required title="Please fill out this field."><br>
+        </div>
+        <div class="end">       
+            <a href="javascript:history.back()" class="close">Back</a>
+            <button type="submit" class="btn btn-primary">Submit</button>
+        </div><Br>
 
-    <p>*required</p>
-</form>
+        <p>*required</p>
+    </form>
+</body>
