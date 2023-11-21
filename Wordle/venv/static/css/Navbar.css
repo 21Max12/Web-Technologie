@@ -17,8 +17,12 @@
 
 .top{
     background-color: rgba(58, 59, 59, 0.6);
-    display: flex;
     border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+    height: 60px;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    min-width: 700px;
 }
 
 .navbar-brand{
@@ -56,17 +60,36 @@
     background-color: #818283; 
     color: white; 
     border: none;
-    margin-left: 20px;
     font-weight: 400;
     font-size: 18px;
+    margin: 0px 15px;
 }
 .btn-primary:hover{
     background-color: hsl(115, 29%, 43%); 
 }
 
-.logout{
-    display: flex;
-    align-items: center;
+.close {
+    height: 100px; 
+    background-color: #818283; 
+    color: white;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    font-size: 18px; 
+    font-weight: 400;
+    text-align: center;
+  }
+
+.close:hover {
+    background-color: hsl(115, 29%, 43%); 
+}
+  
+  
+.top .logout{
+    margin-left: auto;
+}
+
+.logout {
     background-color: #818283;
     color: white;
     font-weight: 400;
@@ -74,9 +97,7 @@
     border: none;
     height: 40px;
     border-radius: 5px;
-    margin-right: 5px;
 }
-
 .logout:hover{
     background-color: hsl(115, 29%, 43%);
     color: white;
@@ -101,3 +122,4 @@
 .modal-body{
     font-size: 20px;
 }
+

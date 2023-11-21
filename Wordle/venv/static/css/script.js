@@ -15452,12 +15452,13 @@ const targetWords = [
     })
   }
   
+  //should be backend
   function checkWinLose(guess, tiles) {
     if (guess === targetWord) {
       showAlert("You Win", 5000);
       danceTiles(tiles);
       stopInteraction();
-      triggerEndGameAnimation(); // Puls-Animation starten
+      //triggerEndGameAnimation(); // Puls-Animation starten
       return;
     }
   
@@ -15465,16 +15466,16 @@ const targetWords = [
     if (remainingTiles.length === 0) {
       showAlert(targetWord.toUpperCase(), null);
       stopInteraction();
-      triggerEndGameAnimation(); // Puls-Animation starten
+      //triggerEndGameAnimation(); // Puls-Animation starten
     }
   }
 
-  function triggerEndGameAnimation() {
+  /*function triggerEndGameAnimation() {
     const wordleTitle = document.querySelector('.navbar-brand');
     if (wordleTitle) {
       wordleTitle.classList.add('pulse');
     }
-  }
+  }*/
   
   function danceTiles(tiles) {
     tiles.forEach((tile, index) => {
