@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, redirect
+from flask import Flask, render_template, request, url_for, redirect, session
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
 from flask_migrate import Migrate
@@ -9,7 +9,9 @@ from wtforms.validators import InputRequired, Length, ValidationError, Optional,
 from datetime import datetime
 from flask_bcrypt import Bcrypt
 import os
-from flask_socketio import SocketIO, emit
+from flask_socketio import SocketIO, emit, join_room, leave_room, send
+from string import ascii_uppercase
+import random
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -21,14 +23,15 @@ db = SQLAlchemy(app)
 migrate = Migrate(app, db)
 socketio = SocketIO(app)
 
-
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
+
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -38,6 +41,17 @@ class User(db.Model, UserMixin):
     secure_answer = db.Column(db.String(80), nullable = False)
     e_mail = db.Column(db.String(80), nullable = True)
     is_user_admin = db.Column(db.Boolean, default=False, nullable = False)
+
+class Game(db.Model):
+    id_game = db.Column(db.Integer, primary_key=True)
+    id_Host = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    id_Join = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    winner = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+
+    host = db.relationship('User', foreign_keys=[id_Host], backref=db.backref('hosted_games', lazy=True))
+    joiner = db.relationship('User', foreign_keys=[id_Join], backref=db.backref('joined_games', lazy=True))
+    winner_user = db.relationship('User', foreign_keys=[winner], backref=db.backref('won_games', lazy=True))
+
 
 
 
@@ -116,10 +130,43 @@ def login():
             pass
     return render_template('Login.html', form=form)
 
+rooms ={}
+
+def generate_unique_code(Length):
+    while True:
+        code =""
+        for _ in range(Length):
+            code += random.choice(ascii_uppercase)
+        if code not in rooms:
+            break
+    return code
 
 @app.route('/homescreen', methods=['GET','POST'])
 @login_required
 def Homescreen():
+    #session.clear()
+    if request.method == "POST":
+        return redirect(url_for("multiplayer"))
+        """
+        name = current_user.username
+        code = request.form.get("code")
+        join = request.form.get("join", False)
+        create = request.form.get("create", False)
+
+        if join != False:
+            return redirect(url_for('homescreen', error = "Please enter a join code"))
+
+        room = code
+
+        if create != False:
+            room = generate_unique_code(4)
+            rooms[room] = {"members":0, "messages": []}
+
+        elif code not in rooms:
+            return redirect(url_for('homescreen', error ="Room does not exist"))
+        session["room"] = room
+        session[current_user.username] = name"""
+
     return render_template('Homescreen.html')
 
 
@@ -173,6 +220,7 @@ def singleplayer():
 def multiplayer():
      if current_user.is_authenticated:
         username = current_user.username
+
      return render_template('Multi.html', username=username)
 
 @app.route('/newpw')
@@ -180,22 +228,62 @@ def newpw():
 
     return render_template('NewPassword.html')
 
-
-
-@socketio.on('connect')
-def handle_connect():
-    print('Client connected')
+"""
+@socketio.on("connect")
+def connect(auth):
+    room = session.get("room")
+    name = session.get("name")
+    if not room or not name:
+        return
+    if room not in rooms:
+        leave_room(room)
+        return
+    
+    join_room(room)
+    send({"name": name, "message" : "has entered the room"}, to=room)
+    rooms[room]["members"] +=1
+    print(f"{name} joined room{room}")
 
 @socketio.on('disconnect')
-def handle_disconnect():
-    print('Client disconnected')
+def disconnect():
+    room = session.get("room")
+    name = session.get("name")
+    leave_room(room)
+
+    if room in rooms:
+        rooms[room]["members"] -=1
+        if rooms[room]["members"] <=0:
+            del rooms[room]
+    send({"name": name, "message" : "has left the room"}, to=room)
+    print(f"{name} left the room{room}")
 
 @socketio.on('spieleraktion')
-def handle_spieleraktion(data):
-    # Verarbeitung der Spieleraktion
-    # Aktualisierung des Spielstands
-    # Senden des aktualisierten Spielstands an alle Spieler
-    emit('spielupdate', updated_game_state, broadcast=True)
+def spieleraktion(data):
+    # Verarbeiten der Spieleraktion
+    # Beispiel: Aktualisieren des Spielstands oder Verarbeiten einer Nachricht
+    # Rücksenden der Antwort an die Spieler
+    emit('spielupdate', response_data, to=room)
+
+
+@app.route('/join', methods=['POST','GET'])
+@login_required
+def join():
+     if request.method == 'POST':
+        game_code = request.form['game_code']
+        if game_code in rooms:
+            game_id = rooms[game_code]
+            game = Game.query.get(game_id)
+            if game and game.id_Join is None:  # Überprüfen, ob das Spiel noch frei ist
+                game.id_Join = current_user.id
+                db.session.commit()
+                return redirect(url_for('game_room', code=game_code))
+            else:
+                flash('Das Spiel ist bereits voll oder existiert nicht.')
+        else:
+            flash('Ungültiger Spielcode.')
+    return render_template('join_game.html')
+   
+"""
 
 
 
