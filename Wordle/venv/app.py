@@ -144,29 +144,6 @@ def generate_unique_code(Length):
 @app.route('/homescreen', methods=['GET','POST'])
 @login_required
 def Homescreen():
-    #session.clear()
-    if request.method == "POST":
-        return redirect(url_for("multiplayer"))
-        """
-        name = current_user.username
-        code = request.form.get("code")
-        join = request.form.get("join", False)
-        create = request.form.get("create", False)
-
-        if join != False:
-            return redirect(url_for('homescreen', error = "Please enter a join code"))
-
-        room = code
-
-        if create != False:
-            room = generate_unique_code(4)
-            rooms[room] = {"members":0, "messages": []}
-
-        elif code not in rooms:
-            return redirect(url_for('homescreen', error ="Room does not exist"))
-        session["room"] = room
-        session[current_user.username] = name"""
-
     return render_template('Homescreen.html')
 
 
@@ -268,11 +245,13 @@ def spieleraktion(data):
 @app.route('/join', methods=['POST','GET'])
 @login_required
 def join():
+
     return render_template('Join.html')
    
 @app.route('/host', methods=['POST','GET'])
 @login_required
 def host():
+    
     return render_template('Host.html')
 
 @app.route('/settings', methods=['POST','GET'])
