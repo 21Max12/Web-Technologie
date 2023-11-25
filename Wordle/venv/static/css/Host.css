@@ -2,8 +2,6 @@
 
 body{
   background-color: hsl(0, 2%, 10%);
-  color: white;
-  padding: 30px;
   font-family: 'Nunito', sans-serif;
 }
 
@@ -45,6 +43,7 @@ body{
 
 .middle-content{
   background-color: hsl(0, 2%, 10%); 
+  color: white;
   position: absolute; 
   border: 2px solid white;
   border-radius: 30px;
@@ -141,16 +140,17 @@ input[type="text"]{
 .Tile{
   width: 60px;
   height: 60px;
-  background-color: hsl(115, 29%, 43%);
+  background-color: hsl(240, 2%, 23%);
   margin-left: 10px;
-  animation: pulseAnimation 2.5s infinite;
+  animation: Animation 2.5s infinite;
 }
 
-@keyframes pulseAnimation {
+@keyframes Animation {
     
   0% {
     opacity: 1;
     transform: scale(1);
+    background-color: hsl(115, 29%, 43%);
   }
   100% {
     opacity: 1;
@@ -165,3 +165,26 @@ input[type="text"]{
 .Tile:nth-child(4) { animation-delay: 1.5s; }
 .Tile:nth-child(5) { animation-delay: 2s; }
 .Tile:nth-child(6) { animation-delay: 2.5s; }
+
+.bottom-bar{
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  justify-content: left;
+  height: 60px;
+  align-items: center;
+}
+
+.bottom-bar .clock{
+  margin-left: auto;
+}
+
+.clock{
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  margin-right: 30px;
+}
+
