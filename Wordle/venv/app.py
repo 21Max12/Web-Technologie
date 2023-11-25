@@ -92,6 +92,10 @@ class RegisterForm(FlaskForm):
     security_question = SelectField('Security Question', choices=[('Pet', "What's the name of your first pet?"), ('Car', "What was your first car?"), ('Mother', "What is the mother's surname?")], validators=[InputRequired()])
     security_answer = StringField('Security Answer', validators=[InputRequired()])
     submit = SubmitField("Register")
+    
+    def validate_confirm_password(self, field):
+        if field.data != self.password.data:
+            raise ValidationError("Die Passwörter stimmen nicht überein.")
 
     def validate_username(self, username):
         existing_user_username = User.query.filter_by(
