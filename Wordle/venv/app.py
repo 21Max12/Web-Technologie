@@ -105,7 +105,7 @@ class RegisterForm(FlaskForm):
             raise ValidationError(
                 "Der Username existiert bereits, bitte verwenden einen anderen"
             )
-            
+
 class LoginForm(FlaskForm):
     username = StringField(validators = [InputRequired(), Length(
          min = 4, max =20)], render_kw = {"placeholder":"Username"})
@@ -166,7 +166,14 @@ def register():
         secure_question = request.form['security_question']
         hashed_answer = bcrypt.generate_password_hash(security_answer).decode('utf-8')
         e_mail = form.e_mail.data
-        new_user = User(username=form.username.data, password=hashed_password, secure_question=secure_question, secure_answer=hashed_answer, e_mail=e_mail)
+        
+        if User.query.count() == 0:
+            is_admin = True
+        else:
+            is_admin = False
+
+        new_user = User(username=form.username.data, password=hashed_password, secure_question=secure_question, secure_answer=hashed_answer, e_mail=e_mail, is_user_admin=is_admin)
+
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('login'))
