@@ -126,7 +126,7 @@ def login():
                 #"Falscher Benutzername oder Kennwort"
                 #Benni: Das was ich kommentiert habe ist alt 
             return render_template('Login.html', form=form, error=True)
-            #)
+            
             pass
     return render_template('Login.html', form=form)
 
@@ -240,19 +240,45 @@ def spieleraktion(data):
     # Beispiel: Aktualisieren des Spielstands oder Verarbeiten einer Nachricht
     # Rücksenden der Antwort an die Spieler
     emit('spielupdate', response_data, to=room)
-
 """
+
 @app.route('/join', methods=['POST','GET'])
 @login_required
 def join():
-
     return render_template('Join.html')
+"""
+    if request.method == 'POST':
+        game_code = request.form['game_code']
+        if game_code in rooms:
+            game_id = rooms[game_code]
+            game = Game.query.get(game_id)
+            if game and game.id_Join is None:  # Überprüfen, ob das Spiel noch frei ist
+                game.id_Join = current_user.id
+                db.session.commit()
+                return redirect(url_for('game_room', code=game_code))
+            else:
+                flash('Das Spiel ist bereits voll oder existiert nicht.')
+        else:
+            flash('Ungültiger Spielcode.')
+"""
    
+ 
+
 @app.route('/host', methods=['POST','GET'])
 @login_required
 def host():
-    
     return render_template('Host.html')
+"""
+    if request.method == 'POST':
+        new_game = Game(id_Host=current_user.id)
+        db.session.add(new_game)
+        db.session.commit()
+        game_code = generate_unique_code(4)  # Ihre Funktion zur Codegenerierung
+        # Speichern Sie den Spielcode mit der Spiel-ID
+        rooms[game_code] = new_game.id_game
+        return redirect(url_for('game_room', code=game_code))
+"""
+
 
 @app.route('/settings', methods=['POST','GET'])
 @login_required
