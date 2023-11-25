@@ -161,7 +161,7 @@ def register():
         hashed_password = bcrypt.generate_password_hash(form.password.data)
         secure_question = request.form['security_question']
         hashed_answer = bcrypt.generate_password_hash(security_answer).decode('utf-8')
-        e_mail = request.form['e_mail']
+        e_mail = form.e_mail.data
         new_user = User(username=form.username.data, password=hashed_password, secure_question=secure_question, secure_answer=hashed_answer, e_mail=e_mail)
         db.session.add(new_user)
         db.session.commit()
@@ -246,7 +246,7 @@ def spieleraktion(data):
 @login_required
 def join():
     return render_template('Join.html')
-"""
+"""r
     if request.method == 'POST':
         game_code = request.form['game_code']
         if game_code in rooms:
