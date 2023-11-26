@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, url_for, redirect, session
+from flask import Flask, render_template, request, url_for, redirect, session, flash
 from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import text
 from flask_migrate import Migrate
@@ -203,20 +203,20 @@ def impressum():
 def singleplayer():
     return render_template('Single.html')
 
-@app.route('/multiplayer',methods=['POST','GET'])
-@login_required
-def multiplayer():
-     if current_user.is_authenticated:
-        username = current_user.username
 
-     return render_template('Multi.html', username=username)
+@app.route('/multiplayer/<code>', methods=['GET', 'POST'])
+@login_required
+def multiplayer(code):
+    # Hier können Sie Ihre Spiellogik implementieren
+    return render_template('Multi.html', code=code)
+
 
 @app.route('/newpw')
 def newpw():
 
     return render_template('NewPassword.html')
 
-"""
+
 @socketio.on("connect")
 def connect(auth):
     room = session.get("room")
@@ -232,6 +232,7 @@ def connect(auth):
     rooms[room]["members"] +=1
     print(f"{name} joined room{room}")
 
+
 @socketio.on('disconnect')
 def disconnect():
     room = session.get("room")
@@ -245,50 +246,48 @@ def disconnect():
     send({"name": name, "message" : "has left the room"}, to=room)
     print(f"{name} left the room{room}")
 
+
 @socketio.on('spieleraktion')
 def spieleraktion(data):
     # Verarbeiten der Spieleraktion
     # Beispiel: Aktualisieren des Spielstands oder Verarbeiten einer Nachricht
     # Rücksenden der Antwort an die Spieler
     emit('spielupdate', response_data, to=room)
-"""
 
-@app.route('/join', methods=['POST','GET'])
+
+@app.route('/join', methods=['POST', 'GET'])
 @login_required
 def join():
-    return render_template('Join.html')
-"""r
     if request.method == 'POST':
-        game_code = request.form['game_code']
-        if game_code in rooms:
+        game_code = request.form.get('game_code')  # Verwendung von runden Klammern
+        if game_code and game_code in rooms:
             game_id = rooms[game_code]
             game = Game.query.get(game_id)
-            if game and game.id_Join is None:  # Überprüfen, ob das Spiel noch frei ist
+            if game and game.id_Join is None:  
                 game.id_Join = current_user.id
                 db.session.commit()
-                return redirect(url_for('game_room', code=game_code))
+                
+              
+                return redirect(url_for('multiplayer', code=game_code))
             else:
                 flash('Das Spiel ist bereits voll oder existiert nicht.')
         else:
             flash('Ungültiger Spielcode.')
-"""
-   
+    return render_template('Join.html')
  
 
-@app.route('/host', methods=['POST','GET'])
+@app.route('/host', methods=['GET', 'POST'])
 @login_required
 def host():
-    return render_template('Host.html')
-"""
     if request.method == 'POST':
         new_game = Game(id_Host=current_user.id)
         db.session.add(new_game)
         db.session.commit()
-        game_code = generate_unique_code(4)  # Ihre Funktion zur Codegenerierung
-        # Speichern Sie den Spielcode mit der Spiel-ID
+
+        game_code = generate_unique_code(4)
         rooms[game_code] = new_game.id_game
-        return redirect(url_for('game_room', code=game_code))
-"""
+        return render_template('Host.html', game_code=game_code)
+    return render_template('Host.html')
 
 
 @app.route('/settings', methods=['POST','GET'])
