@@ -2,7 +2,7 @@
   <div class="container-fluid">
     <a class="navbar-brand" href="/homescreen">Wordle</a>
     <div class="d-flex">
-      {% if request.path != url_for('Homescreen') %}  
+      {% if request.path != url_for('homescreen') %}  
         <a href="/homescreen" class="btn logout">Back to Menu</a>
       {% endif %}
       <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">How to play Wordle</a>
