@@ -124,7 +124,7 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user)
-            return redirect(url_for('Homescreen'))
+            return redirect(url_for('homescreen'))
         else:
             #raise ValidationError(
                 #"Falscher Benutzername oder Kennwort"
