@@ -147,7 +147,7 @@ def generate_unique_code(Length):
 
 @app.route('/homescreen', methods=['GET','POST'])
 @login_required
-def Homescreen():
+def homescreen():
     return render_template('Homescreen.html')
 
 
