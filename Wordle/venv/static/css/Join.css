@@ -100,11 +100,12 @@ body{
 
 .myTextbox{
   display: flex;
-  width: 50%;
+  width: 30%;
   height: 70px;
   outline: none;
   border: none;
   border-radius: 10px;
+  font-size: 30px;
 }
 
 input[type="text"]{
@@ -115,7 +116,7 @@ input[type="text"]{
   font-size: 22px;
   font-weight: 600;
   margin: 0;
-  margin-right: 70px;
+  margin-right: 20px;
 }
 
 .join-btn{
@@ -123,7 +124,7 @@ input[type="text"]{
   justify-content: center;
   align-items: center;
   width: 10%;
-  font-size: 25px;
+  font-size: 30px;
   font-weight: 600;
   height: 70px;
   outline: none;

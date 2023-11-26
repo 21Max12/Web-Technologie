@@ -19,12 +19,14 @@ body{
 
 .profil-attribute{
   margin-top: 50px;
+  font-size: 18px;
+  font-weight: 600;
 }
 
 
 .all-body{
   color: white;
-  padding: 70px 70px 0px 70px;
+  padding: 70px;
   display: flex;
   flex-direction: column;
 }
@@ -50,25 +52,6 @@ body{
   margin-right: 5px;
 }
 
-.admin-body{
-  margin-top: 50px;
-  background-color: hsl(0, 2%, 10%);
-  border: 2px solid white;
-  border-radius: 30px;
-  padding: 50px;
-}
-
-.text-container{
-  display: flex;
-  justify-content: left;
-}
-
-.add-word{
-  width: 670px;
-  border: none;
-  border-radius: 15px;
-  height: 40px;
-}
 
 .sub-titel{
   margin-bottom:10px;

@@ -24,9 +24,7 @@ body{
 
 .all-body{
   color: white;
-  padding: 70px 70px 0px 70px;
-  display: flex;
-  flex-direction: column;
+  padding: 70px;
 }
 
 .profil-body{
@@ -50,45 +48,22 @@ body{
   margin-right: 5px;
 }
 
-.admin-body{
-  margin-top: 50px;
-  background-color: hsl(0, 2%, 10%);
-  border: 2px solid white;
-  border-radius: 30px;
-  padding: 50px;
-}
-
-.text-container{
-  display: flex;
-  justify-content: left;
-}
-
-.add-word{
-  width: 670px;
-  border: none;
-  border-radius: 15px;
-  height: 40px;
-}
-
-.sub-titel{
-  margin-bottom:10px;
-}
-
 .bottom-bar{
-  width: 100%;
-  display: flex;
-  justify-content: left;
-  height: 60px;
-  align-items: center;
-}
-
-.bottom-bar .clock{
-  margin-left: auto;
-}
-
-.clock{
-  color: white;
-  font-size: 20px;
-  font-weight: 700;
-}
-
+    width: 100%;
+    display: flex;
+    justify-content: left;
+    height: 60px;
+    align-items: center;
+  }
+  
+  .bottom-bar .clock{
+    margin-left: auto;
+  }
+  
+  .clock{
+    color: white;
+    font-size: 20px;
+    font-weight: 700;
+    margin-right: 30px;
+  }
+    

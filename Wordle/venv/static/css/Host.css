@@ -100,11 +100,12 @@ body{
 }
 
 .myTextbox{
-  width: 50%;
+  width: 20%;
   height: 70px;
   outline: none;
   border: none; 
   border-radius: 10px;
+  font-size: 30px;
 }
 
 .box-hash{
@@ -132,7 +133,7 @@ input[type="text"]{
 }
 
 .wait-text{
-  font-size: 22px;
+  font-size: 28px;
   margin: 0;
   margin-right: 82px;
 }
