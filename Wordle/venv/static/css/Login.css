@@ -139,7 +139,7 @@ input[type="checkbox"] {
 .anmelden a{
     margin-left: 15px;
     text-decoration: none;
-    color: white;
+    color: rgb(255, 255, 255);
 }
 
 .anmelden a:hover{

@@ -21,7 +21,6 @@ body{
   margin-top: 50px;
 }
 
-
 .all-body{
   color: white;
   padding: 70px 70px 0px 70px;
@@ -50,6 +49,15 @@ body{
   margin-right: 5px;
 }
 
+.reset-text{
+  color: white;
+  text-decoration: none;
+}
+
+.reset-text:hover{
+  text-decoration: underline;
+}
+
 .admin-body{
   margin-top: 50px;
   background-color: hsl(0, 2%, 10%);
@@ -64,10 +72,30 @@ body{
 }
 
 .add-word{
-  width: 670px;
+  text-align: center;
+  width: 100px;
   border: none;
-  border-radius: 15px;
+  border-radius: 10px;
   height: 40px;
+  outline: none;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.add-btn{
+  margin-left: 10px;
+  width: 100px;
+  border: none;
+  border-radius: 10px;
+  height: 40px;
+  outline: none;
+  font-size: 18px;
+  font-weight: 600;
+}
+
+.add-btn:hover{
+  background-color: hsl(115, 29%, 43%);
+  color: white;
 }
 
 .sub-titel{
