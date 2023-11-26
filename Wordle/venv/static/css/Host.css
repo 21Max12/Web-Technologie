@@ -124,7 +124,7 @@ body{
 .waiting-container{
   display: flex;
   align-items: center;
-  justify-content: right;
+  justify-content: center;
 }
 
 input[type="text"]{
@@ -150,7 +150,7 @@ input[type="text"]{
   0% {
     opacity: 1;
     transform: scale(1);
-    background-color: hsl(115, 29%, 43%);
+    background-color: hsl(49, 51%, 47%);
   }
   100% {
     opacity: 1;

@@ -14,13 +14,12 @@
         <div anmelden class="register">
         <h1><span class="C">C</span>reate user account</h1><br>
             <h4 class="sub-head">Enter your data</h4>
-    <form action="/register" method="post">
+    <form id="registrationForm" action="/register" method="post" onsubmit="return checkPasswordsMatch();">
         <div class="blub">
             {{ form.hidden_tag() }} 
             {{ form.username(size=20, class="form-control", placeholder="Username*") }}<br>
             {{ form.password(size=20, class="form-control", placeholder="Password*") }}<br>
-            <!--Einheitlich anpassen-->
-            <input type="password" name="confirm_password" class="form-control" placeholder="Passwort repeat*" required title="Please fill out this field."><br>
+            <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Passwort repeat*" required title="Please fill out this field."><br>
             <input type="email" name="e_mail" class="form-control" placeholder="E-Mail"><br>
 
             <h4>Security question</h4>
@@ -35,10 +34,31 @@
             <input type="text" name="security_answer" class="form-control" placeholder="Security answer*" required title="Please fill out this field."><br>
         </div>
         <div class="end">       
-            <a href="javascript:history.back()" class="close">Back</a>
+            <a href="/" class="close">Back</a>
             <button type="submit" class="btn btn-primary">Submit</button>
-        </div><Br>
+        </div>
 
-        <p>*required</p>
+        <div id="passwords-not-match" class="warning" style="display: none;">
+            The passwords do not match
+        </div>
+        <div id="error-message" class="warning" style="display: none;">
+            This username is alreade taken
+        </div>
+        <p class="text-required">*required</p>
     </form>
+
+            <script>
+                function checkPasswordsMatch() {
+                    var password = document.getElementById('password').value;
+                    var confirm_password = document.getElementById('confirm_password').value;
+                    var error_message = document.getElementById('passwords-not-match');
+                    
+                    if (password !== confirm_password) {
+                        error_message.style.display = 'block';
+                        return false; 
+                    }
+                    return true; 
+                }
+            </script>
+
 </body>

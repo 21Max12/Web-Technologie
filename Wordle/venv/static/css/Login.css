@@ -10,6 +10,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    flex-direction: column;
     min-height: 100vh; 
     background: url('wordle.jpg') no-repeat;
     background-position: center;
@@ -36,6 +37,10 @@ body {
 
 .Box{
     width: 600px;
+    position: absolute; 
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
     background-color: transparent;
     backdrop-filter: blur(60px);
     border: 1px solid white;

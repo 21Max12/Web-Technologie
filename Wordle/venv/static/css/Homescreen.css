@@ -4,8 +4,18 @@ body{
     background-color: hsl(0, 2%, 10%);
     font-family: 'Nunito', sans-serif;
     min-width: 1100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
 }
 
+.middle-content{
+    display: flex;
+    margin-top: auto;
+    margin-bottom: auto;
+    flex-direction: column;
+}
 
 .raster-background {
     position: fixed; 
@@ -18,11 +28,6 @@ body{
     background-size: 60px 60px; 
     z-index: -1; /* Stellt sicher, dass es hinter anderen Inhalten liegt */
   }
-  
-.head{
-    display: flex;
-    justify-content: center;
-}
 
 .tiles{
     display: flex;
@@ -41,9 +46,7 @@ body{
     font-weight: 800;
     color: white;
     animation: float 3s ease-in-out infinite;
-    margin-bottom: 150px;
-    margin-top: 150px;
-
+    margin-bottom: 200px;
 }
 
 .letter-grey{
@@ -79,7 +82,7 @@ body{
     display: flex; 
     align-items: center; 
     justify-content: space-between; 
-    width: 30%; 
+    width: 70%; 
     padding: 20px; 
     margin-bottom: 20px; 
     border: none;
@@ -90,7 +93,6 @@ body{
     position: relative; 
     transition: width 0.3s ease, background-color 0.3s ease, font-size 0.3s ease; /* Sanfte Transition für spezifische Eigenschaften */
 }
-
 
 .menu-button .icon {
     position: absolute;
@@ -108,8 +110,9 @@ body{
 
 .menu-button:hover{
     background-color: #538d4e;
-    width: 33%;
+    width: 80%;
     font-size: 30px;
+    color: white;
 }
 
 .icon svg{
@@ -119,9 +122,4 @@ body{
 
 #setting{
     margin-top: 40px;
-}
-
-
-.menu-logout{
-    margin-bottom: 150px;
 }

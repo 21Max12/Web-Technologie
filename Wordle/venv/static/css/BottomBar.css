@@ -1,7 +1,4 @@
 .bottom-bar{
-    position: fixed;
-    left: 0;
-    bottom: 0;
     width: 100%;
     display: flex;
     justify-content: left;
@@ -9,6 +6,7 @@
     height: 60px;
     border-top: 1px solid rgba(255, 255, 255, 0.3);
     align-items: center;
+    margin-top: auto;
 }
 
 .bottom-bar .clock{
