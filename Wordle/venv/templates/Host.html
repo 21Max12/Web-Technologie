@@ -60,7 +60,26 @@
     setInterval(updateClock, 1000);
     updateClock(); 
     </script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script>
+$(document).ready(function() {
+    var gameCode = "{{ game_code }}"; // Stellen Sie sicher, dass dieser Wert korrekt ist
+
+    function checkGameStatus() {
+        $.ajax({
+            url: '/check_game_status/' + gameCode,
+            success: function(response) {
+                if(response.status === 'ready') {
+                    window.location.href = "{{ url_for('multiplayer', code=game_code) }}";
+                }
+            }
+        });
+    }
+
+    setInterval(checkGameStatus, 1000); // Überprüfen alle 5 Sekunden
+});
+</script>
 
 </body>
 </html>
