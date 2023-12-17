@@ -92,7 +92,7 @@ def add_words(words_):
 
 
 def add_admin():
-    raw_password = "1234"
+    raw_password = "Adminspasswort?!_"
     hashed_password = bcrypt.generate_password_hash(raw_password).decode('utf-8')
 
     raw_secure_answer = "Peter"
@@ -116,7 +116,6 @@ def delete_users(ids):
         if user_to_delete:
             db.session.delete(user_to_delete)
     db.session.commit()
-
 
 
 class RegisterForm(FlaskForm):
