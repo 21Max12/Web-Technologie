@@ -58,46 +58,6 @@ body{
   text-decoration: underline;
 }
 
-.admin-body{
-  margin-top: 50px;
-  background-color: hsl(0, 2%, 10%);
-  border: 2px solid white;
-  border-radius: 30px;
-  padding: 50px;
-}
-
-.text-container{
-  display: flex;
-  justify-content: left;
-}
-
-.add-word{
-  text-align: center;
-  width: 100px;
-  border: none;
-  border-radius: 10px;
-  height: 40px;
-  outline: none;
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.add-btn{
-  margin-left: 10px;
-  width: 100px;
-  border: none;
-  border-radius: 10px;
-  height: 40px;
-  outline: none;
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.add-btn:hover{
-  background-color: hsl(115, 29%, 43%);
-  color: white;
-}
-
 .sub-titel{
   margin-bottom:10px;
 }

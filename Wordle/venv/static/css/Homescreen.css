@@ -33,6 +33,10 @@ body{
     display: flex;
 }
 
+#space{
+    margin-right: 80px;
+}
+
 .letter{
     display: flex;
     justify-content: center;
@@ -83,7 +87,7 @@ body{
     display: flex; 
     align-items: center; 
     justify-content: space-between; 
-    width: 70%; 
+    width: 50%; 
     padding: 20px; 
     margin-bottom: 20px; 
     border: none;
@@ -111,7 +115,7 @@ body{
 
 .menu-button:hover{
     background-color: #538d4e;
-    width: 80%;
+    width: 60%;
     font-size: 30px;
     color: white;
 }
