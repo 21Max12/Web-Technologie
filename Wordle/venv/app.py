@@ -29,12 +29,13 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 
 
-"""
 def admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         user_id = session.get('user_id')
+        is_user_admin = session.get('is_user_admin')
         print("Aktuelle user_id in der Session:", user_id)
+        print("Der Admin status ist", is_user_admin)
         if user_id:
             user = User.query.get(user_id)
             if user and user.is_user_admin:
@@ -45,10 +46,10 @@ def admin_required(f):
             flash("Sie sind nicht eingeloggt.")
         return redirect(url_for('homescreen'))  # Oder eine andere passende Seite
     return decorated_function
-"""
+
 
 @app.route('/admin_view', methods=['GET', 'POST'])
-#@admin_required
+@admin_required
 def admin_page():
     return render_template('Admin.html')
 
@@ -158,6 +159,9 @@ def login():
         user = User.query.filter_by(username=form.username.data).first()
         if user and bcrypt.check_password_hash(user.password, form.password.data):
             login_user(user)
+            session['user_id'] = user.id
+            session['is_user_admin'] = user.is_user_admin
+            print(user.is_user_admin)
             return redirect(url_for('homescreen'))
         else:
             #raise ValidationError(
@@ -182,6 +186,7 @@ def generate_unique_code(Length):
 @app.route('/homescreen', methods=['GET','POST'])
 @login_required
 def homescreen():
+    is_user_admin = session.get('is_user_admin')
     return render_template('Homescreen.html')
 
 
