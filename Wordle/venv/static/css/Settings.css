@@ -66,6 +66,7 @@ body{
   background-color: white;
   width: 100%;
   border: none;
+  outline: none;
   border-radius: 10px;
   padding-left: 10px;
   height: 35px;
