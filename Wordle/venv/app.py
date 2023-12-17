@@ -28,23 +28,31 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
 
-
-
+print("User ID:", user_id)
+if user:
+    print("User gefunden:", user.username, "Is Admin:", user.is_user_admin)
+else:
+    print("Kein Benutzer gefunden")
+"""
 def admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         user_id = session.get('user_id')
         if user_id:
-            user = user.query.get(user_id)
+            user = User.query.get(user_id)
             if user and user.is_user_admin:
                 return f(*args, **kwargs)
-        return redirect()
+            else:
+                flash("Sie haben keine Berechtigung, diese Seite zu sehen.")
+        else:
+            flash("Sie sind nicht eingeloggt.")
+        return redirect(url_for('homescreen'))  # Oder eine andere passende Seite
     return decorated_function
-
-@app.route('/...')
-@admin_required
+"""
+@app.route('/admin_view')
+#@admin_required
 def admin_page():
-    return render_template('admin_page.htmlt')
+    return render_template('Admin.html')
 
 
 @login_manager.user_loader
