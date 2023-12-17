@@ -92,7 +92,7 @@ def add_words(words_):
 
 
 def add_admin():
-    raw_password = "Adminspasswort?!_"
+    raw_password = "1234"
     hashed_password = bcrypt.generate_password_hash(raw_password).decode('utf-8')
 
     raw_secure_answer = "Peter"
