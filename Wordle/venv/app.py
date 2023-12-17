@@ -12,6 +12,7 @@ import os
 from flask_socketio import SocketIO, emit, join_room, leave_room, send
 from string import ascii_uppercase
 import random
+from functools import wraps
 
 basedir = os.path.abspath(os.path.dirname(__file__))
 
@@ -26,6 +27,24 @@ socketio = SocketIO(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
+
+
+
+def admin_required(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        user_id = session.get('user_id')
+        if user_id:
+            user = user.query.get(user_id)
+            if user and user.is_user_admin:
+                return f(*args, **kwargs)
+        return redirect()
+    return decorated_function
+
+@app.route('/...')
+@admin_required
+def admin_page():
+    return render_template('admin_page.htmlt')
 
 
 @login_manager.user_loader
