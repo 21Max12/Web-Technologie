@@ -47,7 +47,7 @@ def admin_required(f):
     return decorated_function
 """
 
-@app.route('/admin_view'methods=['GET', 'POST'])
+@app.route('/admin_view', methods=['GET', 'POST'])
 #@admin_required
 def admin_page():
     return render_template('Admin.html')
