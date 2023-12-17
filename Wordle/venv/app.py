@@ -34,6 +34,7 @@ def admin_required(f):
     @wraps(f)
     def decorated_function(*args, **kwargs):
         user_id = session.get('user_id')
+        print("Aktuelle user_id in der Session:", user_id)
         if user_id:
             user = User.query.get(user_id)
             if user and user.is_user_admin:
@@ -45,7 +46,8 @@ def admin_required(f):
         return redirect(url_for('homescreen'))  # Oder eine andere passende Seite
     return decorated_function
 """
-@app.route('/admin_view')
+
+@app.route('/admin_view'methods=['GET', 'POST'])
 #@admin_required
 def admin_page():
     return render_template('Admin.html')
