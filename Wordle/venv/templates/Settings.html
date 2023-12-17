@@ -20,18 +20,18 @@
       <h1 class="header"><span class="U">U</span>ser profile</h1><br>
 
       <div class="profil-attribute">
-        <h3 class="sub-titel">Username</h3>
-        <p name="username">{{ username }}</p>
+        <h2 class="sub-titel">Username</h2>
+        <input class="db-input" type="text" value="{{ username }}" readonly>
       </div>
 
       <div class="profil-attribute">
-        <h3 class="sub-titel">E-Mail</h3>
-        <p name="email">{{ email }}</p>
+        <h2 class="sub-titel">E-Mail</h2>
+        <input class="db-input" type="text" value="{{ email }}" readonly>
       </div>
       
 
       <div class="profil-attribute">
-        <h3 class="sub-titel">Password</h3>
+        <h2 class="sub-titel">Password</h2>
         <a href="/pwreset" class="reset-text">Password reset</a>
       </div>
     </div>
