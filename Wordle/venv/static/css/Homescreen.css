@@ -77,6 +77,8 @@ body{
 .letter:nth-child(4) { animation-delay: 0.7s; }
 .letter:nth-child(5) { animation-delay: 0.2s; }
 .letter:nth-child(6) { animation-delay: 1s; }
+.letter:nth-child(7) { animation-delay: 0.3s; }
+.letter:nth-child(8) { animation-delay: 0.5s; }
 
 .menu{
     display: flex;
