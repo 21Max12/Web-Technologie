@@ -347,7 +347,7 @@ def settings():
     username = session.get('username')
     email = session.get('e_mail')
     print(username,email)
-    return render_template('Settings.html')
+    return render_template('Settings.html', username=username, email=email)
 
 if __name__ == '__main__':
 
