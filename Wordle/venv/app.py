@@ -160,6 +160,8 @@ def login():
             login_user(user)
             session['user_id'] = user.id
             session['is_user_admin'] = user.is_user_admin
+            session['username'] = user.username
+            session['e_mail'] = user.e_mail
             print(user.is_user_admin)
             return redirect(url_for('homescreen'))
         else:
@@ -342,6 +344,9 @@ def check_game_status(code):
 @app.route('/settings', methods=['POST','GET'])
 @login_required
 def settings():
+    username = session.get('username')
+    email = session.get('e_mail')
+    print(username,email)
     return render_template('Settings.html')
 
 if __name__ == '__main__':
