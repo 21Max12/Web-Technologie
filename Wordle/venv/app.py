@@ -14,9 +14,13 @@ from string import ascii_uppercase
 import random
 from functools import wraps
 
+
+
 basedir = os.path.abspath(os.path.dirname(__file__))
 
 app = Flask(__name__)
+
+
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///' + os.path.join(basedir, 'database.db')
 app.config['SECRET_KEY'] = 'thisisasecretkey'
 bcrypt = Bcrypt(app)
@@ -58,6 +62,16 @@ def admin_page():
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+class LoginForm(FlaskForm):
+    username = StringField(validators = [InputRequired(), Length(
+         min = 4, max =20)], render_kw = {"placeholder":"Username"})
+    
+    password = PasswordField(validators = [InputRequired(), Length(
+        min = 4, max = 20)], render_kw = {"placeholder": "Password"})
+    
+    submit = SubmitField("Login")
+
+
 
 class User(db.Model, UserMixin):
     id = db.Column(db.Integer, primary_key=True)
@@ -67,6 +81,7 @@ class User(db.Model, UserMixin):
     secure_answer = db.Column(db.String(80), nullable = False)
     e_mail = db.Column(db.String(80), nullable = True)
     is_user_admin = db.Column(db.Boolean, default=False, nullable = False)
+
 
 class Game(db.Model):
     id_game = db.Column(db.Integer, primary_key=True)
@@ -90,6 +105,35 @@ def add_words(words_):
 
     db.session.commit()
 
+
+@app.route('/', methods=['GET', 'POST'])
+def login():
+    form = LoginForm()
+    if form.validate_on_submit():
+        user = User.query.filter_by(username=form.username.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user)
+            session['user_id'] = user.id
+            session['is_user_admin'] = user.is_user_admin
+            session['username'] = user.username
+            session['e_mail'] = user.e_mail
+            print(user.is_user_admin)
+            return redirect(url_for('homescreen'))
+        else:
+            #raise ValidationError(
+                #"Falscher Benutzername oder Kennwort"
+                #Benni: Das was ich kommentiert habe ist alt 
+            return render_template('Login.html', form=form, error=True)
+            
+            pass
+    return render_template('Login.html', form=form)
+
+
+@app.route('/homescreen', methods=['GET','POST'])
+@login_required
+def homescreen():
+    is_user_admin = session.get('is_user_admin')
+    return render_template('Homescreen.html')
 
 def add_admin():
     raw_password = "Adminspasswort?!_"
@@ -140,39 +184,6 @@ class RegisterForm(FlaskForm):
                 "Der Username existiert bereits, bitte verwenden einen anderen"
             )
 
-class LoginForm(FlaskForm):
-    username = StringField(validators = [InputRequired(), Length(
-         min = 4, max =20)], render_kw = {"placeholder":"Username"})
-    
-    password = PasswordField(validators = [InputRequired(), Length(
-        min = 4, max = 20)], render_kw = {"placeholder": "Password"})
-    
-    submit = SubmitField("Login")
-
-
-
-@app.route('/', methods=['GET', 'POST'])
-def login():
-    form = LoginForm()
-    if form.validate_on_submit():
-        user = User.query.filter_by(username=form.username.data).first()
-        if user and bcrypt.check_password_hash(user.password, form.password.data):
-            login_user(user)
-            session['user_id'] = user.id
-            session['is_user_admin'] = user.is_user_admin
-            session['username'] = user.username
-            session['e_mail'] = user.e_mail
-            print(user.is_user_admin)
-            return redirect(url_for('homescreen'))
-        else:
-            #raise ValidationError(
-                #"Falscher Benutzername oder Kennwort"
-                #Benni: Das was ich kommentiert habe ist alt 
-            return render_template('Login.html', form=form, error=True)
-            
-            pass
-    return render_template('Login.html', form=form)
-
 rooms ={}
 
 def generate_unique_code(Length):
@@ -183,12 +194,6 @@ def generate_unique_code(Length):
         if code not in rooms:
             break
     return code
-
-@app.route('/homescreen', methods=['GET','POST'])
-@login_required
-def homescreen():
-    is_user_admin = session.get('is_user_admin')
-    return render_template('Homescreen.html')
 
 
 @app.route('/logout', methods=['GET','POST'])
@@ -247,8 +252,56 @@ def singleplayer():
 @app.route('/multiplayer/<code>', methods=['GET', 'POST'])
 @login_required
 def multiplayer(code):
-    # Hier können Sie Ihre Spiellogik implementieren
+    
     return render_template('Multi.html', code=code)
+def handle_guess():
+    data = request.json
+    guess = data.get('guess', '').lower()
+
+    # Wählen Sie hier das Zielwort für die aktuelle Sitzung aus
+    # Sie müssen eine Logik implementieren, um das Zielwort konsistent zu halten
+    targetWord = targetWords[0] # Beispiel, wie man ein Zielwort auswählt
+
+    result = check_guess(guess, targetWord)
+
+    return jsonify(result)
+
+
+
+# Beispielhafte Liste von möglichen Zielwörtern
+targetWords = ["apple", "berry", "cherry"]
+
+# Eine Funktion, die das geratene Wort überprüft
+def check_guess(guess, targetWord):
+    result = {"correct": False, "correctPositions": []}
+    for i, letter in enumerate(guess):
+        if letter == targetWord[i]:
+            result["correctPositions"].append(i)
+        if guess == targetWord:
+            result["correct"] = True
+    return result
+
+@app.route('/check-guess', methods=['POST'])
+
+
+
+def get_random_gameword():
+    count = Gamewords.query.count()
+    if count == 0:
+        return None  # Keine Wörter in der Datenbank
+    random_index = random.randint(0, count - 1)
+    random_word = Gamewords.query.offset(random_index).first()
+    return random_word.words if random_word else None
+
+@socketio.on('submit_guess')
+def handle_guess(data):
+    guess = data['guess']
+    # Hier kommt Ihre Logik zur Überprüfung des Wortes
+    is_correct = check_word(guess)
+
+    # Senden des Ergebnisses zurück zum Client
+    emit('guess_result', {'is_correct': is_correct})
+    print(guess)
 
 
 @app.route('/newpw')
@@ -259,6 +312,7 @@ def newpw():
 
 @socketio.on("connect")
 def connect(auth):
+    print('Client Connected')
     room = session.get("room")
     name = session.get("name")
     if not room or not name:
@@ -275,6 +329,7 @@ def connect(auth):
 
 @socketio.on('disconnect')
 def disconnect():
+    print("Client Disconnected")
     room = session.get("room")
     name = session.get("name")
     leave_room(room)
@@ -289,10 +344,47 @@ def disconnect():
 
 @socketio.on('spieleraktion')
 def spieleraktion(data):
+    room = data['room']
+    guess = data['guess']
+    response_data = {
+        'result': 'Ergebnis',
+        'player': 'name'
+    }
     # Verarbeiten der Spieleraktion
     # Beispiel: Aktualisieren des Spielstands oder Verarbeiten einer Nachricht
     # Rücksenden der Antwort an die Spieler
-    emit('spielupdate', response_data, to=room)
+    emit('spielupdate', response_data, room=room)
+
+@socketio.on('create_game')
+def on_create_game():
+    room = generate_unique_room_id()
+    chosen_word = get_random_gameword()
+    games[room] = {
+        'word': chosen_word,
+        'guesses': []
+    }
+    join_room(room)
+    emit('game_created', {'room': room, 'word_length': chosen_word}, room=room)
+
+@socketio.on('make_guess')
+def make_guess(data):
+    room = data['room']
+    guess = data['guess']
+    game = games.get(room)
+
+    if not game:
+        emit('error', {'message': 'Spiel nicht gefunden'}, room=room)
+        return
+
+    # Überprüfen Sie den Rateversuch
+    result = check_guess(game['word'], guess)
+    game['guesses'].append((data['player'], guess, result))
+
+    emit('guess_result', {'player': data['player'], 'guess': guess, 'result': result}, room=room)
+
+def check_guess(word, guess):
+    # Implementieren Sie hier Ihre Logik zur Überprüfung des Rateversuchs
+    pass
 
 
 @app.route('/join', methods=['POST', 'GET'])
@@ -348,6 +440,14 @@ def settings():
     email = session.get('e_mail')
     print(username,email)
     return render_template('Settings.html', username=username, email=email)
+
+
+
+
+
+
+
+
 
 if __name__ == '__main__':
 
