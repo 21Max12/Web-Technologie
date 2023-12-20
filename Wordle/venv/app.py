@@ -252,19 +252,8 @@ def singleplayer():
 @app.route('/multiplayer/<code>', methods=['GET', 'POST'])
 @login_required
 def multiplayer(code):
-    
+    target_word = get_random_gameword()
     return render_template('Multi.html', code=code)
-def handle_guess():
-    data = request.json
-    guess = data.get('guess', '').lower()
-
-    # Wählen Sie hier das Zielwort für die aktuelle Sitzung aus
-    # Sie müssen eine Logik implementieren, um das Zielwort konsistent zu halten
-    targetWord = targetWords[0] # Beispiel, wie man ein Zielwort auswählt
-
-    result = check_guess(guess, targetWord)
-
-    return jsonify(result)
 
 
 
@@ -281,7 +270,34 @@ def check_guess(guess, targetWord):
             result["correct"] = True
     return result
 
-@app.route('/check-guess', methods=['POST'])
+
+
+
+def wort_uebereinstimmung(target_word, guess):
+    # Initialisierung der Ergebnisliste
+    ergebnis = []
+
+    # Um Dopplungen zu vermeiden, wird eine Kopie des Zielwortes erstellt, die bearbeitet wird
+    zielwort_kopie = list(target_word)
+
+    # Überprüfung jedes Buchstabens im eingegebenen Wort
+    for index, buchstabe in enumerate(guess):
+        if index < len(target_word) and buchstabe == target_word[index]:
+            # Richtiger Buchstabe an der richtigen Position
+            ergebnis.append(1)
+            # Markieren des Buchstabens im Zielwort als "verwendet"
+            zielwort_kopie[index] = None
+        elif buchstabe in zielwort_kopie:
+            # Richtiger Buchstabe, aber an der falschen Position
+            ergebnis.append(2)
+            # Markieren des ersten Vorkommens des Buchstabens im Zielwort als "verwendet"
+            zielwort_kopie[zielwort_kopie.index(buchstabe)] = None
+        else:
+            # Falscher Buchstabe
+            ergebnis.append(3)
+
+    return ergebnis
+
 
 
 
@@ -303,6 +319,13 @@ def handle_guess(data):
     emit('guess_result', {'is_correct': is_correct})
     print(guess)
 
+target_word = "example"
+
+def check_word(guess):
+    """
+    Überprüfen, ob das geratene Wort gleich dem Zielwort ist.
+    """
+    return guess.lower() == target_word.lower()
 
 @app.route('/newpw')
 def newpw():
