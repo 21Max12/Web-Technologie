@@ -12982,6 +12982,7 @@ const guessGrid = document.querySelector("[data-guess-grid]")
 
 startInteraction()
 
+
 function startInteraction() {
   document.addEventListener("click", handleMouseClick)
   document.addEventListener("keydown", handleKeyPress)
@@ -13048,7 +13049,12 @@ function deleteKey() {
   delete lastTile.dataset.letter
 }
 
-const socket = io.connect('http://localhost:5000');
+const socket = io.connect('http://' + document.domain + ':' + location.port);
+
+socket.on('connect', () => {
+  console.log('Connected to the server');
+});
+
 
 function submitGuess() {
   const activeTiles = [...getActiveTiles()]
@@ -13088,7 +13094,6 @@ function updateTilesBasedOnResponse(correctPositions) {
 }
 
 function checkWinLoseBasedOnResponse(correctPositions) {
-  // Implementieren Sie die Logik zum Bestimmen von Gewinn/Verlust
 }
 
 
@@ -13103,17 +13108,16 @@ function flipTile(tile, index, result) {
   tile.addEventListener("transitionend", () => {
     tile.classList.remove("flip");
 
-    // Verwenden Sie das Ergebnis, um den Zustand des Tiles zu bestimmen
     switch(result[index]) {
-      case 1: // 1 könnte "correct" bedeuten
+      case 1: 
         tile.dataset.state = "correct";
         key.classList.add("correct");
         break;
-      case 2: // 2 könnte "wrong-location" bedeuten
+      case 2: 
         tile.dataset.state = "wrong-location";
         key.classList.add("wrong-location");
         break;
-      default: // Andere Fälle, z.B. 0, könnten "wrong" bedeuten
+      case 3: 
         tile.dataset.state = "wrong";
         key.classList.add("wrong");
         break;
