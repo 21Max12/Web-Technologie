@@ -12,7 +12,7 @@ body {
     align-items: center;
     flex-direction: column;
     min-height: 100vh; 
-    background: url('wordle.jpg') no-repeat;
+    background: url('background.jpg') no-repeat;
     background-position: center;
     background-size: cover;
     font-family: 'Nunito', sans-serif;
