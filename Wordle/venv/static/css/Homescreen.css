@@ -130,3 +130,11 @@ body{
 #setting{
     margin-top: 40px;
 }
+
+#admin{
+    background-color: hsl(49, 51%, 47%);
+}
+
+#admin:hover{
+    background-color: #538d4e;
+}
