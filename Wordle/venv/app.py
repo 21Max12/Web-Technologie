@@ -410,8 +410,7 @@ def join():
             game = Game.query.get(game_id)
             if game and game.id_Join is None:  
                 game.id_Join = current_user.id
-                db.session.commit()
-                
+                db.session.commit()               
               
                 return redirect(url_for('multiplayer', code=game_code))
             else:
