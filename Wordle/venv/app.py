@@ -252,23 +252,8 @@ def singleplayer():
 @app.route('/multiplayer/<code>', methods=['GET', 'POST'])
 @login_required
 def multiplayer(code):
-    target_word = get_random_gameword()
     return render_template('Multi.html', code=code)
 
-
-
-# Beispielhafte Liste von möglichen Zielwörtern
-targetWords = ["apple", "berry", "cherry"]
-
-# Eine Funktion, die das geratene Wort überprüft
-def check_guess(guess, targetWord):
-    result = {"correct": False, "correctPositions": []}
-    for i, letter in enumerate(guess):
-        if letter == targetWord[i]:
-            result["correctPositions"].append(i)
-        if guess == targetWord:
-            result["correct"] = True
-    return result
 
 
 
@@ -312,20 +297,22 @@ def get_random_gameword():
 @socketio.on('submit_guess')
 def handle_guess(data):
     guess = data['guess']
-    # Hier kommt Ihre Logik zur Überprüfung des Wortes
-    is_correct = check_word(guess)
+    target_word = session.get('target_word')
+
+    if target_word:
+        ergebnis = wort_uebereinstimmung(target_word, guess)
+        print(ergebnis, target_word)
+
+        emit('guess_result',{'ergebnis': ergebnis})
+    else:
+        emit('error',{'message':'No target word set'})
+
 
     # Senden des Ergebnisses zurück zum Client
-    emit('guess_result', {'is_correct': is_correct})
-    print(guess)
+    #emit('guess_result', {'is_correct': is_correct})
 
-target_word = "example"
 
-def check_word(guess):
-    """
-    Überprüfen, ob das geratene Wort gleich dem Zielwort ist.
-    """
-    return guess.lower() == target_word.lower()
+
 
 @app.route('/newpw')
 def newpw():
@@ -441,6 +428,7 @@ def host():
 
         game_code = generate_unique_code(4)
         rooms[game_code] = new_game.id_game
+        session['target_word'] = get_random_gameword()
         return render_template('Host.html', game_code=game_code)
     return render_template('Host.html')
 
