@@ -13012,7 +13012,6 @@ function handleMouseClick(e) {
   }
 }
 
-
 function handleKeyPress(e) {
   if (e.key === "Enter") {
     submitGuess()
@@ -13051,9 +13050,13 @@ function deleteKey() {
   delete lastTile.dataset.letter
 }
 
+
+let mySid;
 const socket = io.connect('http://' + document.domain + ':' + location.port);
 
 socket.on('connect', () => {
+  mySid = socket.id;
+  console.log(mySid)
   console.log('Connected to the server');
 });
 
@@ -13082,6 +13085,8 @@ function submitGuess() {
 
 socket.on('guess_result', (data) => {
   const ergebnis = data.ergebnis;
+  const senderSid = data.sender_sid;
+  console.log(senderSid); 
   console.log(ergebnis); 
   updateTilesBasedOnResponse(ergebnis);
   checkWinLoseBasedOnResponse(ergebnis);
@@ -13109,6 +13114,8 @@ function checkWinLoseBasedOnResponse(correctPositions) {
     startInteraction()
   }
 }
+
+
 
 function flipTile(tile, index, result) {
   const letter = tile.dataset.letter;
