@@ -13080,11 +13080,16 @@ function submitGuess() {
   activeTiles.forEach((...params) => flipTile(...params, guess))
 }
 
-socket.on('guess_result', function(response) {
+socket.on('guess_result', (data) => {
+  const ergebnis = data.ergebnis;
+  console.log(ergebnis); 
+});
+
+/*socket.on('guess_result', function(response) {
   // Beispielantwort: {correctPositions: [1, 0, 0, 1, 2]}
   updateTilesBasedOnResponse(response.correctPositions);
   checkWinLoseBasedOnResponse(response.correctPositions);
-});
+});*/
 
 function updateTilesBasedOnResponse(correctPositions) {
   const activeTiles = getActiveTiles();
