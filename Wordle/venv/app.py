@@ -297,15 +297,18 @@ def get_random_gameword():
 @socketio.on('submit_guess')
 def handle_guess(data):
     guess = data['guess']
+    room = data['room']
+    sender_sid = request.sid
     target_word = session.get('target_word')
 
     if target_word:
         ergebnis = wort_uebereinstimmung(target_word, guess)
+
         print(ergebnis, target_word)
 
-        emit('guess_result',{'ergebnis': ergebnis})
+        emit('guess_result', {'ergebnis': ergebnis, 'sender_sid': sender_sid}, room=room)
     else:
-        emit('error',{'message':'No target word set'})
+        emit('error', {'message': 'No target word set'}, room=room)
 
 
     # Senden des Ergebnisses zurück zum Client
@@ -386,7 +389,7 @@ def make_guess(data):
         emit('error', {'message': 'Spiel nicht gefunden'}, room=room)
         return
 
-    # Überprüfen Sie den Rateversuch
+    # Überprüfen Sie den Rateversu ch
     result = check_guess(game['word'], guess)
     game['guesses'].append((data['player'], guess, result))
 
@@ -451,12 +454,6 @@ def settings():
     email = session.get('e_mail')
     print(username,email)
     return render_template('Settings.html', username=username, email=email)
-
-
-
-
-
-
 
 
 
