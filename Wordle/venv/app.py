@@ -294,21 +294,23 @@ def get_random_gameword():
     random_word = Gamewords.query.offset(random_index).first()
     return random_word.words if random_word else None
 
+
 @socketio.on('submit_guess')
 def handle_guess(data):
     guess = data['guess']
-   
     sender_sid = request.sid
     target_word = session.get('target_word')
 
     if target_word:
         ergebnis = wort_uebereinstimmung(target_word, guess)
-
         print(ergebnis, target_word,sender_sid)
 
-        emit('guess_result', {'ergebnis': ergebnis, 'sender_sid': sender_sid}, broadcast =True)
+        if ergebnis == [1, 1, 1, 1, 1]:
+            emit('guess_result', {'ergebnis': ergebnis, 'sender_sid': sender_sid, 'target_word': target_word}, broadcast=True)
+        else:
+            emit('guess_result', {'ergebnis': ergebnis, 'sender_sid': sender_sid}, broadcast=True)
     else:
-        emit('error', {'message': 'No target word set'}, broadcast =True)
+        emit('error', {'message': 'No target word set'}, broadcast=True)
 
 
     # Senden des Ergebnisses zurück zum Client
@@ -410,7 +412,8 @@ def join():
             game = Game.query.get(game_id)
             if game and game.id_Join is None:  
                 game.id_Join = current_user.id
-                db.session.commit()               
+                db.session.commit()
+                
               
                 return redirect(url_for('multiplayer', code=game_code))
             else:

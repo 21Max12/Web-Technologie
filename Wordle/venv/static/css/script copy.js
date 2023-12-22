@@ -12979,10 +12979,8 @@ const DANCE_ANIMATION_DURATION = 500
 const keyboard = document.querySelector("[data-keyboard]")
 const alertContainer = document.querySelector("[data-alert-container]")
 const guessGrid = document.querySelector("[data-guess-grid]")
-const MAX_GUESSES = 6;
 
 startInteraction()
-startTimer()
 
 function startInteraction() {
   document.addEventListener("click", handleMouseClick)
@@ -13085,93 +13083,65 @@ function submitGuess() {
   activeTiles.forEach((...params) => flipTile(...params, guess))
 }
 
-let targetWord = null;
-
 socket.on('guess_result', (data) => {
-  const { ergebnis, sender_sid, target_word } = data; 
+  const { ergebnis, sender_sid } = data; 
   console.log('Result received:', ergebnis, 'from SID:', sender_sid);
-
-  if (target_word) {
-    targetWord = target_word; 
-  }
-  
   if (sender_sid === mySid) {
     updateTilesBasedOnResponse(ergebnis, 'player');
     checkWinLoseBasedOnResponse(ergebnis, 'player');
     } else {
-    opponentDrawCount++;
     updateTilesBasedOnResponse(ergebnis, 'opponent');
     checkWinLoseBasedOnResponse(ergebnis, 'opponent');
     }
 });
 
-let playerGuessCount = 0;
-let opponentGuessCount = 0;
-let opponentDrawCount = 0;
-
+/*function updateTilesBasedOnResponse(positions) {
+  const activeTiles = getActiveTiles();
+  activeTiles.forEach((tile, index) => {
+    flipTile(tile, index, positions);
+  });
+}*/
 
 function updateTilesBasedOnResponse(positions, playerType) {
-  let tilesToUpdate;
-  let startTileIndex;
-
-  if (playerType === 'player') {
-    startTileIndex = playerGuessCount * WORD_LENGTH;
-    tilesToUpdate = document.querySelectorAll('.guess-grid .tile');
-    playerGuessCount++; 
-  } else {
-    startTileIndex = opponentGuessCount * WORD_LENGTH;
-    tilesToUpdate = document.querySelectorAll('.guess-opponent .tile');
-    opponentGuessCount++; 
-  }
-
-  for (let i = 0; i < WORD_LENGTH; i++) {
-    flipTile(tilesToUpdate[startTileIndex + i], positions[i]);
-  }
+  const tilesToUpdate = playerType === 'player' ? getActiveTiles() : document.querySelectorAll('.guess-opponent .tile');
+  tilesToUpdate.forEach((tile, index) => {
+    flipTile(tile, index, positions);
+  });
 }
 
-let noTilesAlertShown = false;
+/*function checkWinLoseBasedOnResponse(correctPositions) {
+  const hasWon = correctPositions.every(position => position === 1);
+  
+  if (hasWon) {
+    showAlert("You Win", 5000); 
+    stopInteraction();
+  } else {
+    const remainingTiles = guessGrid.querySelectorAll(":not([data-letter])");
+    if (remainingTiles.length === 0) {
+      showAlert("Game Over", 5000); 
+      stopInteraction(); 
+    }
+    startInteraction()
+  }
+}*/
 
 function checkWinLoseBasedOnResponse(correctPositions, playerType) {
   const hasWon = correctPositions.every(position => position === 1);
-  const playerTilesLeft = guessGrid.querySelectorAll(":not([data-letter])").length;
-  console.log(playerTilesLeft)
-  const opponentTilesLeft = document.querySelector('.guess-opponent').querySelectorAll(":not([data-letter])").length;
-  console.log(opponentTilesLeft)
 
-  if (hasWon) {
-    const message = playerType === 'player' ? "You Won! :)": "You Lose! :(";
-    showAlert(message, 5000);
-    showAlert(targetWord.toUpperCase(), null)
-    stopTimer();
-    setTimeout(() => {
-      showBackToMenuButton();
-    }, 5500);
-
+  if (hasWon && playerType === 'player') {
+    showAlert("You Win", 5000); 
     stopInteraction();
-    return;
-  }
-
-  if (playerTilesLeft === 0 && opponentGuessCount === MAX_GUESSES) {
-    showAlert("Draw - No Tiles Left", 5000);
+  } else if (hasWon && playerType === 'opponent') {
+    showAlert("You Lose", 5000); 
     stopInteraction();
-    return;
+  } else if (!hasWon && noTilesLeft()) {
+    showAlert("Game Over - No Tiles Left", 5000); 
+    stopInteraction(); 
+  } else {
+    if (playerType === 'player') {
+      startInteraction();
+    }
   }
-
-  if (playerTilesLeft === 0 && !noTilesAlertShown) {
-    showAlert("No Atempts Left", 5000);
-    noTilesAlertShown = true;
-    stopInteraction();
-    return;
-  }
-
-  if (playerType === 'player') {
-    startInteraction();
-  }
-}
-
-function showBackToMenuButton() {
-  const backToMenuButton = document.querySelector('.back');
-  backToMenuButton.classList.add('visible');
 }
 
 function noTilesLeft() {
@@ -13180,23 +13150,24 @@ function noTilesLeft() {
 }
 
 
-function flipTile(tile, result) {
+function flipTile(tile, index, result) {
   const letter = tile.dataset.letter;
   const key = keyboard.querySelector(`[data-key="${letter}"i]`);
-  addFlipAnimation(tile, result, key);
+
+  addFlipAnimation(tile, index, result[index], key);
 }
 
-function addFlipAnimation(tile, result, key) {
+function addFlipAnimation(tile, index, result, key) {
   setTimeout(() => {
     tile.classList.add("flip");
-  }, FLIP_ANIMATION_DURATION / 5); 
+  }, (index * FLIP_ANIMATION_DURATION) / 2);
 
   tile.addEventListener("transitionend", () => {
     tile.classList.remove("flip");
-    updateTileState(tile, key, result); 
+
+    updateTileState(tile, key, result);
   }, { once: true });
 }
-
 
 function updateTileState(tile, key, state) {
   switch(state) {
@@ -13233,24 +13204,4 @@ function showAlert(message, duration = 1000) {
     })
   }, duration)
 }
-
-var timerInterval; 
-
-function startTimer() {
-    var startTime = Date.now();
-    timerInterval = setInterval(function() {
-        var elapsedTime = Date.now() - startTime;
-        var seconds = Math.floor((elapsedTime / 1000) % 60);
-        var minutes = Math.floor((elapsedTime / (1000 * 60)) % 60);
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        document.getElementById('game-timer').textContent = 'Playtime: ' + minutes + ':' + seconds;
-    }, 1000);
-}
-
-function stopTimer() {
-    clearInterval(timerInterval);
-}
-
-
 

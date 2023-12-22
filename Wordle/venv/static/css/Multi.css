@@ -38,18 +38,42 @@
     margin: 50px 100px 0px 100px;
   }
 
+  .back {
+    visibility: hidden;
+    background-color: hsl(49, 51%, 47%);
+    color: white;
+    font-weight: 400;
+    font-size: 26px;
+    border: none;
+    border-radius: 5px;
+    align-items: center;
+    animation: none;
+    margin-left: 5px;
+  }
+
+  .back.visible {
+    visibility: visible;
+    animation: highlightButton 1s ease 3; 
+  }
+
+  .back:hover{
+      background-color: hsl(115, 29%, 43%);
+      color: white;
+  }
+
+
   .btn-primary{
     animation: highlightButton 1s ease 3;
   }
 
   @keyframes highlightButton {
     0%, 100% {
-      background-color: #818283; 
+      background-color: hsl(49, 51%, 47%); 
       transform: scale(1);
       opacity: 1;
     }
     50% {
-      background-color: #538d4e;
+      background-color: hsl(49, 51%, 47%);
       transform: scale(1.2);
       opacity: 1;
     }
@@ -75,8 +99,10 @@
   }
 
 
-  .keyboards{
-    display: flex;
+  .bottom{
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    align-items: center; 
   }
   .keyboard1 {
     display: grid;
@@ -86,17 +112,13 @@
     gap: .25em;
     justify-content: center;
   }
-  
-  .keyboard2 {
-    visibility: hidden;
-    display: grid;
-    flex-grow: 1;
-    grid-template-columns: repeat(20, minmax(auto, 1.25em));
-    grid-auto-rows: 3em;
-    gap: .25em;
-    justify-content: center;
+
+  .game-timer{
+    color: white;
+    font-size: 60px;
+    justify-self: center;
   }
-  
+
   .key {
     font-size: inherit;
     grid-column: span 2;
@@ -309,4 +331,5 @@
     font-size: 20px;
     font-weight: 700;
   }
+
   
