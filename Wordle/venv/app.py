@@ -306,9 +306,9 @@ def handle_guess(data):
 
         print(ergebnis, target_word,sender_sid)
 
-        emit('guess_result', {'ergebnis': ergebnis, 'sender_sid': sender_sid})
+        emit('guess_result', {'ergebnis': ergebnis, 'sender_sid': sender_sid}, boradcast =True)
     else:
-        emit('error', {'message': 'No target word set'})
+        emit('error', {'message': 'No target word set'}, boradcast =True)
 
 
     # Senden des Ergebnisses zurück zum Client
