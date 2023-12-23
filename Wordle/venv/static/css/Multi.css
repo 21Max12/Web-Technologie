@@ -61,9 +61,8 @@
       color: white;
   }
 
-
   .btn-primary{
-    animation: highlightButton 1s ease 3;
+    animation: highlightButton 1s ease 5;
   }
 
   @keyframes highlightButton {

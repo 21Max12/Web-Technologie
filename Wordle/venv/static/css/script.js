@@ -12984,6 +12984,7 @@ const MAX_GUESSES = 6;
 startInteraction()
 startTimer()
 
+
 function startInteraction() {
   document.addEventListener("click", handleMouseClick)
   document.addEventListener("keydown", handleKeyPress)
@@ -13085,16 +13086,11 @@ function submitGuess() {
   activeTiles.forEach((...params) => flipTile(...params, guess))
 }
 
-let targetWord = null;
 
 socket.on('guess_result', (data) => {
-  const { ergebnis, sender_sid, target_word } = data; 
+  const { ergebnis, sender_sid} = data; 
   console.log('Result received:', ergebnis, 'from SID:', sender_sid);
 
-  if (target_word) {
-    targetWord = target_word; 
-  }
-  
   if (sender_sid === mySid) {
     updateTilesBasedOnResponse(ergebnis, 'player');
     checkWinLoseBasedOnResponse(ergebnis, 'player');
@@ -13105,6 +13101,13 @@ socket.on('guess_result', (data) => {
     }
 });
 
+
+socket.on('receive_target_word', (data) => {
+  receivedTargetWord = data.target_word;
+  console.log(receivedTargetWord);
+});
+
+let receivedTargetWord = null;
 let playerGuessCount = 0;
 let opponentGuessCount = 0;
 let opponentDrawCount = 0;
@@ -13113,7 +13116,7 @@ let opponentDrawCount = 0;
 function updateTilesBasedOnResponse(positions, playerType) {
   let tilesToUpdate;
   let startTileIndex;
-
+  
   if (playerType === 'player') {
     startTileIndex = playerGuessCount * WORD_LENGTH;
     tilesToUpdate = document.querySelectorAll('.guess-grid .tile');
@@ -13141,20 +13144,30 @@ function checkWinLoseBasedOnResponse(correctPositions, playerType) {
   if (hasWon) {
     const message = playerType === 'player' ? "You Won! :)": "You Lose! :(";
     showAlert(message, 5000);
-    showAlert(targetWord.toUpperCase(), null)
-    stopTimer();
-    setTimeout(() => {
-      showBackToMenuButton();
-    }, 5500);
-
-    stopInteraction();
+    gameover();
     return;
   }
 
   if (playerTilesLeft === 0 && opponentGuessCount === MAX_GUESSES) {
-    showAlert("Draw - No Tiles Left", 5000);
-    stopInteraction();
+    showAlert("Draw :(", 5000);
+    gameover();
     return;
+  }
+  
+  function gameover() {
+    stopTimer();
+
+    stopInteraction();
+
+    socket.emit('request_target_word');
+    
+    setTimeout(() => {
+      showAlert(receivedTargetWord.toUpperCase() , null)
+    }, 6000);
+
+    setTimeout(() => {
+      showBackToMenuButton();
+    }, 10000); 
   }
 
   if (playerTilesLeft === 0 && !noTilesAlertShown) {
@@ -13178,7 +13191,6 @@ function noTilesLeft() {
   const remainingTiles = guessGrid.querySelectorAll(":not([data-letter])");
   return remainingTiles.length === 0;
 }
-
 
 function flipTile(tile, result) {
   const letter = tile.dataset.letter;
@@ -13251,6 +13263,5 @@ function startTimer() {
 function stopTimer() {
     clearInterval(timerInterval);
 }
-
 
 

@@ -13,6 +13,13 @@ from flask_socketio import SocketIO, emit, join_room, leave_room, send
 from string import ascii_uppercase
 import random
 from functools import wraps
+from threading import Thread, Event
+import time
+
+
+
+
+
 
 
 
@@ -31,6 +38,31 @@ socketio = SocketIO(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
+
+
+
+game_timer_event = Event()
+
+def send_game_time(room, count_start):
+    while not game_timer_event.is_set():
+        time_elapsed = int(time.time() - count_start)
+        socketio.emit('game_time', {'time_elapsed': time_elapsed}, room=room)
+        socketio.sleep(1)
+
+@socketio.on('start_game_timer')
+def handle_start_game_timer():
+    room = session.get('game_room')  # Ersetzen Sie dies durch Ihre Logik, um die Spielraum-ID zu erhalten
+    count_start = time.time()
+    game_timer_event.clear()
+    # Starten Sie einen neuen Thread, um die Spielzeit zu senden
+    thread = Thread(target=send_game_time, args=(room, count_start))
+    thread.start()
+
+@socketio.on('stop_game_timer')
+def handle_stop_game_timer():
+    game_timer_event.set() 
+
+
 
 
 def admin_required(f):
@@ -303,21 +335,23 @@ def handle_guess(data):
 
     if target_word:
         ergebnis = wort_uebereinstimmung(target_word, guess)
-        print(ergebnis, target_word,sender_sid)
+        print(ergebnis, target_word, sender_sid)
+        emit('guess_result', {'ergebnis': ergebnis, 'sender_sid': sender_sid}, broadcast=True)  
 
-        if ergebnis == [1, 1, 1, 1, 1]:
-            emit('guess_result', {'ergebnis': ergebnis, 'sender_sid': sender_sid, 'target_word': target_word}, broadcast=True)
-        else:
-            emit('guess_result', {'ergebnis': ergebnis, 'sender_sid': sender_sid}, broadcast=True)
     else:
         emit('error', {'message': 'No target word set'}, broadcast=True)
 
 
+@socketio.on('request_target_word')
+def handle_request_target_word():
+    target_word = session.get('target_word')
+    print(target_word)
+    if target_word:
+        emit('receive_target_word', {'target_word': target_word}, broadcast=True)
+
+
     # Senden des Ergebnisses zurück zum Client
     #emit('guess_result', {'is_correct': is_correct})
-
-
-
 
 @app.route('/newpw')
 def newpw():
