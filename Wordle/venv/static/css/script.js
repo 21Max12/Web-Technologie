@@ -13156,9 +13156,7 @@ function checkWinLoseBasedOnResponse(correctPositions, playerType) {
   
   function gameover() {
     stopTimer();
-
     stopInteraction();
-
     socket.emit('request_target_word');
     
     setTimeout(() => {
@@ -13263,5 +13261,4 @@ function startTimer() {
 function stopTimer() {
     clearInterval(timerInterval);
 }
-
 

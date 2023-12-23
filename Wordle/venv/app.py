@@ -13,13 +13,6 @@ from flask_socketio import SocketIO, emit, join_room, leave_room, send
 from string import ascii_uppercase
 import random
 from functools import wraps
-from threading import Thread, Event
-import time
-
-
-
-
-
 
 
 
@@ -38,32 +31,6 @@ socketio = SocketIO(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
-
-
-
-game_timer_event = Event()
-
-def send_game_time(room, count_start):
-    while not game_timer_event.is_set():
-        time_elapsed = int(time.time() - count_start)
-        socketio.emit('game_time', {'time_elapsed': time_elapsed}, room=room)
-        socketio.sleep(1)
-
-@socketio.on('start_game_timer')
-def handle_start_game_timer():
-    room = session.get('game_room')  # Ersetzen Sie dies durch Ihre Logik, um die Spielraum-ID zu erhalten
-    count_start = time.time()
-    game_timer_event.clear()
-    # Starten Sie einen neuen Thread, um die Spielzeit zu senden
-    thread = Thread(target=send_game_time, args=(room, count_start))
-    thread.start()
-
-@socketio.on('stop_game_timer')
-def handle_stop_game_timer():
-    game_timer_event.set() 
-
-
-
 
 def admin_required(f):
     @wraps(f)
