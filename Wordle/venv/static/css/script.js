@@ -13084,7 +13084,7 @@ function submitGuess() {
   socket.emit('submit_guess', { guess: guess, code: gameCode });
   
   stopInteraction()
-  activeTiles.forEach((...params) => flipTile(...params, guess))
+  //activeTiles.forEach((...params) => flipTile(...params, guess))
 }
 
 
@@ -13127,7 +13127,6 @@ function updateTilesBasedOnResponse(positions, playerType) {
     tilesToUpdate = document.querySelectorAll('.guess-opponent .tile');
     opponentGuessCount++; 
   }
-
   for (let i = 0; i < WORD_LENGTH; i++) {
     flipTile(tilesToUpdate[startTileIndex + i], positions[i]);
   }
@@ -13192,19 +13191,22 @@ function noTilesLeft() {
 }
 
 function flipTile(tile, result) {
+  console.log("ergebnis =", result);
   const letter = tile.dataset.letter;
   const key = keyboard.querySelector(`[data-key="${letter}"i]`);
   addFlipAnimation(tile, result, key);
 }
 
 function addFlipAnimation(tile, result, key) {
+  //console.log("result =", result);
   setTimeout(() => {
     tile.classList.add("flip");
   }, FLIP_ANIMATION_DURATION / 5); 
-
+  
+  
   tile.addEventListener("transitionend", () => {
     tile.classList.remove("flip");
-    updateTileState(tile, key, result); 
+    updateTileState(tile, key, result);
   }, { once: true });
 }
 
@@ -13212,14 +13214,17 @@ function addFlipAnimation(tile, result, key) {
 function updateTileState(tile, key, state) {
   switch(state) {
     case 1: 
+      //console.log("correct");
       tile.dataset.state = "correct";
       key.classList.add("correct");
       break;
     case 2: 
+      //console.log("wrong-location");
       tile.dataset.state = "wrong-location";
       key.classList.add("wrong-location");
       break;
     case 3: 
+      //console.log("wrong");
       tile.dataset.state = "wrong";
       key.classList.add("wrong");
       break;
