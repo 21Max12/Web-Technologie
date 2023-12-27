@@ -87,6 +87,11 @@ class Game(db.Model):
     id_Host = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     id_Join = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     winner = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
+    target_word = db.Column(db.String(255))
+    game_code = db.Column(db.String(255))
+    host_sid = db.Column(db.String(255))
+    join_sid = db.Column(db.String(255))
+
 
     host = db.relationship('User', foreign_keys=[id_Host], backref=db.backref('hosted_games', lazy=True))
     joiner = db.relationship('User', foreign_keys=[id_Join], backref=db.backref('joined_games', lazy=True))
@@ -283,7 +288,9 @@ def wort_uebereinstimmung(target_word, guess):
     return ergebnis
 
 
-
+def get_user_id_from_sid(sender_sid):
+    return user_sid_map.get(sender_sid)
+    
 
 def get_random_gameword():
     count = Gamewords.query.count()
@@ -297,13 +304,22 @@ def get_random_gameword():
 @socketio.on('submit_guess')
 def handle_guess(data):
     guess = data['guess']
-    sender_sid = request.sid
-    target_word = session.get('target_word')
+    game_code = data['code']
+    sender_sid = request.sid 
 
-    if target_word:
+    user_id = get_user_id_from_sid(sender_sid)
+    
+    game = Game.query.filter_by(game_code=game_code).first()
+
+    if game:
+        target_word = game.target_word
         ergebnis = wort_uebereinstimmung(target_word, guess)
-        print(ergebnis, target_word, sender_sid)
+        print(ergebnis, target_word, sender_sid,game_code)
         emit('guess_result', {'ergebnis': ergebnis, 'sender_sid': sender_sid}, broadcast=True)  
+        if ergebnis == [1, 1, 1, 1, 1]:
+            print("Winner")
+            game.winner = user_id
+            db.session.commit()
 
     else:
         emit('error', {'message': 'No target word set'}, broadcast=True)
@@ -325,12 +341,19 @@ def newpw():
 
     return render_template('NewPassword.html')
 
+user_sid_map = {}
+
 
 @socketio.on("connect")
 def connect(auth):
     print('Client Connected')
     room = session.get("room")
     name = session.get("name")
+
+    user_id = current_user.id
+    sender_sid = request.sid
+    user_sid_map[sender_sid] = user_id
+
     if not room or not name:
         return
     if room not in rooms:
@@ -358,49 +381,7 @@ def disconnect():
     print(f"{name} left the room{room}")
 
 
-@socketio.on('spieleraktion')
-def spieleraktion(data):
-    room = data['room']
-    guess = data['guess']
-    response_data = {
-        'result': 'Ergebnis',
-        'player': 'name'
-    }
-    # Verarbeiten der Spieleraktion
-    # Beispiel: Aktualisieren des Spielstands oder Verarbeiten einer Nachricht
-    # Rücksenden der Antwort an die Spieler
-    emit('spielupdate', response_data, room=room)
 
-@socketio.on('create_game')
-def on_create_game():
-    room = generate_unique_room_id()
-    chosen_word = get_random_gameword()
-    games[room] = {
-        'word': chosen_word,
-        'guesses': []
-    }
-    join_room(room)
-    emit('game_created', {'room': room, 'word_length': chosen_word}, room=room)
-
-@socketio.on('make_guess')
-def make_guess(data):
-    room = data['room']
-    guess = data['guess']
-    game = games.get(room)
-
-    if not game:
-        emit('error', {'message': 'Spiel nicht gefunden'}, room=room)
-        return
-
-    # Überprüfen Sie den Rateversu ch
-    result = check_guess(game['word'], guess)
-    game['guesses'].append((data['player'], guess, result))
-
-    emit('guess_result', {'player': data['player'], 'guess': guess, 'result': result}, room=room)
-
-def check_guess(word, guess):
-    # Implementieren Sie hier Ihre Logik zur Überprüfung des Rateversuchs
-    pass
 
 
 @app.route('/join', methods=['POST', 'GET'])
@@ -413,6 +394,8 @@ def join():
             game = Game.query.get(game_id)
             if game and game.id_Join is None:  
                 game.id_Join = current_user.id
+                
+                
                 db.session.commit()
                 
               
@@ -431,10 +414,13 @@ def host():
         new_game = Game(id_Host=current_user.id)
         db.session.add(new_game)
         db.session.commit()
-
+        
         game_code = generate_unique_code(4)
         rooms[game_code] = new_game.id_game
-        session['target_word'] = get_random_gameword()
+        session['current_game_code'] = game_code
+        new_game.game_code = game_code
+        new_game.target_word = get_random_gameword()
+        db.session.commit()
         return render_template('Host.html', game_code=game_code)
     return render_template('Host.html')
 
