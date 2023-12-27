@@ -13157,7 +13157,7 @@ function checkWinLoseBasedOnResponse(correctPositions, playerType) {
   function gameover() {
     stopTimer();
     stopInteraction();
-    socket.emit('request_target_word');
+    socket.emit('request_target_word', {code: gameCode});
     
     setTimeout(() => {
       showAlert(receivedTargetWord.toUpperCase() , null)
