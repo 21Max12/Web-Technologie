@@ -12985,6 +12985,7 @@ startInteraction()
 startTimer()
 
 
+
 function startInteraction() {
   document.addEventListener("click", handleMouseClick)
   document.addEventListener("keydown", handleKeyPress)
@@ -13080,8 +13081,8 @@ function submitGuess() {
     return
   }
 
-  socket.emit('submit_guess', { guess: guess });
-
+  socket.emit('submit_guess', { guess: guess, code: gameCode });
+  
   stopInteraction()
   activeTiles.forEach((...params) => flipTile(...params, guess))
 }
@@ -13165,7 +13166,7 @@ function checkWinLoseBasedOnResponse(correctPositions, playerType) {
 
     setTimeout(() => {
       showBackToMenuButton();
-    }, 10000); 
+    }, 10000);
   }
 
   if (playerTilesLeft === 0 && !noTilesAlertShown) {
