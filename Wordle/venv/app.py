@@ -89,13 +89,16 @@ class Game(db.Model):
     winner = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     target_word = db.Column(db.String(255))
     game_code = db.Column(db.String(255))
-    host_sid = db.Column(db.String(255))
-    join_sid = db.Column(db.String(255))
+
 
 
     host = db.relationship('User', foreign_keys=[id_Host], backref=db.backref('hosted_games', lazy=True))
     joiner = db.relationship('User', foreign_keys=[id_Join], backref=db.backref('joined_games', lazy=True))
     winner_user = db.relationship('User', foreign_keys=[winner], backref=db.backref('won_games', lazy=True))
+
+    @property
+    def is_full(self):
+        return self.id_Host is not None and self.id_Join is not None
 
 class Gamewords(db.Model):
     id_word = db.Column(db.Integer, primary_key = True)
@@ -256,8 +259,27 @@ def singleplayer():
 @app.route('/multiplayer/<code>', methods=['GET', 'POST'])
 @login_required
 def multiplayer(code):
-    return render_template('Multi.html', code=code)
+    game_id = rooms.get(code)
+    print(game_id)
 
+    if not game_id:
+        flash('Spiel nicht gefunden.')
+        return redirect(url_for('homescreen'))  
+
+    game = Game.query.get(game_id)
+    host_user = User.query.get(game.id_Host)
+    join_user = User.query.get(game.id_Join)
+    host_name = host_user.username
+    join_name = join_user.username
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    print(host_name,join_name,current_time)
+    if not game or (game.id_Host != current_user.id and (game.id_Join is None or game.id_Join != current_user.id)):
+        flash('Sie sind nicht berechtigt, dieses Spiel zu betreten.')
+        return redirect(url_for('homescreen'))  
+
+    
+    return render_template('Multi.html', code=code, host_name=host_name, join_name=join_name, current_time=current_time)
 
 
 
@@ -327,6 +349,7 @@ def handle_guess(data):
 
 @socketio.on('request_target_word')
 def handle_request_target_word():
+    
     target_word = session.get('target_word')
     print(target_word)
     if target_word:
