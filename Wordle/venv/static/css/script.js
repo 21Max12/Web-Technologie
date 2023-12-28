@@ -13093,13 +13093,13 @@ function submitGuess() {
 
 
 socket.on('guess_result', (data) => {
-  const { ergebnis, sender_sid} = data; 
-  console.log('Result received:', ergebnis, 'from SID:', sender_sid);
+  const { ergebnis, sender_sid, game_code} = data; 
+  console.log('Result received:', ergebnis, 'from SID:', sender_sid, "das ist der Gamecode:", game_code);
 
-  if (sender_sid === mySid) {
+  if (sender_sid === mySid && gameCode === game_code) {
     updateTilesBasedOnResponse(ergebnis, 'player');
     checkWinLoseBasedOnResponse(ergebnis, 'player');
-    } else {
+    } else if(gameCode === game_code){
     opponentDrawCount++;
     updateTilesBasedOnResponse(ergebnis, 'opponent');
     checkWinLoseBasedOnResponse(ergebnis, 'opponent');
