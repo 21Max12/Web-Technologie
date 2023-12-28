@@ -13,6 +13,7 @@ from flask_socketio import SocketIO, emit, join_room, leave_room, send
 from string import ascii_uppercase
 import random
 from functools import wraps
+import time
 
 
 
@@ -89,6 +90,7 @@ class Game(db.Model):
     winner = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=True)
     target_word = db.Column(db.String(255))
     game_code = db.Column(db.String(255))
+    start_time = db.Column(db.Time)
 
 
 
@@ -366,19 +368,17 @@ def handle_guess(data):
     else:
         emit('error', {'message': 'No target word set'}, broadcast=True)
 
-@socketio.on('current_time')
-def current_time():
-    current_time = datetime.now().strftime("%H:%M:%S")
-    emit('current_time', {'current_time': current_time}, broadcast=True)
+
          
 @socketio.on('request_target_word')
 def handle_request_target_word(data):
     game_code = data['code']
     game = Game.query.filter_by(game_code=game_code).first()
     target_word = game.target_word
+    start_time = game.start_time
     print(target_word)
     if target_word:
-        emit('receive_target_word', {'target_word': target_word}, broadcast=True)
+        emit('receive_target_word', {'target_word': target_word, 'start_time': start_time}, broadcast=True)
 
 
 @app.route('/newpw')
@@ -439,7 +439,8 @@ def join():
             game = Game.query.get(game_id)
             if game and game.id_Join is None:  
                 game.id_Join = current_user.id
-                
+                current_time = datetime.now().time()
+                game.start_time = current_time
                 
                 db.session.commit()
                 
