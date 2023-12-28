@@ -303,9 +303,6 @@ def multiplayer(code):
     return render_template('Multi.html', code=code, player=player, opponent=opponent,start_time=start_time)
 
 
-
-
-
 def wort_uebereinstimmung(target_word, guess):
     # Initialisierung der Ergebnisliste
     ergebnis = []
@@ -359,7 +356,7 @@ def handle_guess(data):
         target_word = game.target_word
         ergebnis = wort_uebereinstimmung(target_word, guess)
         print(ergebnis, target_word, sender_sid,game_code)
-        emit('guess_result', {'ergebnis': ergebnis, 'sender_sid': sender_sid}, broadcast=True)  
+        emit('guess_result', {'ergebnis': ergebnis, 'sender_sid': sender_sid, 'game_code' : game_code}, broadcast=True)  
         if ergebnis == [1, 1, 1, 1, 1]:
             print("Winner")
             game.winner = user_id
