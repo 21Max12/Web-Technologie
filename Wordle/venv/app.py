@@ -285,7 +285,7 @@ def multiplayer(code):
     join_user = User.query.get(game.id_Join)
     host_name = host_user.username
     join_name = join_user.username
-    
+    start_time = game.start_time
 
     if logged_in_username == join_name:
         player = logged_in_username 
@@ -300,7 +300,7 @@ def multiplayer(code):
         return redirect(url_for('homescreen'))  
     
     
-    return render_template('Multi.html', code=code, player=player, opponent=opponent)
+    return render_template('Multi.html', code=code, player=player, opponent=opponent,start_time=start_time)
 
 
 
@@ -375,10 +375,10 @@ def handle_request_target_word(data):
     game_code = data['code']
     game = Game.query.filter_by(game_code=game_code).first()
     target_word = game.target_word
-    start_time = game.start_time
+    
     print(target_word)
     if target_word:
-        emit('receive_target_word', {'target_word': target_word, 'start_time': start_time}, broadcast=True)
+        emit('receive_target_word', {'target_word': target_word}, broadcast=True)
 
 
 @app.route('/newpw')
