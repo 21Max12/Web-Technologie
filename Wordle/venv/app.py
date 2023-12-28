@@ -47,7 +47,7 @@ def admin_required(f):
                 flash("Sie haben keine Berechtigung, diese Seite zu sehen.")
         else:
             flash("Sie sind nicht eingeloggt.")
-        return redirect(url_for('homescreen'))  # Oder eine andere passende Seite
+        return redirect(url_for('homescreen'))  
     return decorated_function
 
 
@@ -262,6 +262,17 @@ def multiplayer(code):
     game_id = rooms.get(code)
     print(game_id)
 
+    session_key = f"multiplayer_access_count_{code}"
+    if session_key not in session:
+        session[session_key] = 0
+    session[session_key] += 1
+
+    # Überprüfen, ob das Limit erreicht wurde
+    if session[session_key] > 1:
+        flash('Sie haben die maximale Anzahl von Aufrufen für dieses Spiel erreicht.')
+        return redirect(url_for('homescreen'))
+
+    game_id = rooms.get(code)
     if not game_id:
         flash('Spiel nicht gefunden.')
         return redirect(url_for('homescreen'))  
@@ -271,7 +282,7 @@ def multiplayer(code):
     join_user = User.query.get(game.id_Join)
     host_name = host_user.username
     join_name = join_user.username
-    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    current_time = datetime.now().strftime("%H:%M:%S")
 
     print(host_name,join_name,current_time)
     if not game or (game.id_Host != current_user.id and (game.id_Join is None or game.id_Join != current_user.id)):
@@ -411,7 +422,7 @@ def disconnect():
 @login_required
 def join():
     if request.method == 'POST':
-        game_code = request.form.get('game_code')  # Verwendung von runden Klammern
+        game_code = request.form.get('game_code')  
         if game_code and game_code in rooms:
             game_id = rooms[game_code]
             game = Game.query.get(game_id)

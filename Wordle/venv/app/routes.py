@@ -1,11 +1,17 @@
-from flask import Blueprint, render_template, request, redirect, url_for, session, flash
+from flask import Blueprint, render_template, request, redirect, url_for, session, flash, jsonify
 from flask_login import login_required, current_user, logout_user, login_user
 from .models import User, Game
 from .utils import admin_required, get_random_gameword, generate_unique_code
 from .forms import LoginForm, RegisterForm
 from . import db, bcrypt
+from datetime import datetime
 
 main = Blueprint('main', __name__)
+
+@main.route('/admin_view', methods=['GET', 'POST'])
+@admin_required
+def admin_page():
+    return render_template('Admin.html')
 
 @main.route('/', methods=['GET', 'POST'])
 def login():
@@ -21,17 +27,13 @@ def login():
             print(user.is_user_admin)
             return redirect(url_for('homescreen'))
         else:
-
+            #raise ValidationError(
+                #"Falscher Benutzername oder Kennwort"
+                #Benni: Das was ich kommentiert habe ist alt 
             return render_template('Login.html', form=form, error=True)
             
             pass
     return render_template('Login.html', form=form)
-
-
-@main.route('/admin_view', methods=['GET', 'POST'])
-@admin_required
-def admin_page():
-    return render_template('Admin.html')
 
 
 @main.route('/homescreen', methods=['GET','POST'])
@@ -68,6 +70,7 @@ def register():
         return redirect(url_for('login'))
     return render_template('Register.html', form=form)
 
+
 @main.route('/pwreset', methods=['GET', 'POST'])
 def pwreset():
     if request.method == 'POST':
@@ -91,11 +94,32 @@ def impressum():
 def singleplayer():
     return render_template('Single.html')
 
+rooms ={}
 
 @main.route('/multiplayer/<code>', methods=['GET', 'POST'])
 @login_required
 def multiplayer(code):
-    return render_template('Multi.html', code=code)
+    game_id = rooms.get(code)
+    print(game_id)
+
+    if not game_id:
+        flash('Spiel nicht gefunden.')
+        return redirect(url_for('homescreen'))  
+
+    game = Game.query.get(game_id)
+    host_user = User.query.get(game.id_Host)
+    join_user = User.query.get(game.id_Join)
+    host_name = host_user.username
+    join_name = join_user.username
+    current_time = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+    print(host_name,join_name,current_time)
+    if not game or (game.id_Host != current_user.id and (game.id_Join is None or game.id_Join != current_user.id)):
+        flash('Sie sind nicht berechtigt, dieses Spiel zu betreten.')
+        return redirect(url_for('homescreen'))  
+
+    
+    return render_template('Multi.html', code=code, host_name=host_name, join_name=join_name, current_time=current_time)
 
 @main.route('/newpw')
 def newpw():
@@ -112,7 +136,10 @@ def join():
             game = Game.query.get(game_id)
             if game and game.id_Join is None:  
                 game.id_Join = current_user.id
-                db.session.commit()               
+                
+                
+                db.session.commit()
+                
               
                 return redirect(url_for('multiplayer', code=game_code))
             else:
@@ -129,12 +156,27 @@ def host():
         new_game = Game(id_Host=current_user.id)
         db.session.add(new_game)
         db.session.commit()
-
+        
         game_code = generate_unique_code(4)
         rooms[game_code] = new_game.id_game
-        session['target_word'] = get_random_gameword()
+        session['current_game_code'] = game_code
+        new_game.game_code = game_code
+        new_game.target_word = get_random_gameword()
+        db.session.commit()
         return render_template('Host.html', game_code=game_code)
     return render_template('Host.html')
+
+@main.route('/check_game_status/<code>')
+@login_required
+def check_game_status(code):
+    # Überprüfen Sie den Status des Spiels
+    # Beispiel:
+    game_id = rooms.get(code)
+    if game_id:
+        game = Game.query.get(game_id)
+        if game and game.id_Join is not None:
+            return jsonify({"status": "ready"})
+    return jsonify({"status": "waiting"})
 
 @main.route('/settings', methods=['POST','GET'])
 @login_required

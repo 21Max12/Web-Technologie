@@ -3,6 +3,7 @@ from flask import session, flash, redirect, url_for
 import random
 from .models import User, Gamewords
 from string import ascii_uppercase
+from .routes import rooms
 
 def admin_required(f):
     @wraps(f)

@@ -6,13 +6,17 @@ from .routes import main as main_routes
 from flask_bcrypt import Bcrypt
 
 
-app = Flask(__name__)
+
+
 db = SQLAlchemy()
 socketio = SocketIO()
 login_manager = LoginManager()
 bcrypt = Bcrypt(app)
+user_sid_map = {}
+rooms ={}
 
 def create_app():
+    app = Flask(__name__)
     app.config.from_pyfile('settings.py')
 
     db.init_app(app)
