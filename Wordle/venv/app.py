@@ -372,16 +372,14 @@ def current_time():
     emit('current_time', {'current_time': current_time}, broadcast=True)
          
 @socketio.on('request_target_word')
-def handle_request_target_word():
-    
-    target_word = session.get('target_word')
+def handle_request_target_word(data):
+    game_code = data['code']
+    game = Game.query.filter_by(game_code=game_code).first()
+    target_word = game.target_word
     print(target_word)
     if target_word:
         emit('receive_target_word', {'target_word': target_word}, broadcast=True)
 
-
-    # Senden des Ergebnisses zurück zum Client
-    #emit('guess_result', {'is_correct': is_correct})
 
 @app.route('/newpw')
 def newpw():
