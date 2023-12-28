@@ -277,20 +277,28 @@ def multiplayer(code):
         flash('Spiel nicht gefunden.')
         return redirect(url_for('homescreen'))  
 
+    logged_in_username = current_user.username
     game = Game.query.get(game_id)
     host_user = User.query.get(game.id_Host)
     join_user = User.query.get(game.id_Join)
     host_name = host_user.username
     join_name = join_user.username
-    current_time = datetime.now().strftime("%H:%M:%S")
+    
 
-    print(host_name,join_name,current_time)
+    if logged_in_username == join_name:
+        player = logged_in_username 
+        opponent = host_name
+    else:
+        player = host_name
+        opponent = join_name
+
+    
     if not game or (game.id_Host != current_user.id and (game.id_Join is None or game.id_Join != current_user.id)):
         flash('Sie sind nicht berechtigt, dieses Spiel zu betreten.')
         return redirect(url_for('homescreen'))  
-
     
-    return render_template('Multi.html', code=code, host_name=host_name, join_name=join_name, current_time=current_time)
+    
+    return render_template('Multi.html', code=code, player=player, opponent=opponent)
 
 
 
