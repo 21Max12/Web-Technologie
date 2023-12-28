@@ -12,6 +12,12 @@
   <script src="{{ url_for('static', filename='css/script.js') }}" defer></script>  
   <link rel="icon" type="image" href="{{ url_for('static', filename='css/letter.jpeg') }}">
   <title>Tile Quest - Multiplayer</title>
+  <script type="text/javascript">
+    const player = "{{ player }}";
+    const opponent = "{{ opponent }}";
+    const gameCode = "{{ code }}";
+    const startTime = "{{ start_time }}"
+</script>
 </head>
 <body>
 {% include "navbar.html" %}
@@ -26,8 +32,8 @@
     </div>
 
     <div class="headers">
-      <h1 class="head1" name="User">Player</h1>
-      <h1 class="head2">Opponent</h1>
+      <h1 class="head1" name="User" id="playerName">{{ player }}</h1>
+      <h1 class="head2" id="opponentName">{{ opponent }}</h1>
     </div>
     
     <div class="almost-all">
@@ -142,10 +148,6 @@
     <div class="bottom-bar">
       <div id="clock" class="clock"></div>
     </div>
-
-    <script>
-      var gameCode = "{{ code }}";
-    </script>
     
     <script>
       function updateClock() {

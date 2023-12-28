@@ -12980,9 +12980,14 @@ const keyboard = document.querySelector("[data-keyboard]")
 const alertContainer = document.querySelector("[data-alert-container]")
 const guessGrid = document.querySelector("[data-guess-grid]")
 const MAX_GUESSES = 6;
+let timerInterval;
 
-startInteraction()
-startTimer()
+startInteraction();
+console.log(startTime);
+//startTimer();
+document.addEventListener('DOMContentLoaded', (event) => {
+  startTimer();
+});
 
 
 
@@ -13084,7 +13089,6 @@ function submitGuess() {
   socket.emit('submit_guess', { guess: guess, code: gameCode });
   
   stopInteraction()
-  //activeTiles.forEach((...params) => flipTile(...params, guess))
 }
 
 
@@ -13105,7 +13109,6 @@ socket.on('guess_result', (data) => {
 
 socket.on('receive_target_word', (data) => {
   receivedTargetWord = data.target_word;
-  console.log(receivedTargetWord);
 });
 
 let receivedTargetWord = null;
@@ -13158,7 +13161,7 @@ function checkWinLoseBasedOnResponse(correctPositions, playerType) {
     stopTimer();
     stopInteraction();
     socket.emit('request_target_word', {code: gameCode});
-    
+
     setTimeout(() => {
       showAlert(receivedTargetWord.toUpperCase() , null)
     }, 6000);
@@ -13191,14 +13194,12 @@ function noTilesLeft() {
 }
 
 function flipTile(tile, result) {
-  console.log("ergebnis =", result);
   const letter = tile.dataset.letter;
   const key = keyboard.querySelector(`[data-key="${letter}"i]`);
   addFlipAnimation(tile, result, key);
 }
 
 function addFlipAnimation(tile, result, key) {
-  //console.log("result =", result);
   setTimeout(() => {
     tile.classList.add("flip");
   }, FLIP_ANIMATION_DURATION / 5); 
@@ -13214,17 +13215,14 @@ function addFlipAnimation(tile, result, key) {
 function updateTileState(tile, key, state) {
   switch(state) {
     case 1: 
-      //console.log("correct");
       tile.dataset.state = "correct";
       key.classList.add("correct");
       break;
     case 2: 
-      //console.log("wrong-location");
       tile.dataset.state = "wrong-location";
       key.classList.add("wrong-location");
       break;
     case 3: 
-      //console.log("wrong");
       tile.dataset.state = "wrong";
       key.classList.add("wrong");
       break;
@@ -13250,21 +13248,28 @@ function showAlert(message, duration = 1000) {
   }, duration)
 }
 
-var timerInterval; 
 
 function startTimer() {
-    var startTime = Date.now();
-    timerInterval = setInterval(function() {
-        var elapsedTime = Date.now() - startTime;
-        var seconds = Math.floor((elapsedTime / 1000) % 60);
-        var minutes = Math.floor((elapsedTime / (1000 * 60)) % 60);
-        seconds = seconds < 10 ? "0" + seconds : seconds;
-        minutes = minutes < 10 ? "0" + minutes : minutes;
-        document.getElementById('game-timer').textContent = 'Playtime: ' + minutes + ':' + seconds;
-    }, 1000);
+  const parts = startTime.split(':');
+  const start = new Date();
+  start.setHours(parseInt(parts[0]), parseInt(parts[1]), parseInt(parts[2]), 0);
+
+  timerInterval = setInterval(() => updatePlayTime(start), 10);
+  updatePlayTime(start); 
+}
+
+function updatePlayTime(start) {
+  const now = new Date();
+  const elapsed = now - start; 
+
+  const seconds = Math.floor((elapsed / 1000) % 60);
+  const minutes = Math.floor((elapsed / (1000 * 60)) % 60);
+
+  const formattedTime = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+  document.getElementById('game-timer').textContent = 'Playtime: ' + formattedTime;
 }
 
 function stopTimer() {
-    clearInterval(timerInterval);
+  clearInterval(timerInterval);
 }
 
