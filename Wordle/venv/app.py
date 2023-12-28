@@ -458,7 +458,7 @@ def host():
         db.session.add(new_game)
         db.session.commit()
         
-        game_code = generate_unique_code(4)
+        game_code = generate_unique_code(6)
         rooms[game_code] = new_game.id_game
         session['current_game_code'] = game_code
         new_game.game_code = game_code
