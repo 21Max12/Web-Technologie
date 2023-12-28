@@ -13214,18 +13214,18 @@ function addFlipAnimation(tile, result, key) {
 
 
 function updateTileState(tile, key, state) {
-  switch(state) {
-    case 1: 
+  switch (state) {
+    case 1:
       tile.dataset.state = "correct";
-      key.classList.add("correct");
+      if (key) key.classList.add("correct");
       break;
-    case 2: 
+    case 2:
       tile.dataset.state = "wrong-location";
-      key.classList.add("wrong-location");
+      if (key) key.classList.add("wrong-location");
       break;
-    case 3: 
+    case 3:
       tile.dataset.state = "wrong";
-      key.classList.add("wrong");
+      if (key) key.classList.add("wrong");
       break;
   }
 }
