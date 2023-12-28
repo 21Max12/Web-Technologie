@@ -13094,7 +13094,8 @@ function submitGuess() {
 
 socket.on('guess_result', (data) => {
   const { ergebnis, sender_sid, game_code} = data; 
-  console.log('Result received:', ergebnis, 'from SID:', sender_sid, "das ist der Gamecode:", game_code);
+  console.log('Result received:', ergebnis, 'from SID:', sender_sid);
+  console.log(game_code, gameCode);
 
   if (sender_sid === mySid && gameCode === game_code) {
     updateTilesBasedOnResponse(ergebnis, 'player');
