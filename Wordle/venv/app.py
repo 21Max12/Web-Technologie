@@ -295,6 +295,7 @@ def multiplayer(code):
 
 
 
+
 def wort_uebereinstimmung(target_word, guess):
     # Initialisierung der Ergebnisliste
     ergebnis = []
@@ -357,7 +358,11 @@ def handle_guess(data):
     else:
         emit('error', {'message': 'No target word set'}, broadcast=True)
 
-
+@socketio.on('current_time')
+def current_time():
+    current_time = datetime.now().strftime("%H:%M:%S")
+    emit('current_time', {'current_time': current_time}, broadcast=True)
+         
 @socketio.on('request_target_word')
 def handle_request_target_word():
     
