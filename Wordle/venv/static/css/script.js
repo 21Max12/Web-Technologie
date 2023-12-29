@@ -13082,7 +13082,7 @@ function submitGuess() {
   }, "")
 
   if (!dictionary.includes(guess)) {
-    showAlert("Not in word list")
+    showAlert("Invalid word")
     return
   }
 
