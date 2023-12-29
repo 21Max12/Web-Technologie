@@ -13094,7 +13094,8 @@ function submitGuess() {
 
 socket.on('guess_result', (data) => {
   const { ergebnis, sender_sid, game_code} = data; 
-  console.log('Result received:', ergebnis, 'from SID:', sender_sid, "das ist der Gamecode:", game_code);
+  console.log('Result received:', ergebnis, 'from SID:', sender_sid);
+  console.log(game_code, gameCode);
 
   if (sender_sid === mySid && gameCode === game_code) {
     updateTilesBasedOnResponse(ergebnis, 'player');
@@ -13213,18 +13214,18 @@ function addFlipAnimation(tile, result, key) {
 
 
 function updateTileState(tile, key, state) {
-  switch(state) {
-    case 1: 
+  switch (state) {
+    case 1:
       tile.dataset.state = "correct";
-      key.classList.add("correct");
+      if (key) key.classList.add("correct");
       break;
-    case 2: 
+    case 2:
       tile.dataset.state = "wrong-location";
-      key.classList.add("wrong-location");
+      if (key) key.classList.add("wrong-location");
       break;
-    case 3: 
+    case 3:
       tile.dataset.state = "wrong";
-      key.classList.add("wrong");
+      if (key) key.classList.add("wrong");
       break;
   }
 }
