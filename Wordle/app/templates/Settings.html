@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tile Quest - Settings</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Settings.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Navbar.css') }}">
+    <link rel="icon" type="image" href="{{ url_for('static', filename='css/letter.jpeg') }}">
+</head>
+
+<body>
+  {% include "navbar.html" %}
+
+  <div class="raster-background"></div>
+
+  <div class="all-body">
+    <div class="profil-body">
+      <h1 class="header"><span class="U">U</span>ser profile</h1><br>
+
+      <div class="profil-attribute">
+        <h2 class="sub-titel">Username</h2>
+        <input class="db-input" type="text" value="{{ username }}" readonly>
+      </div>
+
+      <div class="profil-attribute">
+        <h2 class="sub-titel">E-Mail</h2>
+        <input class="db-input" type="text" value="{{ email }}" readonly>
+      </div>
+      
+
+      <div class="profil-attribute">
+        <h2 class="sub-titel">Password</h2>
+        <a href="/pwreset" class="reset-text">Password reset</a>
+      </div>
+    </div>
+    
+    <div class="bottom-bar">
+      <div id="clock" class="clock"></div>
+    </div>
+  </div>
+
+  
+  <script>
+    function updateClock() {
+      var now = new Date();
+      var hours = now.getHours();
+      var minutes = now.getMinutes();
+      var ampm = hours >= 12 ? 'PM' : 'AM';
+      hours = hours % 12;
+      hours = hours ? hours : 12;
+      minutes = minutes < 10 ? '0' + minutes : minutes;
+      var strTime = hours + ':' + minutes + ' ' + ampm;
+      document.getElementById('clock').textContent = strTime;    
+    }
+  
+    setInterval(updateClock, 1000);
+    updateClock(); 
+  </script>
+
+</body>
+</html>

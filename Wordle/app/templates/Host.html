@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tile Quest - Host</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Host.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/Navbar.css') }}">
+    <link rel="icon" type="image" href="{{ url_for('static', filename='css/letter.jpeg') }}">
+</head>
+
+<body>
+
+  {% include "navbar.html" %}
+
+  <div class="raster-background"></div>
+
+  <div class="middle-content">
+    <div class="header"><h1><span class="tiles-word">
+          <span class="letter">H</span>
+          <span class="letter letter-grey">O</span>
+          <span class="letter">S</span>
+          <span class="letter letter-yellow">T</span>
+          <span class="game">Game</span>
+        </span></h1>
+    </div>
+    <div class="textbox-container">
+        <p class="text-share">To play, share this code with a friend</p>
+        <div class="box-hash"><input type="text" id="myTextbox" class="myTextbox" value="{{ game_code }}" readonly></div>
+    </div>
+
+    <div class="waiting-container">
+        <p class="wait-text">Waiting for Player to join</p>
+        <div class="Tile"></div>
+        <div class="Tile"></div>
+        <div class="Tile"></div>
+        <div class="Tile"></div>
+        <div class="Tile"></div>
+    </div>
+  </div>
+
+  <div class="bottom-bar">
+    <div id="clock" class="clock"></div>
+  </div>
+  
+  <script>
+    function updateClock() {
+    var now = new Date();
+    var hours = now.getHours();
+    var minutes = now.getMinutes();
+    var ampm = hours >= 12 ? 'PM' : 'AM';
+    hours = hours % 12;
+    hours = hours ? hours : 12;
+    minutes = minutes < 10 ? '0' + minutes : minutes;
+    var strTime = hours + ':' + minutes + ' ' + ampm;
+    document.getElementById('clock').textContent = strTime;    
+    }
+  
+    setInterval(updateClock, 1000);
+    updateClock(); 
+  </script>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+  <script>
+  $(document).ready(function() {
+      var gameCode = "{{ game_code }}";
+
+      function checkGameStatus() {
+          $.ajax({
+              url: '/check_game_status/' + gameCode,
+              success: function(response) {
+                  if(response.status === 'ready') {
+                      window.location.href = "{{ url_for('main.multiplayer', code=game_code) }}";
+                  }
+              }
+          });
+      }
+
+      setInterval(checkGameStatus, 1000);
+  });
+  </script>
+
+</body>
+</html>
