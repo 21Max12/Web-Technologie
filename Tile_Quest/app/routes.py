@@ -6,13 +6,23 @@ from app.forms import LoginForm, RegisterForm
 from app.extensions import db, bcrypt
 from datetime import datetime
 from app.shared import rooms
+from app.models import Gamewords
 
 
 main = Blueprint('main', __name__)
 
 @main.route('/admin_view', methods=['GET', 'POST'])
 @admin_required
-def admin_page():
+def admin_page(): 
+    if request.method == 'POST':
+        add_word_text = request.form.get('add_word')
+        existing_word = Gamewords.query.filter_by(words=add_word_text).first()  # Abfrage des Wortes in der Datenbank
+
+        if existing_word is None and add_word_text:  # Überprüfung, ob das Wort nicht existiert und nicht leer ist
+            new_word = Gamewords(words=add_word_text)  # Erstellen eines neuen Gamewords-Objekts
+            db.session.add(new_word)  # Hinzufügen des neuen Objekts zur Datenbanksession
+            db.session.commit()  # Speichern der Änderungen in der Datenbank
+
     return render_template('Admin.html')
 
 @main.route('/', methods=['GET', 'POST'])
