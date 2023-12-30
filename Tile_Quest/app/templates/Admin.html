@@ -23,7 +23,7 @@
         <h3 class="sub-titel">Add guessing words to the Tile Quest collection</h3>
         <form action="/admin_view" method="post">
           <div class="text-container">
-            <input type="text" class="add-word" name="add_word" maxlength="5" pattern="[A-Za-z]{5}" oninput="this.value = this.value.toUpperCase()" required title="5 letters required">
+            <input type="text" class="add-word" name="add_word" maxlength="5" pattern="[A-Za-z]{5}" oninput="this.value = this.value.toLowerCase()" required title="5 letters required">
             <button class="add-btn">Add</button>
           </div>
         </form>
