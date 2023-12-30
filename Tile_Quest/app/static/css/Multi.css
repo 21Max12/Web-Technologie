@@ -83,9 +83,9 @@
  }
 
   .headers{
-    display: flex;
-    align-content: center;
-    justify-content: center;
+    display: grid;
+    grid-template-columns: 1fr 1fr; 
+    align-items: center; 
   }
 
   .head1, .head2{
