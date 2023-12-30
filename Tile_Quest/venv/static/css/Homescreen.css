@@ -1,0 +1,140 @@
+@import url('https://fonts.googleapis.com/css2?family=Nunito:wght@200;300;400;500;600;700;800;900;1000&display=swap');
+
+body{
+    background-color: hsl(0, 2%, 10%);
+    font-family: 'Nunito', sans-serif;
+    min-width: 1100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.middle-content{
+    display: flex;
+    margin-top: auto;
+    margin-bottom: auto;
+    flex-direction: column;
+}
+
+.raster-background {
+    position: fixed; 
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+    background-size: 60px 60px; 
+    z-index: -1; /* Stellt sicher, dass es hinter anderen Inhalten liegt */
+  }
+
+.tiles{
+    display: flex;
+}
+
+#space{
+    margin-right: 80px;
+}
+
+.letter{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 130px;
+    height: 130px;
+    background-color: #538d4e;
+    border: 5px solid white;
+    margin: 2px;
+    font-size: 65px;
+    font-weight: 800;
+    color: white;
+    animation: float 3s ease-in-out infinite;
+    margin-bottom: 200px;
+    margin-top: 100px;
+}
+
+.letter-grey{
+    background-color: hsl(240, 2%, 23%);
+}
+
+.letter-yellow{
+    background-color: hsl(49, 51%, 47%);
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0);
+    }
+    50% {
+        transform: translateY(-30px);
+    }
+}
+
+.letter:nth-child(1) { animation-delay: 0s; }
+.letter:nth-child(2) { animation-delay: 0.5s; }
+.letter:nth-child(3) { animation-delay: 0.3s; }
+.letter:nth-child(4) { animation-delay: 0.7s; }
+.letter:nth-child(5) { animation-delay: 0.2s; }
+.letter:nth-child(6) { animation-delay: 1s; }
+.letter:nth-child(7) { animation-delay: 0.3s; }
+.letter:nth-child(8) { animation-delay: 0.5s; }
+
+.menu{
+    display: flex;
+    justify-content: center;
+}
+
+.menu-button {
+    display: flex; 
+    align-items: center; 
+    justify-content: space-between; 
+    width: 50%; 
+    padding: 20px; 
+    margin-bottom: 20px; 
+    border: none;
+    outline: none;
+    border-radius: 30px;
+    font-size: 23px;
+    font-weight: 500;
+    position: relative; 
+    transition: width 0.3s ease, background-color 0.3s ease, font-size 0.3s ease; /* Sanfte Transition für spezifische Eigenschaften */
+}
+
+.menu-button .icon {
+    position: absolute;
+    left: 40px; 
+}
+
+.menu-button .txt {
+    flex-grow: 1; 
+    text-align: center; 
+}
+
+.menu-button .icon{
+    justify-content: left;
+}
+
+.menu-button:hover{
+    background-color: #538d4e;
+    width: 60%;
+    font-size: 30px;
+    color: white;
+}
+
+.icon svg{
+    width: 24px; 
+    height: 24px;
+}
+
+#setting{
+    margin-top: 40px;
+}
+
+#admin{
+    background-color: hsl(49, 51%, 47%);
+}
+
+#admin:hover{
+    background-color: #538d4e;
+}
