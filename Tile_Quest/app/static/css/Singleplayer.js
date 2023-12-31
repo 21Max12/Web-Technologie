@@ -15295,10 +15295,7 @@ const DANCE_ANIMATION_DURATION = 500
 const keyboard = document.querySelector("[data-keyboard]")
 const alertContainer = document.querySelector("[data-alert-container]")
 const guessGrid = document.querySelector("[data-guess-grid]")
-const offsetFromDate = new Date(2022, 0, 1)
-const msOffset = Date.now() - offsetFromDate
-const dayOffset = msOffset / 1000 / 60 / 60 / 24
-const targetWord = targetWords[Math.floor(dayOffset)]
+const targetWord = getRandomWord();
 console.log(targetWord)
 
 startInteraction()
@@ -15444,6 +15441,9 @@ function showAlert(message, duration = 1000) {
 function checkWinLose(guess, tiles) {
   if (guess === targetWord) {
     showAlert("You Win", 5000)
+    setTimeout(() => {
+      showBackToMenuButton();
+    }, 5500);
     stopInteraction()
     return
   }
@@ -15455,3 +15455,11 @@ function checkWinLose(guess, tiles) {
   }
 }
 
+function showBackToMenuButton() {
+  const backToMenuButton = document.querySelector('.back');
+  backToMenuButton.classList.add('visible');
+}
+
+function getRandomWord() {
+  return targetWords[Math.floor(Math.random() * targetWords.length)];
+}

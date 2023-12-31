@@ -291,3 +291,26 @@
     font-weight: 700;
   }
   
+  .back {
+    visibility: hidden;
+    background-color: hsl(49, 51%, 47%);
+    color: white;
+    font-weight: 400;
+    font-size: 26px;
+    border: none;
+    border-radius: 5px;
+    align-items: center;
+    animation: none;
+    margin-left: 5px;
+    margin-bottom: 30px;
+  }
+
+  .back.visible {
+    visibility: visible;
+    animation: highlightButton 1s ease 3; 
+  }
+
+  .back:hover{
+      background-color: hsl(115, 29%, 43%);
+      color: white;
+  }
