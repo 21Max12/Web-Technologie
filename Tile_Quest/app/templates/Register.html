@@ -43,7 +43,10 @@
         <div id="passwords-not-match" class="warning" style="display: none;">
             The passwords do not match
         </div>
-
+        
+        <div id="question_missing" class="warning" style="display: none;">
+            Choose a security question
+        </div>
 
         {% if username_taken %}
         <div id="username-taken" class="warning" >
@@ -54,17 +57,30 @@
         <p class="text-required">*required</p>
     </form>
 
-            <script>
-                function checkPasswordsMatch() {
-                    var password = document.getElementById('password').value;
-                    var confirm_password = document.getElementById('confirm_password').value;
-                    var error_message = document.getElementById('passwords-not-match');
-                    
-                    if (password !== confirm_password) {
-                        error_message.style.display = 'block';
-                        return false; 
-                    }
-                    return true; 
-                }
-            </script>
-</body>
+    <script>
+        function checkPasswordsMatch() {
+            var password = document.getElementById('password').value;
+            var confirm_password = document.getElementById('confirm_password').value;
+            var security_question = document.getElementsByName('security_question')[0].value;
+            var passwordsError = document.getElementById('passwords-not-match');
+            var questionError = document.getElementById('question_missing');
+    
+            passwordsError.style.display = 'none';
+            questionError.style.display = 'none';
+    
+            var formValid = true;
+    
+            if (password !== confirm_password) {
+                passwordsError.style.display = 'block';
+                formValid = false;
+            }
+    
+            if (security_question === 'Choose a security question*') {
+                questionError.style.display = 'block';
+                formValid = false;
+            }
+    
+            return formValid;
+        }
+    </script>
+    </body>
