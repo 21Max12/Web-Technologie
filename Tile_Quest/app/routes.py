@@ -61,7 +61,7 @@ def register():
         existing_user = User.query.filter_by(username=form.username.data).first()
         if existing_user:
             username_taken = True
-            return render_template('Register.html', form=form, username_taken='username-taken')
+            return render_template('Register.html', form=form, username_taken=username_taken)
         security_answer = form.security_answer.data
         hashed_password = bcrypt.generate_password_hash(form.password.data)
         secure_question = request.form['security_question']
