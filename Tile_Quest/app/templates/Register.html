@@ -17,7 +17,7 @@
             <h4 class="sub-head">Enter your data</h4>
     <form id="registrationForm" action="/register" method="post" onsubmit="return checkPasswordsMatch();">
         <div class="blub">
-            {{ form.hidden_tag() }} 
+            {{ form.hidden_tag() }}
             {{ form.username(size=20, class="form-control", placeholder="Username*") }}<br>
             {{ form.password(size=20, class="form-control", placeholder="Password*") }}<br>
             <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Passwort repeat*" required title="Please fill out this field."><br>
@@ -34,6 +34,7 @@
 
             <input type="text" name="security_answer" class="form-control" placeholder="Security answer*" required title="Please fill out this field."><br>
         </div>
+
         <div class="end">       
             <a href="/" class="close">Back</a>
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -42,9 +43,14 @@
         <div id="passwords-not-match" class="warning" style="display: none;">
             The passwords do not match
         </div>
-        <div id="username-taken" class="warning" style="display: none;">
+
+
+        {% if username_taken %}
+        <div id="username-taken" class="warning" >
             This username is alreade taken
         </div>
+        {% endif %}
+
         <p class="text-required">*required</p>
     </form>
 
@@ -61,5 +67,4 @@
                     return true; 
                 }
             </script>
-
 </body>
