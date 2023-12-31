@@ -10,22 +10,22 @@
 
     <div class="d-flex">
       {% if not request.referrer or not request.referrer.endswith("5000/") %}
-      {% if request.path != url_for('main.homescreen') %}  
-      <a href="/homescreen" class="btn logout">Back to Menu</a>
+        {% if request.path != url_for('main.homescreen') %}  
+          <a href="/homescreen" class="btn logout">Back to Menu</a>
+        {% endif %}
       {% endif %}
-      
-      {% endif %}
-      {% if request.referrer and request.referrer.endswith("5000/") %}
+        
+      {% if request.referrer and request.referrer.endswith("5000/") and request.path != url_for('main.homescreen') %}
       <a class="btn logout" href="#" onclick="window.history.back(); return false;">Back to Login</a>
       {% endif %}
 
       <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">How to play Tile Quest</a>
 
-      {% if not request.referrer or not request.referrer.endswith("5000/") %}
+      {% if not request.referrer.endswith("5000/") or request.path == url_for('main.homescreen') %}
         <form action="/logout" method="post">
           <button class="btn logout" type="submit">Logout</button>
         </form>
-        {% endif %}
+      {% endif %}
     </div>
   </div>
 </nav>
