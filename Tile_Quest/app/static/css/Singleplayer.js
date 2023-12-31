@@ -15451,6 +15451,9 @@ function checkWinLose(guess, tiles) {
   const remainingTiles = guessGrid.querySelectorAll(":not([data-letter])")
   if (remainingTiles.length === 0) {
     showAlert(targetWord.toUpperCase(), null)
+    setTimeout(() => {
+      showBackToMenuButton();
+    }, 4000);
     stopInteraction()
   }
 }
