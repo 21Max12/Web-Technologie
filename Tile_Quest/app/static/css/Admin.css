@@ -110,3 +110,15 @@ body{
   font-weight: 600;
 }
 
+.power{
+  margin-top: 40px;
+}
+
+.warning{
+  color: hsl(49, 51%, 47%);
+}
+
+.power_text{
+  font-size: 25px;
+  font-weight: 700;
+}
