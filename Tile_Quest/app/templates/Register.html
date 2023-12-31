@@ -17,7 +17,7 @@
             <h4 class="sub-head">Enter your data</h4>
     <form id="registrationForm" action="/register" method="post" onsubmit="return checkPasswordsMatch();">
         <div class="blub">
-            {{ form.hidden_tag() }} 
+            {{ form.hidden_tag() }}
             {{ form.username(size=20, class="form-control", placeholder="Username*") }}<br>
             {{ form.password(size=20, class="form-control", placeholder="Password*") }}<br>
             <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Passwort repeat*" required title="Please fill out this field."><br>
@@ -34,6 +34,7 @@
 
             <input type="text" name="security_answer" class="form-control" placeholder="Security answer*" required title="Please fill out this field."><br>
         </div>
+
         <div class="end">       
             <a href="/" class="close">Back</a>
             <button type="submit" class="btn btn-primary">Submit</button>
@@ -42,24 +43,44 @@
         <div id="passwords-not-match" class="warning" style="display: none;">
             The passwords do not match
         </div>
-        <div id="username-taken" class="warning" style="display: none;">
+        
+        <div id="question_missing" class="warning" style="display: none;">
+            Choose a security question
+        </div>
+
+        {% if username_taken %}
+        <div id="username-taken" class="warning" >
             This username is alreade taken
         </div>
+        {% endif %}
+
         <p class="text-required">*required</p>
     </form>
 
-            <script>
-                function checkPasswordsMatch() {
-                    var password = document.getElementById('password').value;
-                    var confirm_password = document.getElementById('confirm_password').value;
-                    var error_message = document.getElementById('passwords-not-match');
-                    
-                    if (password !== confirm_password) {
-                        error_message.style.display = 'block';
-                        return false; 
-                    }
-                    return true; 
-                }
-            </script>
-
-</body>
+    <script>
+        function checkPasswordsMatch() {
+            var password = document.getElementById('password').value;
+            var confirm_password = document.getElementById('confirm_password').value;
+            var security_question = document.getElementsByName('security_question')[0].value;
+            var passwordsError = document.getElementById('passwords-not-match');
+            var questionError = document.getElementById('question_missing');
+    
+            passwordsError.style.display = 'none';
+            questionError.style.display = 'none';
+    
+            var formValid = true;
+    
+            if (password !== confirm_password) {
+                passwordsError.style.display = 'block';
+                formValid = false;
+            }
+    
+            if (security_question === 'Choose a security question*') {
+                questionError.style.display = 'block';
+                formValid = false;
+            }
+    
+            return formValid;
+        }
+    </script>
+    </body>
