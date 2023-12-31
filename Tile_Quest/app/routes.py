@@ -58,6 +58,10 @@ def logout():
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
+        existing_user = User.query.filter_by(username=form.username.data).first()
+        if existing_user:
+            username_taken = True
+            return render_template('Register.html', form=form, username_taken='username-taken')
         security_answer = form.security_answer.data
         hashed_password = bcrypt.generate_password_hash(form.password.data)
         secure_question = request.form['security_question']
