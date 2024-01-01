@@ -15338,8 +15338,8 @@ function handleKeyPress(e) {
     return
   }
 
-  if (e.key.match(/^[a-zA-Z]$/)) { // Erlaubt sowohl Groß- als auch Kleinbuchstaben
-    pressKey(e.key.toLowerCase()) // Konvertiert den Buchstaben in Kleinbuchstaben
+  if (e.key.match(/^[a-zA-Z]$/)) { 
+    pressKey(e.key.toLowerCase())
     return
   }
 }
@@ -15349,11 +15349,12 @@ function pressKey(key) {
   if (activeTiles.length >= WORD_LENGTH) return
   const nextTile = guessGrid.querySelector(":not([data-letter])")
   if (nextTile) {
-    nextTile.dataset.letter = key // key ist bereits in Kleinbuchstaben umgewandelt
-    nextTile.textContent = key.toUpperCase() // Zeigt den Buchstaben in Großbuchstaben an
+    nextTile.dataset.letter = key 
+    nextTile.textContent = key.toUpperCase()
     nextTile.dataset.state = "active"
   }
 }
+
 function deleteKey() {
   const activeTiles = getActiveTiles()
   const lastTile = activeTiles[activeTiles.length - 1]
