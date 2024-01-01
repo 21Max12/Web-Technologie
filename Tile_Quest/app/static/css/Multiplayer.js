@@ -13032,21 +13032,20 @@ function handleKeyPress(e) {
     return
   }
 
-  if (e.key.match(/^[a-z]$/)) {
-    pressKey(e.key)
+  if (e.key.match(/^[a-zA-Z]$/)) { 
+    pressKey(e.key.toLowerCase())
     return
   }
 }
 
 function pressKey(key) {
-  console.log("Pressed key:", key);
-  const activeTiles = getActiveTiles();
-  if (activeTiles.length >= WORD_LENGTH) return;
-  const nextTile = guessGrid.querySelector(":not([data-letter])");
+  const activeTiles = getActiveTiles()
+  if (activeTiles.length >= WORD_LENGTH) return
+  const nextTile = guessGrid.querySelector(":not([data-letter])")
   if (nextTile) {
-    nextTile.dataset.letter = key.toLowerCase();
-    nextTile.textContent = key.toUpperCase();
-    nextTile.dataset.state = "active";
+    nextTile.dataset.letter = key 
+    nextTile.textContent = key.toUpperCase()
+    nextTile.dataset.state = "active"
   }
 }
 
