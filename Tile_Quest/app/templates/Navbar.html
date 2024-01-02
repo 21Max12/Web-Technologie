@@ -21,7 +21,7 @@
 
       <a class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">How to play Tile Quest</a>
 
-      {% if not request.referrer.endswith("5000/") or request.path == url_for('main.homescreen') %}
+      {% if request.referrer and not request.referrer.endswith("5000/") or request.path == url_for('main.homescreen') %}
         <form action="/logout" method="post">
           <button class="btn logout" type="submit">Logout</button>
         </form>
