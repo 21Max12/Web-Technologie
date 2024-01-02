@@ -35,7 +35,6 @@ def login():
             session['is_user_admin'] = user.is_user_admin
             session['username'] = user.username
             session['e_mail'] = user.e_mail
-            print(user.is_user_admin)
             return redirect(url_for('main.homescreen'))
         else:
 
@@ -89,10 +88,6 @@ def pwreset():
         return redirect(url_for('main.newpw'))
     return render_template('PWreset.html')
 
-@main.route('/co_determination_law')
-def co_determination_law():
-    return render_template('Law.html')
-
 @main.route('/dsgvo')
 def dsgvo():
     return render_template('DSGVO.html')
@@ -112,14 +107,12 @@ def singleplayer():
 @login_required
 def multiplayer(code):
     game_id = rooms.get(code)
-    print(game_id)
 
     session_key = f"multiplayer_access_count_{code}"
     if session_key not in session:
         session[session_key] = 0
     session[session_key] += 1
 
-    # Überprüfen, ob das Limit erreicht wurde
     if session[session_key] > 1:
         flash('Sie haben die maximale Anzahl von Aufrufen für dieses Spiel erreicht.')
         return redirect(url_for('main.error'))
@@ -212,7 +205,6 @@ def check_game_status(code):
 def settings():
     username = session.get('username')
     email = session.get('e_mail')
-    print(username,email)
     return render_template('Settings.html', username=username, email=email)
 
 @main.route('/error', methods=['GET', 'POST'])

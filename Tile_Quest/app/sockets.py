@@ -10,7 +10,6 @@ socketio = SocketIO()
 
 @socketio.on('submit_guess')
 def handle_guess(data):
-    print(data)
     try:
         
         guess = data['guess']
@@ -24,10 +23,8 @@ def handle_guess(data):
         if game:
             target_word = game.target_word
             ergebnis = wort_uebereinstimmung(target_word, guess)
-            print(ergebnis, target_word, sender_sid,game_code)
             emit('guess_result', {'ergebnis': ergebnis, 'sender_sid': sender_sid, 'game_code' : game_code}, broadcast=True)  
             if ergebnis == [1, 1, 1, 1, 1]:
-                print("Winner")
                 game.winner = user_id
                 db.session.commit()
 
@@ -43,7 +40,6 @@ def handle_request_target_word(data):
     game = Game.query.filter_by(game_code=game_code).first()
     target_word = game.target_word
     
-    print(target_word)
     if target_word:
         emit('receive_target_word', {'target_word': target_word}, broadcast=True)
 

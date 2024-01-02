@@ -11,8 +11,6 @@ def admin_required(f):
     def decorated_function(*args, **kwargs):
         user_id = session.get('user_id')
         is_user_admin = session.get('is_user_admin')
-        print("Aktuelle user_id in der Session:", user_id)
-        print("Der Admin status ist", is_user_admin)
         if user_id:
             user = User.query.get(user_id)
             if user and user.is_user_admin:
