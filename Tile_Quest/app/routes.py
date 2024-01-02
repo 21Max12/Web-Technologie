@@ -88,10 +88,6 @@ def pwreset():
         return redirect(url_for('main.newpw'))
     return render_template('PWreset.html')
 
-@main.route('/co_determination_law')
-def co_determination_law():
-    return render_template('Law.html')
-
 @main.route('/dsgvo')
 def dsgvo():
     return render_template('DSGVO.html')
