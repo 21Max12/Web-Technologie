@@ -9,7 +9,7 @@ from. models import User, Game, Gamewords, init_gamewords
 def create_app():
     app = Flask(__name__)
     app.config['SECRET_KEY'] = 'your_secret_key'
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///your_database.db' # Pfad zur Datenbank
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///your_database.db' 
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 
