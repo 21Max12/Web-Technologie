@@ -26,7 +26,7 @@ body{
     background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px),
                       linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
     background-size: 60px 60px; 
-    z-index: -1; /* Stellt sicher, dass es hinter anderen Inhalten liegt */
+    z-index: -1;
   }
 
 .tiles{
@@ -98,7 +98,7 @@ body{
     font-size: 23px;
     font-weight: 500;
     position: relative; 
-    transition: width 0.3s ease, background-color 0.3s ease, font-size 0.3s ease; /* Sanfte Transition für spezifische Eigenschaften */
+    transition: width 0.3s ease, background-color 0.3s ease, font-size 0.3s ease; 
 }
 
 .menu-button .icon {

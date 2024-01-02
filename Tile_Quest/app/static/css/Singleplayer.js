@@ -15296,7 +15296,6 @@ const keyboard = document.querySelector("[data-keyboard]")
 const alertContainer = document.querySelector("[data-alert-container]")
 const guessGrid = document.querySelector("[data-guess-grid]")
 const targetWord = getRandomWord();
-console.log(targetWord)
 
 startInteraction()
 

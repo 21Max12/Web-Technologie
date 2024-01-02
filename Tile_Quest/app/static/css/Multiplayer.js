@@ -12983,13 +12983,9 @@ const MAX_GUESSES = 6;
 let timerInterval;
 
 startInteraction();
-console.log(startTime);
-//startTimer();
 document.addEventListener('DOMContentLoaded', (event) => {
   startTimer();
 });
-
-
 
 function startInteraction() {
   document.addEventListener("click", handleMouseClick)
@@ -13058,16 +13054,13 @@ function deleteKey() {
   delete lastTile.dataset.letter
 }
 
-
 let mySid;
 const socket = io.connect('http://' + document.domain + ':' + location.port);
 
 socket.on('connect', () => {
   mySid = socket.id;
-  console.log(mySid)
   console.log('Connected to the server');
 });
-
 
 function submitGuess() {
   const activeTiles = [...getActiveTiles()]
@@ -13090,11 +13083,8 @@ function submitGuess() {
   stopInteraction()
 }
 
-
 socket.on('guess_result', (data) => {
   const { ergebnis, sender_sid, game_code} = data; 
-  console.log('Result received:', ergebnis, 'from SID:', sender_sid);
-  console.log(game_code, gameCode);
 
   if (sender_sid === mySid && gameCode === game_code) {
     updateTilesBasedOnResponse(ergebnis, 'player');
@@ -13106,7 +13096,6 @@ socket.on('guess_result', (data) => {
     }
 });
 
-
 socket.on('receive_target_word', (data) => {
   receivedTargetWord = data.target_word;
 });
@@ -13115,7 +13104,6 @@ let receivedTargetWord = null;
 let playerGuessCount = 0;
 let opponentGuessCount = 0;
 let opponentDrawCount = 0;
-
 
 function updateTilesBasedOnResponse(positions, playerType) {
   let tilesToUpdate;
@@ -13140,9 +13128,7 @@ let noTilesAlertShown = false;
 function checkWinLoseBasedOnResponse(correctPositions, playerType) {
   const hasWon = correctPositions.every(position => position === 1);
   const playerTilesLeft = guessGrid.querySelectorAll(":not([data-letter])").length;
-  console.log(playerTilesLeft)
   const opponentTilesLeft = document.querySelector('.guess-opponent').querySelectorAll(":not([data-letter])").length;
-  console.log(opponentTilesLeft)
 
   if (hasWon) {
     const message = playerType === 'player' ? "You Won! :)": "You Lose! :(";
@@ -13211,7 +13197,6 @@ function addFlipAnimation(tile, result, key) {
   }, { once: true });
 }
 
-
 function updateTileState(tile, key, state) {
   switch (state) {
     case 1:
@@ -13247,7 +13232,6 @@ function showAlert(message, duration = 1000) {
     })
   }, duration)
 }
-
 
 function startTimer() {
   const parts = startTime.split(':');

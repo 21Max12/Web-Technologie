@@ -10,7 +10,6 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='css/BottomBar.css') }}">
     <link rel="icon" type="image" href="{{ url_for('static', filename='css/letter.jpeg') }}">
 </head>
-
 <body>
     
     <form action="{{ url_for('main.login') }}" method="post" onsubmit="saveUsername()">
@@ -61,9 +60,9 @@
                     
                     if (savedUsername) {
                         usernameInput.value = savedUsername;
-                        checkbox.checked = true;  // Checkbox markieren, wenn ein Benutzername gespeichert ist
+                        checkbox.checked = true;  
                     } else {
-                        checkbox.checked = false; // Checkbox nicht markieren, wenn kein Benutzername gespeichert ist
+                        checkbox.checked = false; 
                     }
                     }
                 </script>

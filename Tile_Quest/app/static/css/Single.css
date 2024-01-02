@@ -62,12 +62,10 @@
       opacity: 1;
     }
   }
-  
 
  .ms-auto{
   display: flex;
  }
-
 
   .keyboards{
     display: flex;
@@ -145,7 +143,6 @@
     gap: .25em;
     margin-bottom: 1em;
   }
-
 
   .tile {
     font-size: 2em;
