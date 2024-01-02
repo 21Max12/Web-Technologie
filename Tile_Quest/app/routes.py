@@ -15,11 +15,13 @@ main = Blueprint('main', __name__)
 @admin_required
 def admin_page(): 
     if request.method == 'POST':
-        add_word_text = request.form.get('add_word')  # Erhalten des Wortes aus dem Formular
-        if add_word_text:
-            new_word = Gamewords(words=add_word_text)  # Erstellen eines neuen Gamewords-Objekts
-            db.session.add(new_word)  # Hinzufügen des neuen Objekts zur Datenbanksession
-            db.session.commit()  
+        add_word_text = request.form.get('add_word') 
+        existing_word = Gamewords.query.filter_by(words=add_word_text).first()
+        
+        if existing_word is None and add_word_text:
+            new_word=Gamewords(words=add_word_text)
+            db.session.add(new_word)
+            db.session.commit()
     return render_template('Admin.html')
 
 @main.route('/', methods=['GET', 'POST'])
@@ -120,12 +122,12 @@ def multiplayer(code):
     # Überprüfen, ob das Limit erreicht wurde
     if session[session_key] > 1:
         flash('Sie haben die maximale Anzahl von Aufrufen für dieses Spiel erreicht.')
-        return redirect(url_for('homescreen'))
+        return redirect(url_for('main.error'))
 
     game_id = rooms.get(code)
     if not game_id:
         flash('Spiel nicht gefunden.')
-        return redirect(url_for('homescreen'))  
+        return redirect(url_for('main.error'))  
 
     logged_in_username = current_user.username
     game = Game.query.get(game_id)
@@ -212,3 +214,8 @@ def settings():
     email = session.get('e_mail')
     print(username,email)
     return render_template('Settings.html', username=username, email=email)
+
+@main.route('/error', methods=['GET', 'POST'])
+@login_required
+def error():
+    return render_template('error.html')
