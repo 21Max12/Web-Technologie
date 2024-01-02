@@ -18,9 +18,13 @@ body{
 }
 
 .profil-attribute{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-top: 50px;
   font-size: 18px;
   font-weight: 600;
+  margin-bottom: 40px;
 }
 
 .all-body{
@@ -35,6 +39,12 @@ body{
   border-radius: 30px;
   padding: 50px;
   background-color: hsl(0, 2%, 10%);
+}
+
+.head{
+  display: flex;
+  justify-content: center;
+  align-items: baseline;
 }
 
 .bottom-bar{
@@ -69,4 +79,17 @@ body{
   color: white;
 }
 
+.big{
+  color: hsl(49, 51%, 47%);
+  font-size: 120px;
+  margin-right: 40px;
+}
 
+.back{
+  display: flex;
+  justify-content: center;
+}
+
+.tips{
+  color: hsl(115, 29%, 43%);
+}
