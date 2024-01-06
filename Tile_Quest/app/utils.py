@@ -19,7 +19,7 @@ def admin_required(f):
                 flash("Sie haben keine Berechtigung, diese Seite zu sehen.")
         else:
             flash("Sie sind nicht eingeloggt.")
-        return redirect(url_for('homescreen'))  # Oder eine andere passende Seite
+        return redirect(url_for('main.homescreen'))  
     return decorated_function
 
 def get_random_gameword():
