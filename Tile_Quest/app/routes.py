@@ -83,11 +83,6 @@ def register():
     return render_template('Register.html', form=form)
 
 
-@main.route('/pwreset', methods=['GET', 'POST'])
-def pwreset():
-    if request.method == 'POST':
-        return redirect(url_for('main.newpw'))
-    return render_template('PWreset.html')
 
 @main.route('/dsgvo')
 def dsgvo():
