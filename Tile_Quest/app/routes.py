@@ -12,6 +12,7 @@ from app.models import Gamewords
 main = Blueprint('main', __name__)
 
 @main.route('/admin_view', methods=['GET', 'POST'])
+@login_required
 @admin_required
 def admin_page(): 
     if request.method == 'POST':
