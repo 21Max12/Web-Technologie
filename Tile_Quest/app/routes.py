@@ -140,7 +140,7 @@ def multiplayer(code):
     
     if not game or (game.id_Host != current_user.id and (game.id_Join is None or game.id_Join != current_user.id)):
         flash('Sie sind nicht berechtigt, dieses Spiel zu betreten.')
-        return redirect(url_for('homescreen'))  
+        return redirect(url_for('main.homescreen'))  
     
     
     return render_template('Multi.html', code=code, player=player, opponent=opponent,start_time=start_time)
