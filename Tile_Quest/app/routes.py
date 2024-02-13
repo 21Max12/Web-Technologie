@@ -84,11 +84,11 @@ def register():
 
 
 
-@main.route('/dsgvo')
+@main.route('/privacy policy')
 def dsgvo():
     return render_template('DSGVO.html')
 
-@main.route('/impressum')
+@main.route('/imprint')
 def impressum():
     return render_template('Impressum.html')
 
