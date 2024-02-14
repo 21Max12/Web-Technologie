@@ -15348,7 +15348,7 @@ function pressKey(key) {
   if (activeTiles.length >= WORD_LENGTH) return
   const nextTile = guessGrid.querySelector(":not([data-letter])")
   if (nextTile) {
-    nextTile.dataset.letter = key 
+    nextTile.dataset.letter = key.toLowerCase(); 
     nextTile.textContent = key.toUpperCase()
     nextTile.dataset.state = "active"
   }
@@ -15375,6 +15375,7 @@ function submitGuess() {
   }, "")
 
   if (!dictionary.includes(guess)) {
+    console.log(guess)
     showAlert("Invalid word")
     return
   }
