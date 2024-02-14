@@ -84,7 +84,7 @@ def register():
 
 
 
-@main.route('/privacy policy')
+@main.route('/privacy_policy')
 def dsgvo():
     return render_template('DSGVO.html')
 

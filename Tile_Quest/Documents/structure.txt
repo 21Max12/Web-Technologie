@@ -1,0 +1,27 @@
+Tile Quest/				# Hauptanwendungsordner
+│
+├── app/                     			# Enhält Pyhton Skripte und Frontend-Dateien
+│   ├── static/              			# Enthält CSS und JavaScript Dateien
+│   ├── templates/           			# HTML Template-Dateien
+│   ├── virtual_environment/ 			# Virtuelle Umgebung für das Projekt
+│   ├── __init__.py          			# Initialisierungsdatei für das App-Paket
+│   ├── extensions.py        			# Erweiterungen und Zusatzmodule
+│   ├── forms.py             			# Formulare für Benutzereingaben
+│   ├── models.py           			# Datenmodelle
+│   ├── requirements.txt     			# Liste der Abhängigkeiten
+│   ├── routes.py            			# Routendefinitionen für die Anwendung
+│   ├── shared.py           			# Gemeinsam genutzte Funktionen oder Variablen
+│   ├── sockets.py          			# WebSocket-Definitionen
+│   └── utils.py             			# Hilfsfunktionen und -klassen
+│
+├── instance/               			# Instanzspezifische Daten, z.B. Datenbankdatei
+│   └── your_database.db     			# Datenbankdatei (Wird beim erstmaligen Start der Anwendung erzeugt)
+│
+├── run.py                   			# Startskript für die Anwendung
+│
+├── Documents/							# Applikationsdokumente
+│   ├── Installation instructions.pdf	# Installationsanleitung
+│   └── structure.txt                	# Filestruktur
+│
+└── wordle-past-answers-header.webp	# Hintergrundbild der Loginseite 
+
