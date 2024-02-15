@@ -15375,7 +15375,6 @@ function submitGuess() {
   }, "")
 
   if (!dictionary.includes(guess)) {
-    console.log(guess)
     showAlert("Invalid word")
     return
   }
